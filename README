@@ -3,10 +3,16 @@ README for bristol-gui
 About
 -----
 
-GUI for the bristol synthesizer emulation 
+Graphical user interface for the bristol synthesizer emulation 
 (http://bristol.sourceforge.net, author: Nick Copeland). Written in 
 ANSI-C, using the GTK. bristol-gui is Free Software, see the 
-License section.
+"License" section.
+
+This software compiles and runs only on Linux and BSD systems.
+It's purpose is to provide a graphical user interface for the 
+bristol synthesizer emulation. Since there is no equivalent to JACK
+or ALSA on MS Windows based operating systems, porting would make
+no sense at all.
 
 License
 -------
@@ -29,4 +35,16 @@ Contributions
 Synthesizer images and help texts are provided by Nick Copeland:
 http://bristol.sourceforge.net
 
+Current Version
+---------------
+
+The current version is v0.1, which means it's a prototype. There is no
+Makefile yet, but if you have installed the GTK+ dev libraries you 
+should be able to import the head branch into eclipse/CDT and compile. 
+
+Contact
+-------
+bristol-gui is copyrighted (except for the included contributions, see 
+the "Contributions" section), written and maintained by 
+voigt.m@gmail.com
 

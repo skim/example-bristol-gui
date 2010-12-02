@@ -1,5 +1,7 @@
 #include <gtk/gtk.h>
+#include "gtk_common.h"
 #include "handlers.h"
+#include "gui.h"
 
 int main(int argc, char **argv) {
 	gtk_init(&argc, &argv);
@@ -9,12 +11,14 @@ int main(int argc, char **argv) {
 		g_warning("%s", error->message);
 		return 1;
 	} else {
-		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
-		GtkWidget *window_help = GTK_WIDGET(gtk_builder_get_object(builder, "window_help"));
-		init_handlers(builder);
+		gtk_common_init(builder);
+		GtkWidget *window = gtk_get_widget("window_root");
+		bg_prepare_combo_soundengine("combo_soundengine_mini");
+		bg_prepare_entry_identifier("entry_identifier_mini", "mini");
+		bg_prepare_adjust_samplerate("adjust_samplerate_mini", 44100);
+		bg_prepare_adjust_midichannel("adjust_midichannel_mini", 1);
 		gtk_builder_connect_signals(builder, NULL);
 		gtk_widget_show(window);
-		gtk_widget_show(window_help);
 		gtk_main();
 		g_object_unref(builder);
 	}
