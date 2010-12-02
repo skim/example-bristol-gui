@@ -1,4 +1,25 @@
-bristol-gui
+README for bristol-gui
+
+About
+-----
 
 GUI for the bristol synthesizer emulation (http://bristol.sourceforge.net, author: Nick Copeland).
-bristol-gui is Free Software, licensed under the GPL v2.
+It is written in ANSI-C, using GTK.
+
+bristol-gui is Free Software, see the License section.
+
+License
+-------
+
+bristol-gui is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License.
+
+bristol-gui is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with bristol-gui.  If not, see <http://www.gnu.org/licenses/>.
+
