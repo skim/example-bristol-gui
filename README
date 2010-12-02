@@ -3,10 +3,10 @@ README for bristol-gui
 About
 -----
 
-GUI for the bristol synthesizer emulation (http://bristol.sourceforge.net, author: Nick Copeland).
-It is written in ANSI-C, using GTK.
-
-bristol-gui is Free Software, see the License section.
+GUI for the bristol synthesizer emulation 
+(http://bristol.sourceforge.net, author: Nick Copeland). Written in 
+ANSI-C, using the GTK. bristol-gui is Free Software, see the 
+License section.
 
 License
 -------
@@ -22,4 +22,11 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with bristol-gui.  If not, see <http://www.gnu.org/licenses/>.
+
+Contributions
+-------------
+
+Synthesizer images and help texts are provided by Nick Copeland:
+http://bristol.sourceforge.net
+
 

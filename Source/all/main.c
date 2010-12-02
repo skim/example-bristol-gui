@@ -10,9 +10,11 @@ int main(int argc, char **argv) {
 		return 1;
 	} else {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
-		gtk_builder_connect_signals(builder, NULL);
+		GtkWidget *window_help = GTK_WIDGET(gtk_builder_get_object(builder, "window_help"));
 		init_handlers(builder);
+		gtk_builder_connect_signals(builder, NULL);
 		gtk_widget_show(window);
+		gtk_widget_show(window_help);
 		gtk_main();
 		g_object_unref(builder);
 	}
