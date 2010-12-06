@@ -5,9 +5,12 @@
 #include <gtk/gtk.h>
 
 typedef struct {
-	GtkBuilder *builder;
-	GtkWidget *notebook_companies;
-	GHashTable *notebooks_synths;
+	GtkBuilder 	*builder;
+	GtkWidget 	*window_root;
+	GtkWidget	*box_params;
+	GtkWidget 	*notebook_companies;
+	GHashTable 	*notebooks_synths;
+	GHashTable	*boxes_params_synths;
 } bg_gui;
 
 bg_gui* bg_gui_new(GtkBuilder *builder, bg_store *store);

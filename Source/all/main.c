@@ -23,7 +23,8 @@ int main(int argc, char **argv) {
 		bg_synth_new(moog, "mini", "Mini", "Data/Gtk/mini.png");
 
 		bg_gui *gui = bg_gui_new(builder, store);
-		bg_handlers_init(gui);
+		bg_handlers_init(store, gui);
+
 		bg_gui_show(gui);
 
 		g_object_unref(builder);
