@@ -1,11 +1,19 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-#include "bg_configuration.h"
+#include "bg_data.h"
+#include <gtk/gtk.h>
 
-void bg_gui_prepare(const char *suffix);
-void bg_gui_set(const char *suffix, bg_configuration *config);
-void bg_gui_help_show(const char *text_name);
-void bg_synth_start(const char *synth_name);
+typedef struct {
+	GtkBuilder *builder;
+	GtkWidget *notebook_companies;
+	GHashTable *notebooks_synths;
+} bg_gui;
+
+bg_gui* bg_gui_new(GtkBuilder *builder, bg_store *store);
+
+void bg_gui_show(bg_gui* gui);
+void bg_gui_switch_audioproperties(bg_gui *gui);
+
 
 #endif /* GUI_H_ */

@@ -1,79 +1,66 @@
 #include "bg_gui.h"
-#include "bg_configuration.h"
-#include "bg_starter.h"
+#include "bg_data.h"
 #include "gtkc_all.h"
-#include <gtk/gtk.h>
+#include <glib.h>
 
-#define WINDOW_ROOT	"window_root"
-#define WINDOW_HELP	"window_help"
-#define VIEW_HELP	"view_help"
+#define IMAGE_STOCK_UP 		"gtk-go-up"
+#define IMAGE_STOCK_DOWN 	"gtk-go-down"
+#define BOX_COMPANIES		"box_companies"
 
-void bg_gui_combo_configuration_prepare(const char *name) {
-	g_debug("bg_gui_combo_configuration_prepare(%s)", name);
-	GtkListStore *store = gtk_list_store_new(1, G_TYPE_STRING);
-	//GtkTreeIter iter;
-	GtkComboBox *combo = gtkc_get_combo_box(name);
-	gtk_combo_box_set_model(combo, GTK_TREE_MODEL(store));
-	gtk_combo_box_set_active(combo, 0);
-	GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combo), renderer, TRUE);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo), renderer, "text", 0, NULL);
-	g_object_unref(G_OBJECT(store));
+static void _bg_gui_add_synth(gpointer key, gpointer value, gpointer data) {
+	bg_synth *synth = (bg_synth*) value;
+	bg_gui *gui = (bg_gui*) data;
+	g_debug("adding gui for: %s-%s", synth->company->id, synth->id);
+	GtkWidget *notebook_synths = g_hash_table_lookup(gui->notebooks_synths, synth->company->id);
+	GtkWidget *box = gtk_vbox_new(FALSE, 0);
+	GtkWidget *box_label = gtk_hbox_new(FALSE, 0);
+	GtkWidget *image = gtk_image_new_from_file(synth->image_filename);
+	gtk_box_pack_end(GTK_BOX(box_label), image, FALSE, FALSE, 4);
+	GtkWidget *label = gtk_label_new(synth->name);
+	gtk_label_set_attributes(GTK_LABEL(label), pango_attr_list_new());
+	pango_attr_list_insert(gtk_label_get_attributes(GTK_LABEL(label)), pango_attr_scale_new(2));
+	gtk_box_pack_end(GTK_BOX(box_label), label, FALSE, FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(box), box_label, FALSE, FALSE, 4);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook_synths), box, gtk_label_new(synth->name));
 }
 
-void bg_gui_combo_soundengine_prepare(const char *name) {
-	g_debug("bg_gui_combo_soundengine_prepare(%s)", name);
-	GtkListStore *store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_UINT);
-	GtkTreeIter iter;
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, "JACK", 1, BG_JACK, -1);
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, "ALSA", 1, BG_ALSA, -1);
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, "Pulse Audio", 1, BG_PULSE, -1);
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, "OSS", 1, BG_OSS, -1);
-	GtkComboBox *combo = gtkc_get_combo_box(name);
-	gtk_combo_box_set_model(combo, GTK_TREE_MODEL(store));
-	gtk_combo_box_set_active(combo, 0);
-	GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
-	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combo), renderer, TRUE);
-	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo), renderer, "text", 0, NULL);
-	g_object_unref(G_OBJECT(store));
+static void _bg_gui_add_company(gpointer key, gpointer value, gpointer data) {
+	bg_company *company = (bg_company*) value;
+	bg_gui *gui = (bg_gui*) data;
+	g_debug("adding gui for: %s", company->id);
+	GtkWidget *box = gtk_vbox_new(FALSE, 0);
+	GtkWidget *box_label = gtk_hbox_new(FALSE, 0);
+	GtkWidget *label = gtk_label_new(g_strconcat(company->name, " Synthesizers", NULL));
+	gtk_label_set_attributes(GTK_LABEL(label), pango_attr_list_new());
+	pango_attr_list_insert(gtk_label_get_attributes(GTK_LABEL(label)), pango_attr_scale_new(1.5));
+	gtk_box_pack_start(GTK_BOX(box_label), label, FALSE, FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(box), box_label, FALSE, FALSE, 4);
+	GtkWidget *box_notebook_synths = gtk_hbox_new(FALSE, 0);
+	GtkWidget *notebook_synths = gtk_notebook_new();
+	gtk_box_pack_start(GTK_BOX(box_notebook_synths), notebook_synths, TRUE, TRUE, 4);
+	gtk_box_pack_start(GTK_BOX(box), box_notebook_synths, FALSE, FALSE, 4);
+	gtk_notebook_append_page(GTK_NOTEBOOK(gui->notebook_companies), box, gtk_label_new(company->name));
+	g_hash_table_insert(gui->notebooks_synths, company->id, notebook_synths);
+	g_hash_table_foreach(company->synths, _bg_gui_add_synth, gui);
 }
 
-void bg_gui_prepare(const char *suffix) {
-	g_debug("bg_gui_prepare(%s)", suffix);
-	char *name = g_strconcat("combo_configuration_", suffix, NULL);
-	bg_gui_combo_configuration_prepare(name);
-	g_free(name);
-	name = g_strconcat("combo_soundengine_", suffix, NULL);
-	bg_gui_combo_soundengine_prepare(name);
-	g_free(name);
+bg_gui* bg_gui_new(GtkBuilder *builder, bg_store *store) {
+	gtkc_init(builder);
+	bg_gui *gui = g_new(bg_gui, 1);
+	gui->notebooks_synths = g_hash_table_new(g_str_hash, g_str_equal);
+	gui->notebook_companies = gtk_notebook_new();
+	gtk_notebook_set_tab_pos(GTK_NOTEBOOK(gui->notebook_companies), GTK_POS_LEFT);
+	GtkWidget *box_companies = gtkc_get_widget(BOX_COMPANIES);
+	gtk_box_pack_start(GTK_BOX(box_companies), gui->notebook_companies, TRUE, TRUE, 4);
+	g_hash_table_foreach(store->companies, _bg_gui_add_company, gui);
+	return gui;
 }
 
-void bg_synth_start(const char *synth_name) {
-	start_bristol();
+void bg_gui_show(bg_gui *gui) {
+	gtk_widget_show_all(gtkc_get_widget("window_root"));
+	gtk_main();
 }
 
-void bg_gui_set(const char *suffix, bg_configuration *config) {
-	g_debug("bg_gui_set(%s, %s)", suffix, config->name);
-	char *name = g_strconcat("combo_soundengine_", suffix, NULL);
-	gtkc_combo_box_set_active(name, config->soundengine);
-	g_free(name);
-	name = g_strconcat("entry_identifier_", suffix, NULL);
-	gtkc_entry_set_value(name, config->identifier);
-	g_free(name);
-	name = g_strconcat("adjust_samplerate_", suffix, NULL);
-	gtkc_adjustment_set_value(name, config->samplerate);
-	g_free(name);
-	name = g_strconcat("adjust_periodsize_", suffix, NULL);
-	gtkc_adjustment_set_value(name, config->periodsize);
-	g_free(name);
-	name = g_strconcat("adjust_midichannel_", suffix, NULL);
-	gtkc_adjustment_set_value(name, config->midichannel);
-	g_free(name);
-	name = g_strconcat("combo_configuration_", suffix, NULL);
-
+void bg_gui_switch_audioproperties(bg_gui *gui) {
+	gtkc_switch_button_switch("button_switch_audioproperties", "box_audioproperties", IMAGE_STOCK_DOWN, IMAGE_STOCK_UP);
 }
-

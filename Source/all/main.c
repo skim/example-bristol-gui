@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include "bg_gui.h"
+#include "bg_data.h"
 #include "gtkc_all.h"
 #include "bg_handlers.h"
 
@@ -11,13 +12,20 @@ int main(int argc, char **argv) {
 		g_warning("%s", error->message);
 		return 1;
 	} else {
-		gtkc_init(builder);
-		GtkWidget *window = gtkc_get_widget("window_root");
-		bg_gui_prepare("mini");
-		bg_gui_set("mini", bg_configuration_new("mini-default"));
-		gtk_builder_connect_signals(builder, NULL);
-		gtk_widget_show(window);
-		gtk_main();
+		bg_store *store = bg_store_new();
+
+		bg_company *circuits = bg_company_new(store, "circuits", "Sequential Circuits");
+		bg_synth_new(circuits, "pro10", "Prophet 10", "Data/Gtk/prophet-10.png");
+		bg_synth_new(circuits, "pro5", "Prophet 5", "Data/Gtk/prophet-5.png");
+
+		bg_company *moog = bg_company_new(store, "moog", "Moog");
+		bg_synth_new(moog, "explorer", "Voyager", "Data/Gtk/explorer.png");
+		bg_synth_new(moog, "mini", "Mini", "Data/Gtk/mini.png");
+
+		bg_gui *gui = bg_gui_new(builder, store);
+		bg_handlers_init(gui);
+		bg_gui_show(gui);
+
 		g_object_unref(builder);
 	}
 	return 0;
