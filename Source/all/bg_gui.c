@@ -76,7 +76,7 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	//tab
 	GtkWidget *box_tab = gtk_hbox_new(FALSE, 4);
 	//add a resized image to the tab label
-	if (image_filename != NULL) {
+	if (image_filename != NULL && BG_GUI_SHOW_TAB_IMAGES) {
 		GError *error = NULL;
 		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(g_strconcat(BG_PATH_DATA, "/", image_filename, NULL), &error);
 		if (error == NULL) {
