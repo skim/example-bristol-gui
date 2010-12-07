@@ -4,7 +4,6 @@ make clean
 
 rm *.m4
 rm -rf *.cache
-rm bristolgui
 rm compile
 rm config.*
 rm configure
@@ -14,6 +13,6 @@ rm Makefile
 rm Makefile.in
 rm missing
 rm INSTALL
-rm Source/all/*.o
+
 
 
