@@ -13,10 +13,10 @@ int main(int argc, char **argv) {
 	bg_synth *pro10 = bg_synth_new(store, circuits, "pro10", "Prophet 10");
 	//gui setup
 	bg_gui *gui = bg_gui_new(&argc, &argv);
-	bg_gui_add_synth(gui, mini);
-	bg_gui_add_synth(gui, explorer);
-	bg_gui_add_synth(gui, pro5);
-	bg_gui_add_synth(gui, pro10);
+	bg_gui_add_synth(gui, mini, "mini.png");
+	bg_gui_add_synth(gui, explorer, "explorer.png");
+	bg_gui_add_synth(gui, pro5, "pro5.png");
+	bg_gui_add_synth(gui, pro10, "pro10.png");
 	//go
 	bg_gui_main(gui);
 	return 0;
