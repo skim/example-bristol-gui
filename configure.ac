@@ -1,0 +1,11 @@
+AC_INIT([bristolgui], [0.1])
+AC_PREREQ([2.59])
+AM_INIT_AUTOMAKE([bristolgui], [1.5])
+AM_PROG_CC_C_O
+
+PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.0])
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

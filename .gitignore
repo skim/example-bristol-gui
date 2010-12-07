@@ -1,1 +1,15 @@
 linux32
+.deps
+autom4te.cache
+missing
+install-sh
+depcomp
+configure
+Makefile
+Makefile.in
+aclocal.m4
+bristolgui
+compile
+config.log
+config.status
+*.o

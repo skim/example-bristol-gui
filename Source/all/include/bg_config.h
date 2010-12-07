@@ -1,7 +1,10 @@
 #ifndef BG_CONFIG_H_
 #define BG_CONFIG_H_
 
+#ifndef BG_PATH_DATA
 #define BG_PATH_DATA				"./Data/Gtk"
+#endif
+
 #define BG_TITLE 					"bristol-gui"
 #define BG_VERSION					"0.1"
 
