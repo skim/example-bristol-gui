@@ -3,6 +3,7 @@ linux32
 autom4te.cache
 missing
 install-sh
+INSTALL
 depcomp
 configure
 Makefile
