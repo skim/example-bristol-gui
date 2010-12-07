@@ -71,7 +71,7 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 		GtkWidget *image_title = gtk_image_new_from_file(bg_path_new(image_filename));
 		gtk_box_pack_end(GTK_BOX(box_title), image_title, FALSE, FALSE, BG_GUI_PADDING);
 	}
-	GtkWidget *label_title = gtk_label_new(g_strconcat(synth->category->name, " ", synth->name, NULL));
+	GtkWidget *label_title = gtk_label_new(synth->name);
 	gtkc_label_add_attribute(label_title, pango_attr_scale_new(BG_GUI_SCALE_SYNTH));
 	gtk_box_pack_end(GTK_BOX(box_title), label_title, FALSE, FALSE, BG_GUI_PADDING);
 	gtk_box_pack_start(GTK_BOX(vbox), box_title, FALSE, FALSE, BG_GUI_PADDING);
@@ -87,14 +87,14 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	gtk_widget_show_all(box_tab);
 	//profiles panel
 	GtkWidget *box_profiles = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(box_profiles), gtk_label_new("PROFILES"), FALSE, FALSE, BG_GUI_PADDING);
+	gtk_box_pack_start(GTK_BOX(box_profiles), gtk_label_new("TBD"), FALSE, FALSE, BG_GUI_PADDING);
 	//switch profiles panel
 	GtkWidget *switchbox_profiles = gtkc_switch_hbox_new("Profiles", BG_GUI_STOCK_SHOW, BG_GUI_STOCK_HIDE, box_profiles);
 	gtk_box_pack_start(GTK_BOX(vbox), switchbox_profiles, FALSE, FALSE, BG_GUI_PADDING);
 	gtk_box_pack_start(GTK_BOX(vbox), box_profiles, FALSE, FALSE, BG_GUI_PADDING);
 	//audio panel
 	GtkWidget *box_audio = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(box_audio), gtk_label_new("AUDIO PARAMETERS"), FALSE, FALSE, BG_GUI_PADDING);
+	gtk_box_pack_start(GTK_BOX(box_audio), gtk_label_new("TBD"), FALSE, FALSE, BG_GUI_PADDING);
 	//switch audio panel
 	GtkWidget *switchbox_audio = gtkc_switch_hbox_new("Audio Parameters", BG_GUI_STOCK_SHOW, BG_GUI_STOCK_HIDE, box_audio);
 	gtk_box_pack_start(GTK_BOX(vbox), switchbox_audio, FALSE, FALSE, BG_GUI_PADDING);
