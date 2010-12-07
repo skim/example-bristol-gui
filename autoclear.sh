@@ -1,5 +1,7 @@
 #!/bin/sh
 
+make clean
+
 rm *.m4
 rm -rf *.cache
 rm bristolgui

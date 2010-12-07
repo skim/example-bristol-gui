@@ -35,6 +35,18 @@ Contributions
 Synthesizer images and help texts are provided by Nick Copeland:
 http://bristol.sourceforge.net
 
+Installing
+----------
+
+Run:
+
+./autogen
+./configure
+./make 
+./make install
+
+Now start with bristolgui
+
 Current Version
 ---------------
 
