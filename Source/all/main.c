@@ -8,9 +8,11 @@ int main(int argc, char **argv) {
 	bg_category *moog = bg_category_new(store, "moog", "Moog");
 	bg_synth *mini = bg_synth_new(store, moog, "mini", "Mini");
 	bg_synth *explorer = bg_synth_new(store, moog, "explorer", "Voyager");
+
 	bg_category *circuits = bg_category_new(store, "circuits", "Sequential Circuits");
 	bg_synth *pro5 = bg_synth_new(store, circuits, "pro5", "Prophet 5");
 	bg_synth *pro10 = bg_synth_new(store, circuits, "pro10", "Prophet 10");
+
 	//gui setup
 	bg_gui *gui = bg_gui_new(&argc, &argv);
 	bg_gui_add_synth(gui, mini, "mini.png");

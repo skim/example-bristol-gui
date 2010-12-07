@@ -1,33 +1,33 @@
-README for bristol-gui
+
 
 About
 -----
 
-Graphical user interface for the bristol synthesizer emulation 
-(http://bristol.sourceforge.net, author: Nick Copeland). Written in 
-ANSI-C, using the GTK. bristol-gui is Free Software, see the 
-"License" section.
+bristolgui is a graphical user interface (GUI)for the bristol 
+synthesizer emulation (http://bristol.sourceforge.net, 
+author: Nick Copeland). Written in ANSI-C, using the GTK. 
+bristolgui is Free Software, see the "License" section.
 
-This software compiles and runs only on Linux and BSD systems.
+bristolgui runs only on Linux and BSD systems.
+
 It's purpose is to provide a graphical user interface for the 
-bristol synthesizer emulation. Since there is no equivalent to JACK
-or ALSA on MS Windows based operating systems, porting would make
-no sense at all.
+Since there is no equivalent to JACK or ALSA on MS Windows based 
+operating systems, porting would make no sense at all.
 
 License
 -------
 
-bristol-gui is free software: you can redistribute it and/or modify
+bristolgui is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License.
 
-bristol-gui is distributed in the hope that it will be useful,
+bristolgui is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with bristol-gui.  If not, see <http://www.gnu.org/licenses/>.
+along with bristolgui.  If not, see <http://www.gnu.org/licenses/>.
 
 Contributions
 -------------
@@ -38,25 +38,22 @@ http://bristol.sourceforge.net
 Installing
 ----------
 
-Run:
+To compile and install, run:
 
-./autogen
-./configure
+./autogen.sh
+./configure.s
 ./make 
 ./make install
 
-Now start with bristolgui
+To remove the clutter from autotools, run:
 
-Current Version
----------------
+./autoclear.sh
 
-The current version is v0.1, which means it's a prototype. There is no
-Makefile yet, but if you have installed the GTK+ dev libraries you 
-should be able to import the head branch into eclipse/CDT and compile. 
+You can also import this folder as an Eclipse-CDT Project.
 
 Contact
 -------
-bristol-gui is copyrighted (except for the included contributions, see 
+bristolgui is copyrighted (except for the included contributions, see 
 the "Contributions" section), written and maintained by 
 voigt.m@gmail.com
 

@@ -13,5 +13,7 @@
 #define BG_GUI_PADDING				4
 #define BG_GUI_SCALE_CATEGORY		1.5
 #define BG_GUI_SCALE_SYNTH			2
+#define BG_GUI_STOCK_HIDE			"gtk-go-up"
+#define BG_GUI_STOCK_SHOW			"gtk-go-down"
 
 #endif /* BG_CONFIG_H_ */
