@@ -1,10 +1,19 @@
 #ifndef BG_GUI_H_
 #define BG_GUI_H_
 
+#include "bg_config.h"
+#include "bg_data.h"
 #include <gtk/gtk.h>
 
-#define BG_WINDOW_ROOT_TITLE "bristol-gui"
+typedef struct {
+	GtkWidget *window_root;
+	GtkWidget *notebook_categories;
+	GHashTable *boxes_category;
+} bg_gui;
 
-GtkWidget* bg_window_new();
+bg_gui* bg_gui_new(int *argc, char ***argv);
+void 	bg_gui_add_category(bg_gui *gui, bg_category *category);
+void 	bg_gui_add_synth(bg_gui *gui, bg_synth *synth);
+void 	bg_gui_main(bg_gui *gui);
 
 #endif /* BG_GUI_H_ */
