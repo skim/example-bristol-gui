@@ -1,4 +1,6 @@
 #include "bg_gui.h"
+#include "bg_gui_common.h"
+#include "bg_common.h"
 
 static gboolean on_window_close(GtkWidget *window, gpointer data) {
 	g_debug("exiting");
@@ -39,8 +41,7 @@ void bg_gui_add_category(bg_gui *gui, bg_category *category) {
 	//title
 	GtkWidget *box_title = gtk_hbox_new(FALSE, 0);
 	GtkWidget *label_title = gtk_label_new(g_strconcat(category->name, " Synthesizers", NULL));
-	gtk_label_set_attributes(GTK_LABEL(label_title), pango_attr_list_new());
-	pango_attr_list_insert(gtk_label_get_attributes(GTK_LABEL(label_title)), pango_attr_scale_new(BG_GUI_SCALE_CATEGORY));
+	bg_label_add_attribute(label_title, pango_attr_scale_new(BG_GUI_SCALE_CATEGORY));
 	gtk_box_pack_start(GTK_BOX(box_title), label_title, FALSE, FALSE, BG_GUI_PADDING);
 	gtk_box_pack_start(GTK_BOX(vbox), box_title, FALSE, FALSE, BG_GUI_PADDING);
 	//synths
@@ -67,31 +68,19 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	//title
 	GtkWidget *box_title = gtk_hbox_new(FALSE, 0);
 	if (image_filename != NULL) {
-		GtkWidget *image_title = gtk_image_new_from_file(g_strconcat(BG_PATH_DATA, "/", image_filename, NULL));
+		GtkWidget *image_title = gtk_image_new_from_file(bg_path_new(image_filename));
 		gtk_box_pack_end(GTK_BOX(box_title), image_title, FALSE, FALSE, BG_GUI_PADDING);
 	}
 	GtkWidget *label_title = gtk_label_new(g_strconcat(synth->category->name, " ", synth->name, NULL));
-	gtk_label_set_attributes(GTK_LABEL(label_title), pango_attr_list_new());
-	pango_attr_list_insert(gtk_label_get_attributes(GTK_LABEL(label_title)), pango_attr_scale_new(BG_GUI_SCALE_SYNTH));
+	bg_label_add_attribute(label_title, pango_attr_scale_new(BG_GUI_SCALE_SYNTH));
 	gtk_box_pack_end(GTK_BOX(box_title), label_title, FALSE, FALSE, BG_GUI_PADDING);
-	gtk_box_pack_end(GTK_BOX(vbox), box_title, FALSE, FALSE, BG_GUI_PADDING);
+	gtk_box_pack_start(GTK_BOX(vbox), box_title, FALSE, FALSE, BG_GUI_PADDING);
 	//tab
 	GtkWidget *box_tab = gtk_hbox_new(FALSE, 4);
 	//add a resized image to the tab label
 	if (image_filename != NULL && BG_GUI_SHOW_TAB_IMAGES) {
-		GError *error = NULL;
-		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(g_strconcat(BG_PATH_DATA, "/", image_filename, NULL), &error);
-		if (error == NULL) {
-			//scale with fixed AR
-			double scale = gdk_pixbuf_get_height(pixbuf) / 16;
-			pixbuf = gdk_pixbuf_scale_simple(pixbuf, gdk_pixbuf_get_width(pixbuf) / scale, 16, GDK_INTERP_BILINEAR);
-			GtkWidget *image_tab = gtk_image_new_from_pixbuf(pixbuf);
-			gtk_box_pack_start(GTK_BOX(box_tab), image_tab, FALSE, FALSE, 0);
-		} else {
-			g_warning("error loading image: %s: %s", image_filename, error->message);
-			g_free(pixbuf);
-			g_free(error);
-		}
+		GtkWidget *image_tab = bg_new_scaled_image_from_file(bg_path_new(image_filename), BG_GUI_SCALE_TAB_IMAGES);
+		gtk_box_pack_start(GTK_BOX(box_tab), image_tab, FALSE, FALSE, 0);
 	}
 	GtkWidget *label_tab = gtk_label_new(synth->name);
 	gtk_box_pack_start(GTK_BOX(box_tab), label_tab, FALSE, FALSE, 0);
