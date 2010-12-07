@@ -1,9 +1,9 @@
 #include "bg_gui.h"
-#include "bg_gui_common.h"
-#include "bg_common.h"
+#include "bg_common_gui.h"
+#include "bg_common_basic.h"
 
 static gboolean on_window_close(GtkWidget *window, gpointer data) {
-	g_debug("exiting");
+	g_debug("leaving mainloop");
 	gtk_main_quit();
 	return TRUE;
 }
@@ -100,6 +100,7 @@ bg_gui* bg_gui_new(int *argc, char ***argv) {
 
 void bg_gui_main(bg_gui *gui) {
 	gtk_widget_show_all(gui->window_root);
+	g_debug("entering mainloop");
 	gtk_main();
 }
 

@@ -1,5 +1,5 @@
 #include "bg_config.h"
-#include "bg_gui_common.h"
+#include "bg_common_gui.h"
 
 GtkWidget* bg_new_scaled_image_from_file(const char *filename, double scale) {
 	GtkWidget *image = NULL;

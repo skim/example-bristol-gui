@@ -1,4 +1,4 @@
-#include "bg_common.h"
+#include "bg_common_basic.h"
 #include "bg_config.h"
 #include "glib.h"
 
