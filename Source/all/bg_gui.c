@@ -50,7 +50,9 @@ void bg_gui_add_category(bg_gui *gui, bg_category *category) {
 	gtk_box_pack_start(GTK_BOX(box_synths), notebook_synths, TRUE, TRUE, BG_GUI_PADDING);
 	gtk_box_pack_start(GTK_BOX(vbox), box_synths, TRUE, TRUE, BG_GUI_PADDING);
 	//add page
-	gtk_notebook_append_page(GTK_NOTEBOOK(gui->notebook_categories), vbox, gtk_label_new(category->name));
+	GtkWidget *label_tab = gtk_label_new(category->name);
+	gtk_misc_set_alignment(GTK_MISC(label_tab), 0, 0.5);
+	gtk_notebook_append_page(GTK_NOTEBOOK(gui->notebook_categories), vbox, label_tab);
 	//store
 	g_hash_table_insert(gui->notebooks_synths, category->id, notebook_synths);
 	g_debug("added gui for category: %s", category->id);
