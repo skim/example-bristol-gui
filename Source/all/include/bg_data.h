@@ -1,35 +1,38 @@
 #ifndef BG_DATA_H_
 #define BG_DATA_H_
 
+#include "bg_common_basic.h"
 #include <glib.h>
 
 
 typedef struct {
 	char *id;
 	char *name;
-} bg_category;
+} BgCategory;
 
 typedef struct {
 	char *id;
 	char *name;
-} bg_synth_params;
+} BgProfile;
 
 typedef struct {
 	char *id;
 	char *name;
-	bg_category *category;
-	GList *params;
-} bg_synth;
+	char *image_filename;
+	BgCategory *category;
+	BgProfile *profile;
+} BgSynth;
 
 typedef struct {
 	GList *categories;
 	GList *synths;
-	GList *synth_params;
-} bg_store;
+	GListProxy *profiles;
+} BgStore;
 
-bg_store*			bg_store_new();
-bg_category* 		bg_category_new(bg_store *store, const char *id, const char *name);
-bg_synth_params*	bg_synth_params_new(bg_store *store, const char *id, const char *name);
-bg_synth*			bg_synth_new(bg_store *store, bg_category *category, const char *id, const char *name);
+
+BgStore*			bg_store_new();
+BgCategory* 		bg_category_new(BgStore *store, const char *id, const char *name);
+BgProfile*			bg_profile_new(BgStore *store, const char *id, const char *name);
+BgSynth*			bg_synth_new(BgStore *store, BgCategory *category, const char *id, const char *name, const char *image_filename);
 
 #endif /* BG_DATA_H_ */

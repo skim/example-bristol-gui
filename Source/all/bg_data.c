@@ -1,25 +1,29 @@
 #include "bg_data.h"
+#include "bg_config.h"
 
 typedef struct {
 	char *id;
+	char *name;
 } bg_id;
 
 static int bg_list_compare_id(gconstpointer a, gconstpointer b) {
-	bg_id *id_a = (bg_id*)a;
-	bg_id *id_b = (bg_id*)b;
+	bg_id *id_a = (bg_id*) a;
+	bg_id *id_b = (bg_id*) b;
 	return g_strcmp0(id_a->id, id_b->id);
 }
 
-bg_store* bg_store_new() {
-	bg_store *store = g_new(bg_store, 1);
+
+BgStore* bg_store_new() {
+	BgStore *store = g_new(BgStore, 1);
 	store->categories = NULL;
 	store->synths = NULL;
-	store->synth_params = NULL;
+	store->profiles = g_list_proxy_new();
+	bg_profile_new(store, BG_PROFILE_DEFAULT_ID, BG_PROFILE_DEFAULT_NAME);
 	return store;
 }
 
-bg_category* bg_category_new(bg_store *store, const char *id, const char *name) {
-	bg_category *category = g_new(bg_category, 1);
+BgCategory* bg_category_new(BgStore *store, const char *id, const char *name) {
+	BgCategory *category = g_new(BgCategory, 1);
 	category->id = g_strdup(id);
 	category->name = g_strdup(name);
 	g_assert(g_list_find_custom(store->categories, category, bg_list_compare_id) == NULL);
@@ -27,22 +31,25 @@ bg_category* bg_category_new(bg_store *store, const char *id, const char *name) 
 	return category;
 }
 
-bg_synth_params* bg_synth_params_new(bg_store *store, const char *id, const char *name) {
-	bg_synth_params *params = g_new(bg_synth_params, 1);
+BgProfile* bg_profile_new(BgStore *store, const char *id, const char *name) {
+	BgProfile *params = g_new(BgProfile, 1);
 	params->id = g_strdup(id);
 	params->name = g_strdup(name);
-	g_assert(g_list_find_custom(store->synth_params, params, bg_list_compare_id) == NULL);
-	store->synth_params = g_list_append(store->synth_params, params);
+	g_assert(g_list_find_custom(store->profiles->list, params, bg_list_compare_id) == NULL);
+	store->profiles->list = g_list_append(store->profiles->list, params);
 	return params;
 }
 
-bg_synth* bg_synth_new(bg_store *store, bg_category *category, const char *id, const char *name) {
-	bg_synth *synth = g_new(bg_synth, 1);
+BgSynth* bg_synth_new(BgStore *store, BgCategory *category, const char *id, const char *name, const char *image_filename) {
+	BgSynth *synth = g_new(BgSynth, 1);
 	synth->id = g_strdup(id);
 	synth->name = g_strdup(name);
 	synth->category = category;
+	if (image_filename != NULL) {
+		synth->image_filename = g_strdup(image_filename);
+	}
+	synth->profile = (BgProfile*) g_list_first(store->profiles->list);
 	g_assert(g_list_find_custom(store->synths, synth, bg_list_compare_id) == NULL);
-	store->synths= g_list_append(store->synths, synth);
+	store->synths = g_list_append(store->synths, synth);
 	return synth;
 }
-

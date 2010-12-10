@@ -1,4 +1,5 @@
-#include "bg_gui.h"
+#include "bg_gui_window.h"
+#include "bg_gui_profile.h"
 #include "bg_common_gui.h"
 #include "bg_common_basic.h"
 
@@ -35,7 +36,7 @@ static void bg_gui_add_window_root(bg_gui *gui) {
 	gui->notebook_categories = notebook_categories;
 }
 
-void bg_gui_add_category(bg_gui *gui, bg_category *category) {
+void bg_gui_add_category(bg_gui *gui, BgCategory *category) {
 	g_assert(g_hash_table_lookup(gui->notebooks_synths, category->id) == NULL);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 	//title
@@ -59,7 +60,7 @@ void bg_gui_add_category(bg_gui *gui, bg_category *category) {
 	g_debug("added gui for category: %s", category->id);
 }
 
-void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) {
+void bg_gui_add_synth(bg_gui *gui, BgSynth *synth) {
 	if (g_hash_table_lookup(gui->notebooks_synths, synth->category->id) == NULL) {
 		bg_gui_add_category(gui, synth->category);
 	}
@@ -67,8 +68,8 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 	//title
 	GtkWidget *box_title = gtk_hbox_new(FALSE, 0);
-	if (image_filename != NULL) {
-		GtkWidget *image_title = gtk_image_new_from_file(bg_path_new(image_filename));
+	if (synth->image_filename != NULL) {
+		GtkWidget *image_title = gtk_image_new_from_file(bg_path_new(synth->image_filename));
 		gtk_box_pack_end(GTK_BOX(box_title), image_title, FALSE, FALSE, BG_GUI_PADDING);
 	}
 	GtkWidget *label_title = gtk_label_new(synth->name);
@@ -78,16 +79,15 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	//tab
 	GtkWidget *box_tab = gtk_hbox_new(FALSE, 4);
 	//resized image for the tab label
-	if (image_filename != NULL && BG_GUI_SHOW_TAB_IMAGES) {
-		GtkWidget *image_tab = gtkc_image_new_from_file_scaled(bg_path_new(image_filename), BG_GUI_SCALE_TAB_IMAGES);
+	if (synth->image_filename != NULL && BG_GUI_SHOW_TAB_IMAGES) {
+		GtkWidget *image_tab = gtkc_image_new_from_file_scaled(bg_path_new(synth->image_filename), BG_GUI_SCALE_TAB_IMAGES);
 		gtk_box_pack_start(GTK_BOX(box_tab), image_tab, FALSE, FALSE, 0);
 	}
 	GtkWidget *label_tab = gtk_label_new(synth->name);
 	gtk_box_pack_start(GTK_BOX(box_tab), label_tab, FALSE, FALSE, 0);
 	gtk_widget_show_all(box_tab);
 	//profiles panel
-	GtkWidget *box_profiles = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(box_profiles), gtk_label_new("TBD"), FALSE, FALSE, BG_GUI_PADDING);
+	GtkWidget *box_profiles = bg_gui_profiles_box_new(gui->store, gui->window_root);
 	//switch profiles panel
 	GtkWidget *switchbox_profiles = gtkc_switch_hbox_new("Profiles", BG_GUI_STOCK_SHOW, BG_GUI_STOCK_HIDE, box_profiles);
 	gtk_box_pack_start(GTK_BOX(vbox), switchbox_profiles, FALSE, FALSE, BG_GUI_PADDING);
@@ -104,11 +104,20 @@ void bg_gui_add_synth(bg_gui *gui, bg_synth *synth, const char *image_filename) 
 	g_debug("added gui for synth: %s", synth->id);
 }
 
-bg_gui* bg_gui_new(int *argc, char ***argv) {
+static void bg_gui_synth_fill(gpointer object, gpointer data) {
+	BgSynth *synth = (BgSynth*) object;
+	bg_gui *gui = (bg_gui*) data;
+	bg_gui_add_synth(gui, synth);
+}
+
+bg_gui* bg_gui_new(int *argc, char ***argv, BgStore *store) {
 	gtk_init(argc, argv);
 	bg_gui *gui = g_new(bg_gui, 1);
+	gui->store = store;
 	gui->notebooks_synths = g_hash_table_new(g_str_hash, g_str_equal);
 	bg_gui_add_window_root(gui);
+	g_debug("data path: %s", BG_PATH_DATA);
+	g_list_foreach(store->synths, bg_gui_synth_fill, gui);
 	return gui;
 }
 

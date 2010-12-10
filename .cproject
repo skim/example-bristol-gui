@@ -70,7 +70,7 @@
 									<listOptionValue builtIn="false" value="glib-2.0"/>
 								</option>
 								<option id="gnu.c.link.option.ldflags.1684970495" name="Linker flags" superClass="gnu.c.link.option.ldflags" value="-rdynamic" valueType="string"/>
-								<option id="gnu.c.link.option.paths.1880480780" name="Library search path (-L)" superClass="gnu.c.link.option.paths" valueType="libPaths"/>
+								<option id="gnu.c.link.option.paths.1880480780" name="Library search path (-L)" superClass="gnu.c.link.option.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.973880868" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -79,8 +79,6 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.692676980" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.390716414" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug">
 								<option id="gnu.both.asm.option.include.paths.484248151" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="../bristol-gui/Source/include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bristol-gui/libraries/linux32/include/lcs-c}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gio-unix-2.0"/>
