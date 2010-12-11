@@ -17,11 +17,9 @@ BgOptionChoiceList* bg_synth_choices_new() {
 
 BgOptionChoiceList* bg_general_choices_new() {
 	BgOptionChoiceList *list = bg_option_choice_list_new();
-	bg_option_choice_list_add(list, bg_int_option_new("channel", "Midi Channel", 1));
-	bg_option_choice_list_add(list, bg_int_option_new("rate", "Sample Rate", 44100));
-	bg_option_choice_list_add(list, bg_emptry_option_new("mono", "Mono Only", "mono"));
+	bg_option_choice_list_add(list, bg_int_option_new("channel", "Midi Channel", 1), -1);
+	bg_option_choice_list_add(list, bg_int_option_new("rate", "Sample Rate", 44100), -1);
+	bg_option_choice_list_add(list, bg_empty_option_new("mono", "Mono Only", "mono"), -1);
 	return list;
 }
-
-
 
