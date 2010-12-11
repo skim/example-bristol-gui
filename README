@@ -1,9 +1,7 @@
-
-
 About
 -----
 
-bristolgui is a graphical user interface (GUI)for the bristol 
+bristolgui is a graphical user interface for the bristol 
 synthesizer emulation (http://bristol.sourceforge.net, 
 author: Nick Copeland). Written in ANSI-C, using the GTK. 
 bristolgui is Free Software, see the "License" section.
@@ -47,7 +45,7 @@ To compile and install, run:
 
 To remove the clutter from autotools, run:
 
-./autoclear.sh
+./autoclean.sh
 
 You can also import this folder as an Eclipse-CDT Project.
 
