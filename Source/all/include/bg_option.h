@@ -63,7 +63,7 @@ BgOptionChoiceList*	bg_option_choice_list_new();
 void				bg_option_choice_list_add(BgOptionChoiceList *list, BgOption *option, int index);
 void				bg_option_choice_list_add_all(BgOptionChoiceList *list, BgOptionChoiceList *list_to_add);
 void				bg_option_choice_list_remove(BgOptionChoiceList *list, int index);
-BgOption*			bg_option_choide_list_get(BgOptionChoiceList *list, int index);
+BgOption*			bg_option_choice_list_get(BgOptionChoiceList *list, int index);
 
 BgOptionList* 	bg_option_list_new();
 void 			bg_option_list_add(BgOptionList *list, BgOption *option);

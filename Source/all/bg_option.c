@@ -90,10 +90,10 @@ void bg_option_choice_list_add_all(BgOptionChoiceList *list, BgOptionChoiceList 
 }
 
 void bg_option_choice_list_remove(BgOptionChoiceList *list, int index) {
-	list->choices = g_list_remove(list->choices, bg_option_choide_list_get(list, index));
+	list->choices = g_list_remove(list->choices, bg_option_choice_list_get(list, index));
 }
 
-BgOption* bg_option_choide_list_get(BgOptionChoiceList *list, int index) {
+BgOption* bg_option_choice_list_get(BgOptionChoiceList *list, int index) {
 	return (BgOption*) g_list_nth_data(list->choices, index);
 }
 

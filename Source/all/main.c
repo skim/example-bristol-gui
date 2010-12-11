@@ -12,12 +12,12 @@ void showcase_options() {
 
 	//choose engine & synth
 	BgOptionList *options = bg_option_list_new();
-	bg_option_list_add(options, bg_option_choide_list_get(engines, 0));
-	bg_option_list_add(options, bg_option_choide_list_get(synths, 1));
+	bg_option_list_add(options, bg_option_choice_list_get(engines, 0));
+	bg_option_list_add(options, bg_option_choice_list_get(synths, 1));
 
 	//choose some options more
-	bg_option_list_add(options, bg_option_choide_list_get(general, 0));
-	bg_option_list_add(options, bg_option_choide_list_get(general, 1));
+	bg_option_list_add(options, bg_option_choice_list_get(general, 0));
+	bg_option_list_add(options, bg_option_choice_list_get(general, 1));
 
 	//reconfigure some
 	bg_int_option_set(bg_option_list_get(options, "channel"), 4);
