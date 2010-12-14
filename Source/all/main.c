@@ -1,35 +1,10 @@
 #include "bg_common_basic.h"
 #include "bg_config.h"
-#include "bg_option.h"
-#include "bg_options_general.h"
+#include "lgtk.h"
 #include <gtk/gtk.h>
 
-void showcase_options() {
-	//get choices from defaults
-	BgOptionChoiceList *engines = bg_engine_choices_new();
-	BgOptionChoiceList *synths =  bg_synth_choices_new();
-	BgOptionChoiceList *general = bg_general_choices_new();
-
-	//choose engine & synth
-	BgOptionList *options = bg_option_list_new();
-	bg_option_list_add(options, bg_option_choice_list_get(engines, 0));
-	bg_option_list_add(options, bg_option_choice_list_get(synths, 1));
-
-	//choose some options more
-	bg_option_list_add(options, bg_option_choice_list_get(general, 0));
-	bg_option_list_add(options, bg_option_choice_list_get(general, 1));
-
-	//reconfigure some
-	bg_int_option_set(bg_option_list_get(options, "channel"), 4);
-	bg_int_option_set(bg_option_list_get(options, "rate"), 96000);
-
-	//run
-	BgCommand *startBristol = bg_command_new("startBristol", options);
-	g_debug("%s", startBristol->command);
-}
 
 int main(int argc, char **argv) {
-	showcase_options();
 	gtk_init(&argc, &argv);
 	GtkBuilder *builder = gtk_builder_new();
 	GError *error = NULL;
@@ -39,6 +14,10 @@ int main(int argc, char **argv) {
 		return 1;
 	} else {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
+		lgtk_builder_signal_switch_connect(builder, "switch_profile", "box_profile");
+		lgtk_builder_signal_switch_connect(builder, "switch_synth", "box_synth");
+		lgtk_builder_signal_switch_connect(builder, "switch_options", "box_options");
+		lgtk_builder_signal_switch_connect(builder, "switch_runtimes", "box_runtimes");
 		gtk_widget_show_all(window);
 		gtk_main();
 	}
