@@ -1,15 +1,11 @@
-#include "bg_common_basic.h"
+#include "bg_common.h"
 #include "bg_config.h"
-#include "bg_data.h"
 #include "bg_gui.h"
-#include "lg.h"
-#include "lgtk.h"
+#include "bg_session.h"
 #include <gtk/gtk.h>
 
-int main(int argc, char **argv) {
 
-	BgData *data = bg_data_new();
-	bg_data_add_profile(data, bg_profile_new("Empty"));
+int main(int argc, char **argv) {
 
 	gtk_init(&argc, &argv);
 	GtkBuilder *builder = gtk_builder_new();
@@ -20,15 +16,24 @@ int main(int argc, char **argv) {
 		return 1;
 	} else {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
-		lgtk_builder_signal_switch_connect(builder, "switch_profile", "box_profile");
-		lgtk_builder_signal_switch_connect(builder, "switch_synth", "box_synth");
-		lgtk_builder_signal_switch_connect(builder, "switch_options", "box_options");
-		lgtk_builder_signal_switch_connect(builder, "switch_runtimes", "box_runtimes");
 
-		GtkComboBox *combo_profile = GTK_COMBO_BOX(gtk_builder_get_object(builder, "combo_profile"));
-		GtkLabel *label_profile = GTK_LABEL(gtk_builder_get_object(builder, "label_profile"));
-		bg_combo_prepare(combo_profile);
-		bg_combo_set_profiles(combo_profile, label_profile, data);
+		BgProfile *profile = bg_profile_new("Default");
+		BgSession *session = bg_session_new(profile);
+
+		bg_gui_prepare_switch(builder, "profile");
+
+		bg_gui_prepare_switch(builder, "synth");
+		bg_gui_prepare_switch(builder, "options");
+		bg_gui_prepare_switch(builder, "runtimes");
+
+
+		bg_gui_prepare_check(builder, "engine", TRUE);
+
+		bg_gui_prepare_adjust(builder, "midichannel", 1);
+		bg_gui_prepare_check(builder, "midichannel", FALSE);
+
+		bg_gui_prepare_adjust(builder, "samplerate", 44100);
+		bg_gui_prepare_check(builder, "samplerate", FALSE);
 
 		gtk_widget_show_all(window);
 		gtk_main();
