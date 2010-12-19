@@ -1,5 +1,6 @@
 #include "bg_gui.h"
 #include "bg_config.h"
+#include "stdlib.h"
 
 static void bg_gui_switched(GtkButton *button, gpointer data) {
 	BgGuiPayload *payload = (BgGuiPayload*) data;
@@ -37,8 +38,24 @@ void bg_gui_checkbox_prepare(GtkBuilder *builder, const char *id, gboolean activ
 	bg_gui_toggled(check, payload);
 }
 
-void bg_gui_combobox_prepare(GtkBuilder *builder, const char *id) {
-
+void bg_gui_combobox_prepare(GtkBuilder *builder, const char *id, BgEntryList *entries, int selected) {
+	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
+	GtkListStore *store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+	gtk_combo_box_set_model(combo, GTK_TREE_MODEL(store));
+	GtkTreeIter iter;
+	int i;
+	for (i = 0; i < g_list_length(entries->list); i++) {
+		BgEntry *entry = bg_entry_list_nth(entries, i);
+		gtk_list_store_append(store, &iter);
+		gtk_list_store_set(store, &iter, 0, entry->name, 1, entry->value, -1);
+	}
+	GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+	gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combo), renderer, TRUE);
+	gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo), renderer, "text", 0, NULL);
+	if (selected == -1) {
+		selected = 0;
+	}
+	gtk_combo_box_set_active(combo, selected);
 }
 
 void bg_gui_adjust_set_value(GtkBuilder *builder, const char *id, double value) {
