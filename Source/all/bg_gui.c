@@ -83,7 +83,7 @@ int bg_gui_combobox_get_index(GtkBuilder *builder, const char *id, const char *v
 void bg_gui_combobox_set_active_value(GtkBuilder *builder, const char *id, const char *value) {
 	int index = bg_gui_combobox_get_index(builder, id, value);
 	if (index != -1) {
-		g_debug("setting active %d on %s", index, bg_gui_name(id, "combo"));
+		g_debug("setting active on %s to %d (%s)", bg_gui_name(id, "combo"), index, value);
 		gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo"))), index);
 	} else {
 		g_warning("no combo entry for value: %s", value);
