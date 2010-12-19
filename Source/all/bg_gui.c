@@ -2,7 +2,7 @@
 #include "bg_config.h"
 #include "stdlib.h"
 
-static void bg_gui_switched(GtkButton *button, gpointer data) {
+static void bg_gui_button_switched(GtkButton *button, gpointer data) {
 	BgGuiPayload *payload = (BgGuiPayload*) data;
 	GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(payload->builder, bg_gui_name(payload->id, "box")));
 	gtk_widget_set_visible(box, !gtk_widget_get_visible(box));
@@ -11,7 +11,7 @@ static void bg_gui_switched(GtkButton *button, gpointer data) {
 	gtk_button_set_image(button, image);
 }
 
-static void bg_gui_toggled(GtkCheckButton *check, gpointer data) {
+static void bg_gui_checkbox_switched(GtkCheckButton *check, gpointer data) {
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(check));
 	BgGuiPayload *load = (BgGuiPayload*) data;
 	gtk_widget_set_sensitive(label, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)));
@@ -30,15 +30,15 @@ BgGuiPayload *bg_gui_payload_new(GtkBuilder *builder, const char *id) {
 	return load;
 }
 
-void bg_gui_checkbox_prepare(GtkBuilder *builder, const char *id, gboolean active) {
+void bg_gui_checkbox_switch_init(GtkBuilder *builder, const char *id, gboolean active) {
 	GtkCheckButton *check = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
 	BgGuiPayload *payload = bg_gui_payload_new(builder, id);
-	g_signal_connect(check, "toggled", G_CALLBACK(bg_gui_toggled), payload);
+	g_signal_connect(check, "toggled", G_CALLBACK(bg_gui_checkbox_switched), payload);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), active);
-	bg_gui_toggled(check, payload);
+	bg_gui_checkbox_switched(check, payload);
 }
 
-void bg_gui_combobox_prepare(GtkBuilder *builder, const char *id, BgEntryList *entries, int selected) {
+void bg_gui_combobox_init(GtkBuilder *builder, const char *id, BgEntryList *entries, int selected) {
 	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
 	GtkListStore *store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
 	gtk_combo_box_set_model(combo, GTK_TREE_MODEL(store));
@@ -112,8 +112,8 @@ void bg_gui_adjust_set_value(GtkBuilder *builder, const char *id, double value) 
 	gtk_adjustment_set_value(adjust, value);
 }
 
-void bg_gui_switch_prepare(GtkBuilder *builder, const char *id) {
+void bg_gui_button_switch_prepare(GtkBuilder *builder, const char *id) {
 	GtkButton *button = GTK_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "switch")));
 	BgGuiPayload *payload = bg_gui_payload_new(builder, id);
-	g_signal_connect(button, "clicked", G_CALLBACK(bg_gui_switched), payload);
+	g_signal_connect(button, "clicked", G_CALLBACK(bg_gui_button_switched), payload);
 }

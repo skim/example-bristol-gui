@@ -20,18 +20,18 @@ int main(int argc, char **argv) {
 		BgProfile *profile = bg_profile_new("Default");
 		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "alsa"));
 
-		bg_gui_switch_prepare(builder, "profile");
+		bg_gui_button_switch_prepare(builder, "profile");
 
-		bg_gui_switch_prepare(builder, "synth");
-		bg_gui_switch_prepare(builder, "options");
-		bg_gui_switch_prepare(builder, "runtimes");
+		bg_gui_button_switch_prepare(builder, "synth");
+		bg_gui_button_switch_prepare(builder, "options");
+		bg_gui_button_switch_prepare(builder, "runtimes");
 
 		BgEntryList *engines = bg_entry_list_new();
 		bg_entry_list_add_new(engines, "JACK", "jack");
 		bg_entry_list_add_new(engines, "ALSA", "alsa");
 		bg_entry_list_add_new(engines, "OSS", "oss");
-		bg_gui_combobox_prepare(builder, "engine", engines, 0);
-		bg_gui_checkbox_prepare(builder, "engine", FALSE);
+		bg_gui_combobox_init(builder, "engine", engines, 0);
+		bg_gui_checkbox_switch_init(builder, "engine", FALSE);
 
 		BgOption *option_engine = bg_profile_get_option(profile, "engine");
 		if (option_engine != NULL) {
@@ -39,10 +39,10 @@ int main(int argc, char **argv) {
 		}
 
 		bg_gui_adjust_set_value(builder, "midichannel", 1);
-		bg_gui_checkbox_prepare(builder, "midichannel", FALSE);
+		bg_gui_checkbox_switch_init(builder, "midichannel", FALSE);
 
 		bg_gui_adjust_set_value(builder, "samplerate", 44100);
-		bg_gui_checkbox_prepare(builder, "samplerate", FALSE);
+		bg_gui_checkbox_switch_init(builder, "samplerate", FALSE);
 
 		gtk_widget_show_all(window);
 		gtk_main();
