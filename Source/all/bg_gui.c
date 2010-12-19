@@ -58,6 +58,55 @@ void bg_gui_combobox_prepare(GtkBuilder *builder, const char *id, BgEntryList *e
 	gtk_combo_box_set_active(combo, selected);
 }
 
+int bg_gui_combobox_get_index(GtkBuilder *builder, const char *id, const char *value) {
+	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
+	GtkTreeModel *store = gtk_combo_box_get_model(combo);
+	GtkTreeIter iter;
+	int row = 0;
+	gboolean valid = gtk_tree_model_get_iter_first(store, &iter);
+	while (valid) {
+		char *name;
+		char *_value;
+		gtk_tree_model_get(store, &iter, 0, &name, 1, &_value, -1);
+		if (g_str_equal(_value, value)) {
+			return row;
+		} else {
+			g_free(name);
+			g_free(_value);
+			row++;
+			valid = gtk_tree_model_iter_next(store, &iter);
+		}
+	}
+	return -1;
+}
+
+void bg_gui_combobox_set_active_value(GtkBuilder *builder, const char *id, const char *value) {
+	int index = bg_gui_combobox_get_index(builder, id, value);
+	if (index != -1) {
+		g_debug("setting active %d on %s", index, bg_gui_name(id, "combo"));
+		gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo"))), index);
+	} else {
+		g_warning("no combo entry for value: %s", value);
+	}
+}
+
+const char* bg_gui_combobox_get_active_value(GtkBuilder *builder, const char *id) {
+	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
+	GtkTreeModel *store = gtk_combo_box_get_model(combo);
+	GtkTreeIter iter;
+	if (gtk_combo_box_get_active_iter(combo, &iter)) {
+		char *_name;
+		char *value = NULL;
+		gtk_tree_model_get(store, &iter, 0, &_name, 1, value, -1);
+		g_free(_name);
+		return g_strdup(value);
+
+	} else {
+		return NULL;
+	}
+
+}
+
 void bg_gui_adjust_set_value(GtkBuilder *builder, const char *id, double value) {
 	GtkAdjustment *adjust = GTK_ADJUSTMENT(gtk_builder_get_object(builder, bg_gui_name(id, "adjust")));
 	gtk_adjustment_set_value(adjust, value);

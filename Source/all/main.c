@@ -17,6 +17,9 @@ int main(int argc, char **argv) {
 	} else {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
 
+		BgProfile *profile = bg_profile_new("Default");
+		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "alsa"));
+
 		bg_gui_switch_prepare(builder, "profile");
 
 		bg_gui_switch_prepare(builder, "synth");
@@ -28,7 +31,12 @@ int main(int argc, char **argv) {
 		bg_entry_list_add_new(engines, "ALSA", "alsa");
 		bg_entry_list_add_new(engines, "OSS", "oss");
 		bg_gui_combobox_prepare(builder, "engine", engines, 0);
-		bg_gui_checkbox_prepare(builder, "engine", TRUE);
+		bg_gui_checkbox_prepare(builder, "engine", FALSE);
+
+		BgOption *option_engine = bg_profile_get_option(profile, "engine");
+		if (option_engine != NULL) {
+			bg_gui_combobox_set_active_value(builder, "engine", option_engine->value_string);
+		}
 
 		bg_gui_adjust_set_value(builder, "midichannel", 1);
 		bg_gui_checkbox_prepare(builder, "midichannel", FALSE);
