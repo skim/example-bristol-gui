@@ -21,7 +21,10 @@ int main(int argc, char **argv) {
 		//[M] setting up session/ profiles
 		BgProfile *profile = bg_profile_new("Default");
 		BgSession *session = bg_session_new(profile);
-		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "oss"));
+		//defining flags for options
+		bg_option_list_add_flag(profile->options, "midichannel", "channel");
+		bg_option_list_add_flag(profile->options, "samplerate", "rate");
+		bg_profile_add_option(profile, bg_option_new_string("engine", "oss"));
 		//setting up combo list
 		BgEntryList *engines = bg_entry_list_new();
 		bg_entry_list_add_new(engines, "JACK", "jack");

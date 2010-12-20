@@ -678,11 +678,14 @@
                   <object class="GtkVBox" id="vbox3">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkLabel" id="label8">
+                      <object class="GtkLabel" id="label_runtime_preview">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">label</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="padding">4</property>
                         <property name="position">0</property>
                       </packing>
                     </child>

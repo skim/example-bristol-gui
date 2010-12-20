@@ -10,16 +10,23 @@ typedef struct {
 	GObject *widget;
 } BgControlPayload;
 
+static void bg_set_runtime_preview_label(BgProfile *profile, GtkBuilder *builder) {
+	GtkLabel *label_runtime_preview = GTK_LABEL(gtk_builder_get_object(builder, bg_gui_name("runtime_preview", "label")));
+	g_assert(label_runtime_preview != NULL);
+	gtk_label_set_text(label_runtime_preview, bg_option_list_render(profile->options));
+}
+
 static void bg_set_options_label(BgProfile *profile, GtkBuilder *builder) {
 	GtkLabel *label_options = GTK_LABEL(gtk_builder_get_object(builder, bg_gui_name("options", "label")));
+	g_assert(label_options != NULL);
 	int num = bg_profile_count_options(profile);
 	if (num == 0) {
 		gtk_label_set_text(label_options, "None");
 	} else {
 		gtk_label_set_text(label_options, g_strdup_printf("%d", num));
 	}
-
 }
+
 
 static void bg_option_switch_check_button_toggled(GtkCheckButton *check, gpointer data) {
 	BgControlPayload *payload = (BgControlPayload*) data;
@@ -32,6 +39,7 @@ static void bg_option_switch_check_button_toggled(GtkCheckButton *check, gpointe
 		g_debug("on profile %s: removed option %s", profile->name, payload->id);
 	}
 	bg_set_options_label(profile, payload->builder);
+	bg_set_runtime_preview_label(profile, payload->builder);
 }
 
 static void bg_option_combo_box_changed(GtkComboBox *combo, gpointer data) {
@@ -40,6 +48,7 @@ static void bg_option_combo_box_changed(GtkComboBox *combo, gpointer data) {
 	BgOption *option = bg_profile_get_option(profile, payload->id);
 	g_assert(option != NULL);
 	option->value_string = g_strdup(bg_combo_box_get_active_value(payload->builder, payload->id));
+	bg_set_runtime_preview_label(profile, payload->builder);
 	//g_debug("on profile %s: set %s to %s", profile->name, option->id, option->value_string);
 }
 
@@ -49,6 +58,7 @@ static void bg_option_adjustment_changed(GtkAdjustment *adjust, gpointer data) {
 	BgOption *option = bg_profile_get_option(profile, payload->id);
 	g_assert(option != NULL);
 	option->value_int = gtk_adjustment_get_value(adjust);
+	bg_set_runtime_preview_label(profile, payload->builder);
 	//g_debug("on profile %s: set %s to %d", profile->name, option->id, option->value_int);
 }
 
@@ -56,9 +66,9 @@ BgOption* bg_control_get_option_from_widget(GtkBuilder *builder, const char *id,
 	g_assert(widget != NULL);
 	GType type = G_OBJECT_TYPE(widget);
 	if (type == GTK_TYPE_COMBO_BOX) {
-		return bg_option_new_string(id, FALSE, bg_combo_box_get_active_value(builder, id));
+		return bg_option_new_string(id, bg_combo_box_get_active_value(builder, id));
 	} else if (type == GTK_TYPE_ADJUSTMENT) {
-		return bg_option_new_int(id, TRUE, gtk_adjustment_get_value(GTK_ADJUSTMENT(widget)));
+		return bg_option_new_int(id, gtk_adjustment_get_value(GTK_ADJUSTMENT(widget)));
 	} else {
 		g_warning("could not get option for %s from widget", id);
 	}
@@ -124,4 +134,5 @@ void bg_control_connect(BgSession *session, GtkBuilder *builder, const char *id,
 void bg_control_before_start(BgSession *session, GtkBuilder *builder) {
 	BgProfile *profile = bg_session_get_active_profile(session);
 	bg_set_options_label(profile, builder);
+	bg_set_runtime_preview_label(profile, builder);
 }
