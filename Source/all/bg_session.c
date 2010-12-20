@@ -5,13 +5,27 @@ BgSession* bg_session_new(BgProfile *profile) {
 	g_assert(profile != NULL);
 	BgSession *session = g_new(BgSession, 1);
 	session->profiles = NULL;
-	session->profiles = g_list_append(session->profiles, profile);
+	bg_session_add_profile(session, profile);
 	session->index_profile = 0;
 	return session;
 }
 
+void bg_session_add_profile(BgSession *session, BgProfile *profile) {
+	session->profiles = g_list_append(session->profiles, profile);
+}
+
 BgProfile* bg_session_get_active_profile(BgSession *session) {
 	return (BgProfile*) g_list_nth_data(session->profiles, session->index_profile);
+}
+
+BgEntryList* bg_session_get_profiles_as_entries(BgSession *session) {
+	BgEntryList *entries = bg_entry_list_new();
+	int i;
+	for (i = 0; i < g_list_length(session->profiles); i++) {
+		BgProfile *profile = (BgProfile*) g_list_nth_data(session->profiles, i);
+		bg_entry_list_add_new(entries, profile->name, profile->name);
+	}
+	return entries;
 }
 
 BgProfile* bg_profile_new(const char *name) {
@@ -40,4 +54,16 @@ void bg_profile_remove_option(BgProfile *profile, const char *id) {
 
 int bg_profile_count_options(BgProfile *profile) {
 	return g_list_length(profile->options->list);
+}
+
+int bg_profile_count_active_options(BgProfile *profile) {
+	int i;
+	int count = 0;
+	for (i = 0; i < bg_profile_count_options(profile); i++) {
+		BgOption *option = bg_option_list_get_nth(profile->options, i);
+		if (option->active) {
+			count++;
+		}
+	}
+	return count;
 }

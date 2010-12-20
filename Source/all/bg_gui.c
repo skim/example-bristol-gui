@@ -113,7 +113,6 @@ const char* bg_combo_box_get_active_value(GtkBuilder *builder, const char *id) {
 	} else {
 		return NULL;
 	}
-
 }
 
 void bg_adjustment_set_value(GtkBuilder *builder, const char *id, double value) {

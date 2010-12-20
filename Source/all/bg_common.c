@@ -31,11 +31,23 @@ BgEntry* bg_entry_list_nth(BgEntryList *entries, int index) {
 	return (BgEntry*) g_list_nth_data(entries->list, index);
 }
 
+BgOptionConfig* bg_option_config_new(const char *id, const char *widget_type, const char *flag) {
+	BgOptionConfig *config = g_new(BgOptionConfig, 1);
+	config->id = g_strdup(id);
+	config->widget_type = g_strdup(widget_type);
+	if (flag != NULL) {
+		config->flag = g_strdup(flag);
+	} else {
+		config->flag = NULL;
+	}
+	return config;
+}
+
 BgOption* bg_option_new(const char *id, BgOptionType type) {
 	BgOption *option = g_new(BgOption, 1);
 	option->id = g_strdup(id);
+	option->active = TRUE;
 	option->type = type;
-	option->flag = NULL;
 	return option;
 }
 
@@ -53,18 +65,18 @@ BgOption* bg_option_new_int(const char *id, int value) {
 
 char* bg_option_render(BgOption *option) {
 	char *string = "-";
-	if (option->flag != NULL) {
-		string = g_strconcat(string, option->flag, " ", NULL);
+	if (option->config->flag != NULL) {
+		string = g_strconcat(string, option->config->flag, " ", NULL);
 	}
 	switch (option->type) {
-		case BG_OPTION_INT:
-			string = g_strconcat(string, g_strdup_printf("%d", option->value_int), NULL);
-			break;
-		case BG_OPTION_STRING:
-			string = g_strconcat(string, option->value_string, NULL);
-			break;
-		default:
-			break;
+	case BG_OPTION_INT:
+		string = g_strconcat(string, g_strdup_printf("%d", option->value_int), NULL);
+		break;
+	case BG_OPTION_STRING:
+		string = g_strconcat(string, option->value_string, NULL);
+		break;
+	default:
+		break;
 	}
 	return string;
 
@@ -73,21 +85,42 @@ char* bg_option_render(BgOption *option) {
 BgOptionList* bg_option_list_new() {
 	BgOptionList *options = g_new(BgOptionList, 1);
 	options->list = NULL;
+	options->configs = NULL;
 	options->map = g_hash_table_new(g_str_hash, g_str_equal);
-	options->map_flags = g_hash_table_new(g_str_hash, g_str_equal);
+	options->map_configs = g_hash_table_new(g_str_hash, g_str_equal);
 	return options;
 }
 
-void bg_option_list_add_flag(BgOptionList *list, const char *option_id, const char *flag) {
-	g_hash_table_insert(list->map_flags, g_strdup(option_id), g_strdup(flag));
+int bg_option_list_length(BgOptionList *list) {
+	return g_list_length(list->list);
+}
+
+int bg_option_list_config_length(BgOptionList *list) {
+	return g_list_length(list->configs);
+}
+
+BgOption* bg_option_list_get_nth(BgOptionList *list, int index) {
+	return (BgOption*) g_list_nth_data(list->list, index);
+}
+
+BgOptionConfig* bg_option_list_get_nth_config(BgOptionList *list, int index) {
+	return (BgOptionConfig*) g_list_nth_data(list->configs, index);
+}
+
+void bg_option_list_add_config(BgOptionList *list, BgOptionConfig *config) {
+	list->configs = g_list_append(list->configs, config);
+	g_hash_table_insert(list->map_configs, config->id, config);
+}
+
+BgOptionConfig* bg_option_list_get_config(BgOptionList *list, const char *option_id) {
+	return (BgOptionConfig*) g_hash_table_lookup(list->map_configs, option_id);
 }
 
 void bg_option_list_add(BgOptionList *list, BgOption *option) {
+	g_assert(bg_option_list_get_config(list, option->id) != NULL);
+	option->config = bg_option_list_get_config(list, option->id);
 	list->list = g_list_append(list->list, option);
 	g_hash_table_insert(list->map, option->id, option);
-	if (g_hash_table_lookup(list->map_flags, option->id) != NULL) {
-		option->flag = (char*) g_hash_table_lookup(list->map_flags, option->id);
-	}
 }
 
 BgOption* bg_option_list_get(BgOptionList *list, const char *id) {
@@ -104,7 +137,9 @@ char* bg_option_list_render(BgOptionList *list) {
 	int i;
 	for (i = 0; i < g_list_length(list->list); i++) {
 		BgOption *option = (BgOption*) g_list_nth_data(list->list, i);
-		string = g_strconcat(string, " ", bg_option_render(option), NULL);
+		if (option->active) {
+			string = g_strconcat(string, " ", bg_option_render(option), NULL);
+		}
 	}
 	return string;
 }
