@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
 		bg_option_list_add_flag(profile->options, "midichannel", "channel");
 		bg_option_list_add_flag(profile->options, "samplerate", "rate");
 		bg_profile_add_option(profile, bg_option_new_string("engine", "oss"));
+		bg_profile_add_option(profile, bg_option_new_string("synth", "mini"));
 		//setting up combo list
 		BgEntryList *engines = bg_entry_list_new();
 		bg_entry_list_add_new(engines, "JACK", "jack");

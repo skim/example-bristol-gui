@@ -3,6 +3,8 @@
 
 #include <glib.h>
 
+//TODO: options order?
+
 typedef struct {
 	char *name;
 	char *value;
