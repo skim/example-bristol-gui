@@ -37,3 +37,7 @@ void bg_profile_remove_option(BgProfile *profile, const char *id) {
 		bg_option_list_remove(profile->options, option);
 	}
 }
+
+int bg_profile_count_options(BgProfile *profile) {
+	return g_list_length(profile->options->list);
+}

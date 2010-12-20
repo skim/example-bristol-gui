@@ -20,6 +20,10 @@ int main(int argc, char **argv) {
 
 		BgProfile *profile = bg_profile_new("Default");
 		BgSession *session = bg_session_new(profile);
+		BgEntryList *engines = bg_entry_list_new();
+		bg_entry_list_add_new(engines, "JACK", "jack");
+		bg_entry_list_add_new(engines, "ALSA", "alsa");
+		bg_entry_list_add_new(engines, "OSS", "oss");
 		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "oss"));
 
 		bg_switch_button_init(builder, "profile");
@@ -27,20 +31,22 @@ int main(int argc, char **argv) {
 		bg_switch_button_init(builder, "options");
 		bg_switch_button_init(builder, "runtimes");
 
-		BgEntryList *engines = bg_entry_list_new();
-		bg_entry_list_add_new(engines, "JACK", "jack");
-		bg_entry_list_add_new(engines, "ALSA", "alsa");
-		bg_entry_list_add_new(engines, "OSS", "oss");
 		bg_combo_box_init(builder, "engine", engines, 0);
 		bg_switch_check_button_init(builder, "engine", FALSE);
-		bg_option_switch_check_button_control_init(session, builder, "engine", "combo");
+		bg_option_init(session, builder, "engine", "combo");
+		bg_option_connect(session, builder, "engine", "combo");
 
 		bg_adjustment_set_value(builder, "midichannel", 1);
 		bg_switch_check_button_init(builder, "midichannel", FALSE);
-		bg_option_switch_check_button_control_init(session, builder, "midichannel", "adjust");
+		bg_option_init(session, builder, "midichannel", "adjust");
+		bg_option_connect(session, builder, "midichannel", "adjust");
 
 		bg_adjustment_set_value(builder, "samplerate", 44100);
 		bg_switch_check_button_init(builder, "samplerate", FALSE);
+		bg_option_init(session, builder, "samplerate", "adjust");
+		bg_option_connect(session, builder, "samplerate", "adjust");
+
+		bg_options_before_start(session, builder);
 
 		gtk_widget_show_all(window);
 		gtk_main();

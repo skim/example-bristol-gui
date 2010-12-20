@@ -10,6 +10,17 @@ typedef struct {
 	GObject *widget;
 } BgControlPayload;
 
+static void bg_set_options_label(BgProfile *profile, GtkBuilder *builder) {
+	GtkLabel *label_options = GTK_LABEL(gtk_builder_get_object(builder, bg_gui_name("options", "label")));
+	int num = bg_profile_count_options(profile);
+	if (num == 0) {
+		gtk_label_set_text(label_options, "None");
+	} else {
+		gtk_label_set_text(label_options, g_strdup_printf("%d", num));
+	}
+
+}
+
 static void bg_option_switch_check_button_toggled(GtkCheckButton *check, gpointer data) {
 	BgControlPayload *payload = (BgControlPayload*) data;
 	BgProfile *profile = bg_session_get_active_profile(payload->session);
@@ -20,6 +31,7 @@ static void bg_option_switch_check_button_toggled(GtkCheckButton *check, gpointe
 		bg_profile_remove_option(profile, payload->id);
 		g_debug("on profile %s: removed option %s", profile->name, payload->id);
 	}
+	bg_set_options_label(profile, payload->builder);
 }
 
 static void bg_option_combo_box_changed(GtkComboBox *combo, gpointer data) {
@@ -28,7 +40,7 @@ static void bg_option_combo_box_changed(GtkComboBox *combo, gpointer data) {
 	BgOption *option = bg_profile_get_option(profile, payload->id);
 	g_assert(option != NULL);
 	option->value_string = g_strdup(bg_combo_box_get_active_value(payload->builder, payload->id));
-	g_debug("on profile %s: set %s to %s", profile->name, option->id, option->value_string);
+	//g_debug("on profile %s: set %s to %s", profile->name, option->id, option->value_string);
 }
 
 static void bg_option_adjustment_changed(GtkAdjustment *adjust, gpointer data) {
@@ -37,7 +49,7 @@ static void bg_option_adjustment_changed(GtkAdjustment *adjust, gpointer data) {
 	BgOption *option = bg_profile_get_option(profile, payload->id);
 	g_assert(option != NULL);
 	option->value_int = gtk_adjustment_get_value(adjust);
-	g_debug("on profile %s: set %s to %d", profile->name, option->id, option->value_int);
+	//g_debug("on profile %s: set %s to %d", profile->name, option->id, option->value_int);
 }
 
 BgOption* bg_get_option_from_widget(GtkBuilder *builder, const char *id, GObject *widget) {
@@ -85,7 +97,7 @@ BgControlPayload* bg_control_payload_new(BgSession *session, GtkBuilder *builder
 	return payload;
 }
 
-void bg_option_switch_check_button_control_init(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
+void bg_option_init(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
 	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
 	GObject *widget_option = G_OBJECT(gtk_builder_get_object(builder, bg_gui_name(id, option_widget)));
 	BgProfile *profile = bg_session_get_active_profile(session);
@@ -94,7 +106,22 @@ void bg_option_switch_check_button_control_init(BgSession *session, GtkBuilder *
 	g_debug("on profile %s: initializing control for %s, type: %s", profile->name, id, option_widget);
 	BgControlPayload *payload = bg_control_payload_new(session, builder, id, widget_option);
 	bg_set_option_from_profile(payload);
-	bg_set_signals_from_profile(payload);
 	gtk_toggle_button_set_active(check, bg_profile_get_option(profile, id) != NULL);
+}
+
+void bg_option_connect(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
+	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
+	GObject *widget_option = G_OBJECT(gtk_builder_get_object(builder, bg_gui_name(id, option_widget)));
+	BgProfile *profile = bg_session_get_active_profile(session);
+	g_assert(check != NULL);
+	g_assert(widget_option != NULL);
+	g_debug("on profile %s: connection control for %s, type: %s", profile->name, id, option_widget);
+	BgControlPayload *payload = bg_control_payload_new(session, builder, id, widget_option);
+	bg_set_signals_from_profile(payload);
 	g_signal_connect(check, "toggled", G_CALLBACK(bg_option_switch_check_button_toggled), bg_control_payload_new(session, builder, id, G_OBJECT(widget_option)));
+}
+
+void bg_options_before_start(BgSession *session, GtkBuilder *builder) {
+	BgProfile *profile = bg_session_get_active_profile(session);
+	bg_set_options_label(profile, builder);
 }
