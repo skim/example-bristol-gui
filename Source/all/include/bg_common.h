@@ -38,6 +38,7 @@ void 			bg_entry_list_add(BgEntryList *entries, BgEntry *entry);
 void 			bg_entry_list_add_new(BgEntryList *entries, const char *name, const char *value);
 BgOption* 		bg_option_new(const char *id, gboolean has_flag, BgOptionType type);
 BgOption* 		bg_option_new_string(const char *id, gboolean has_flag, const char *value);
+BgOption* 		bg_option_new_int(const char *id, gboolean has_flag, int value);
 BgOptionList* 	bg_option_list_new();
 void 			bg_option_list_add(BgOptionList *list, BgOption *option);
 BgOption* 		bg_option_list_get(BgOptionList *list, const char *id);

@@ -10,6 +10,10 @@ BgSession* bg_session_new(BgProfile *profile) {
 	return session;
 }
 
+BgProfile* bg_session_get_active_profile(BgSession *session) {
+	return (BgProfile*) g_list_nth_data(session->profiles, session->index_profile);
+}
+
 BgProfile* bg_profile_new(const char *name) {
 	BgProfile *profile = g_new(BgProfile, 1);
 	profile->name = g_strdup(name);

@@ -45,6 +45,12 @@ BgOption* bg_option_new_string(const char *id, gboolean has_flag, const char *va
 	return option;
 }
 
+BgOption* bg_option_new_int(const char *id, gboolean has_flag, int value) {
+	BgOption *option = bg_option_new(id, has_flag, BG_OPTION_INT);
+	option->value_int = value;
+	return option;
+}
+
 BgOptionList* bg_option_list_new() {
 	BgOptionList *options = g_new(BgOptionList, 1);
 	options->list = NULL;

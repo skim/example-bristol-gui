@@ -2,7 +2,7 @@
 #include "bg_config.h"
 #include "stdlib.h"
 
-static void bg_gui_button_switched(GtkButton *button, gpointer data) {
+static void bg_switch_button_toggled(GtkButton *button, gpointer data) {
 	BgGuiPayload *payload = (BgGuiPayload*) data;
 	GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(payload->builder, bg_gui_name(payload->id, "box")));
 	gtk_widget_set_visible(box, !gtk_widget_get_visible(box));
@@ -11,7 +11,7 @@ static void bg_gui_button_switched(GtkButton *button, gpointer data) {
 	gtk_button_set_image(button, image);
 }
 
-static void bg_gui_checkbox_switched(GtkCheckButton *check, gpointer data) {
+static void bg_switch_check_button_toggled(GtkCheckButton *check, gpointer data) {
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(check));
 	BgGuiPayload *load = (BgGuiPayload*) data;
 	gtk_widget_set_sensitive(label, gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)));
@@ -23,6 +23,15 @@ char *bg_gui_name(const char *id, const char *widget) {
 	return g_strdup_printf("%s_%s", widget, id);
 }
 
+GType bg_gui_get_type(const char *widget_string) {
+	if (g_str_has_prefix(widget_string, "combo")) {
+		return GTK_TYPE_COMBO_BOX;
+	} else if (g_str_has_prefix(widget_string, "adjust")) {
+		return GTK_TYPE_ADJUSTMENT;
+	}
+	return G_TYPE_NONE;
+}
+
 BgGuiPayload *bg_gui_payload_new(GtkBuilder *builder, const char *id) {
 	BgGuiPayload *load = g_new(BgGuiPayload, 1);
 	load->builder = builder;
@@ -30,15 +39,15 @@ BgGuiPayload *bg_gui_payload_new(GtkBuilder *builder, const char *id) {
 	return load;
 }
 
-void bg_gui_checkbox_switch_init(GtkBuilder *builder, const char *id, gboolean active) {
+void bg_switch_check_button_init(GtkBuilder *builder, const char *id, gboolean active) {
 	GtkCheckButton *check = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
 	BgGuiPayload *payload = bg_gui_payload_new(builder, id);
-	g_signal_connect(check, "toggled", G_CALLBACK(bg_gui_checkbox_switched), payload);
+	g_signal_connect(check, "toggled", G_CALLBACK(bg_switch_check_button_toggled), payload);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), active);
-	bg_gui_checkbox_switched(check, payload);
+	bg_switch_check_button_toggled(check, payload);
 }
 
-void bg_gui_combobox_init(GtkBuilder *builder, const char *id, BgEntryList *entries, int selected) {
+void bg_combo_box_init(GtkBuilder *builder, const char *id, BgEntryList *entries, int selected) {
 	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
 	GtkListStore *store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
 	gtk_combo_box_set_model(combo, GTK_TREE_MODEL(store));
@@ -58,7 +67,7 @@ void bg_gui_combobox_init(GtkBuilder *builder, const char *id, BgEntryList *entr
 	gtk_combo_box_set_active(combo, selected);
 }
 
-int bg_gui_combobox_get_index(GtkBuilder *builder, const char *id, const char *value) {
+int bg_combo_box_get_index(GtkBuilder *builder, const char *id, const char *value) {
 	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
 	GtkTreeModel *store = gtk_combo_box_get_model(combo);
 	GtkTreeIter iter;
@@ -80,8 +89,8 @@ int bg_gui_combobox_get_index(GtkBuilder *builder, const char *id, const char *v
 	return -1;
 }
 
-void bg_gui_combobox_set_active_value(GtkBuilder *builder, const char *id, const char *value) {
-	int index = bg_gui_combobox_get_index(builder, id, value);
+void bg_combo_box_set_active_value(GtkBuilder *builder, const char *id, const char *value) {
+	int index = bg_combo_box_get_index(builder, id, value);
 	if (index != -1) {
 		g_debug("setting active on %s to %d (%s)", bg_gui_name(id, "combo"), index, value);
 		gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo"))), index);
@@ -90,14 +99,14 @@ void bg_gui_combobox_set_active_value(GtkBuilder *builder, const char *id, const
 	}
 }
 
-const char* bg_gui_combobox_get_active_value(GtkBuilder *builder, const char *id) {
+const char* bg_combo_box_get_active_value(GtkBuilder *builder, const char *id) {
 	GtkComboBox *combo = GTK_COMBO_BOX(gtk_builder_get_object(builder, bg_gui_name(id, "combo")));
 	GtkTreeModel *store = gtk_combo_box_get_model(combo);
 	GtkTreeIter iter;
 	if (gtk_combo_box_get_active_iter(combo, &iter)) {
 		char *_name;
-		char *value = NULL;
-		gtk_tree_model_get(store, &iter, 0, &_name, 1, value, -1);
+		char *value;
+		gtk_tree_model_get(store, &iter, 0, &_name, 1, &value, -1);
 		g_free(_name);
 		return g_strdup(value);
 
@@ -107,13 +116,13 @@ const char* bg_gui_combobox_get_active_value(GtkBuilder *builder, const char *id
 
 }
 
-void bg_gui_adjust_set_value(GtkBuilder *builder, const char *id, double value) {
+void bg_adjustment_set_value(GtkBuilder *builder, const char *id, double value) {
 	GtkAdjustment *adjust = GTK_ADJUSTMENT(gtk_builder_get_object(builder, bg_gui_name(id, "adjust")));
 	gtk_adjustment_set_value(adjust, value);
 }
 
-void bg_gui_button_switch_prepare(GtkBuilder *builder, const char *id) {
+void bg_switch_button_init(GtkBuilder *builder, const char *id) {
 	GtkButton *button = GTK_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "switch")));
 	BgGuiPayload *payload = bg_gui_payload_new(builder, id);
-	g_signal_connect(button, "clicked", G_CALLBACK(bg_gui_button_switched), payload);
+	g_signal_connect(button, "clicked", G_CALLBACK(bg_switch_button_toggled), payload);
 }

@@ -2,6 +2,7 @@
 #include "bg_config.h"
 #include "bg_gui.h"
 #include "bg_session.h"
+#include "bg_control.h"
 #include <gtk/gtk.h>
 
 
@@ -18,31 +19,28 @@ int main(int argc, char **argv) {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
 
 		BgProfile *profile = bg_profile_new("Default");
-		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "alsa"));
+		BgSession *session = bg_session_new(profile);
+		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "oss"));
 
-		bg_gui_button_switch_prepare(builder, "profile");
-
-		bg_gui_button_switch_prepare(builder, "synth");
-		bg_gui_button_switch_prepare(builder, "options");
-		bg_gui_button_switch_prepare(builder, "runtimes");
+		bg_switch_button_init(builder, "profile");
+		bg_switch_button_init(builder, "synth");
+		bg_switch_button_init(builder, "options");
+		bg_switch_button_init(builder, "runtimes");
 
 		BgEntryList *engines = bg_entry_list_new();
 		bg_entry_list_add_new(engines, "JACK", "jack");
 		bg_entry_list_add_new(engines, "ALSA", "alsa");
 		bg_entry_list_add_new(engines, "OSS", "oss");
-		bg_gui_combobox_init(builder, "engine", engines, 0);
-		bg_gui_checkbox_switch_init(builder, "engine", FALSE);
+		bg_combo_box_init(builder, "engine", engines, 0);
+		bg_switch_check_button_init(builder, "engine", FALSE);
+		bg_option_switch_check_button_control_init(session, builder, "engine", "combo");
 
-		BgOption *option_engine = bg_profile_get_option(profile, "engine");
-		if (option_engine != NULL) {
-			bg_gui_combobox_set_active_value(builder, "engine", option_engine->value_string);
-		}
+		bg_adjustment_set_value(builder, "midichannel", 1);
+		bg_switch_check_button_init(builder, "midichannel", FALSE);
+		bg_option_switch_check_button_control_init(session, builder, "midichannel", "adjust");
 
-		bg_gui_adjust_set_value(builder, "midichannel", 1);
-		bg_gui_checkbox_switch_init(builder, "midichannel", FALSE);
-
-		bg_gui_adjust_set_value(builder, "samplerate", 44100);
-		bg_gui_checkbox_switch_init(builder, "samplerate", FALSE);
+		bg_adjustment_set_value(builder, "samplerate", 44100);
+		bg_switch_check_button_init(builder, "samplerate", FALSE);
 
 		gtk_widget_show_all(window);
 		gtk_main();
