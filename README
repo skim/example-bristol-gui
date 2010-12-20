@@ -7,17 +7,15 @@ author: Nick Copeland). Written in ANSI-C, using the GTK.
 bristolgui is Free Software, see the "License" section.
 
 bristolgui runs only on Linux and BSD systems.
-
-It's purpose is to provide a graphical user interface for the 
 Since there is no equivalent to JACK or ALSA on MS Windows based 
-operating systems, porting would make no sense at all.
+operating systems, porting it would make no sense at all.
 
 License
 -------
 
 bristolgui is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License.
+the Free Software Foundation, version 2 of the License.
 
 bristolgui is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,10 +34,17 @@ http://bristol.sourceforge.net
 Installing
 ----------
 
+You need:
+
+automake
+autoconf
+m4
+gtk+-dev 
+
 To compile and install, run:
 
 ./autogen.sh
-./configure.s
+./configure
 ./make 
 ./make install
 
