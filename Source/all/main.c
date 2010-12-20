@@ -18,14 +18,17 @@ int main(int argc, char **argv) {
 	} else {
 		GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "window_root"));
 
+		//[M] setting up session/ profiles
 		BgProfile *profile = bg_profile_new("Default");
 		BgSession *session = bg_session_new(profile);
+		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "oss"));
+		//setting up combo list
 		BgEntryList *engines = bg_entry_list_new();
 		bg_entry_list_add_new(engines, "JACK", "jack");
 		bg_entry_list_add_new(engines, "ALSA", "alsa");
 		bg_entry_list_add_new(engines, "OSS", "oss");
-		bg_profile_add_option(profile, bg_option_new_string("engine", FALSE, "oss"));
 
+		//[V] initializing/ connecting the gui
 		bg_switch_button_init(builder, "profile");
 		bg_switch_button_init(builder, "synth");
 		bg_switch_button_init(builder, "options");
@@ -33,20 +36,19 @@ int main(int argc, char **argv) {
 
 		bg_combo_box_init(builder, "engine", engines, 0);
 		bg_switch_check_button_init(builder, "engine", FALSE);
-		bg_option_init(session, builder, "engine", "combo");
-		bg_option_connect(session, builder, "engine", "combo");
-
 		bg_adjustment_set_value(builder, "midichannel", 1);
 		bg_switch_check_button_init(builder, "midichannel", FALSE);
-		bg_option_init(session, builder, "midichannel", "adjust");
-		bg_option_connect(session, builder, "midichannel", "adjust");
-
 		bg_adjustment_set_value(builder, "samplerate", 44100);
 		bg_switch_check_button_init(builder, "samplerate", FALSE);
-		bg_option_init(session, builder, "samplerate", "adjust");
-		bg_option_connect(session, builder, "samplerate", "adjust");
 
-		bg_options_before_start(session, builder);
+		//[C] initializing/ connecting controllers
+		bg_control_init(session, builder, "engine", "combo");
+		bg_control_connect(session, builder, "engine", "combo");
+		bg_control_init(session, builder, "midichannel", "adjust");
+		bg_control_connect(session, builder, "midichannel", "adjust");
+		bg_control_init(session, builder, "samplerate", "adjust");
+		bg_control_connect(session, builder, "samplerate", "adjust");
+		bg_control_before_start(session, builder);
 
 		gtk_widget_show_all(window);
 		gtk_main();

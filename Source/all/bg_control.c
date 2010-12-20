@@ -25,7 +25,7 @@ static void bg_option_switch_check_button_toggled(GtkCheckButton *check, gpointe
 	BgControlPayload *payload = (BgControlPayload*) data;
 	BgProfile *profile = bg_session_get_active_profile(payload->session);
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check))) {
-		bg_profile_add_option(profile, bg_get_option_from_widget(payload->builder, payload->id, payload->widget));
+		bg_profile_add_option(profile, bg_control_get_option_from_widget(payload->builder, payload->id, payload->widget));
 		g_debug("on profile %s: added option %s", profile->name, payload->id);
 	} else {
 		bg_profile_remove_option(profile, payload->id);
@@ -52,7 +52,7 @@ static void bg_option_adjustment_changed(GtkAdjustment *adjust, gpointer data) {
 	//g_debug("on profile %s: set %s to %d", profile->name, option->id, option->value_int);
 }
 
-BgOption* bg_get_option_from_widget(GtkBuilder *builder, const char *id, GObject *widget) {
+BgOption* bg_control_get_option_from_widget(GtkBuilder *builder, const char *id, GObject *widget) {
 	g_assert(widget != NULL);
 	GType type = G_OBJECT_TYPE(widget);
 	if (type == GTK_TYPE_COMBO_BOX) {
@@ -97,7 +97,7 @@ BgControlPayload* bg_control_payload_new(BgSession *session, GtkBuilder *builder
 	return payload;
 }
 
-void bg_option_init(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
+void bg_control_init(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
 	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
 	GObject *widget_option = G_OBJECT(gtk_builder_get_object(builder, bg_gui_name(id, option_widget)));
 	BgProfile *profile = bg_session_get_active_profile(session);
@@ -109,7 +109,7 @@ void bg_option_init(BgSession *session, GtkBuilder *builder, const char *id, con
 	gtk_toggle_button_set_active(check, bg_profile_get_option(profile, id) != NULL);
 }
 
-void bg_option_connect(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
+void bg_control_connect(BgSession *session, GtkBuilder *builder, const char *id, const char *option_widget) {
 	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, bg_gui_name(id, "check")));
 	GObject *widget_option = G_OBJECT(gtk_builder_get_object(builder, bg_gui_name(id, option_widget)));
 	BgProfile *profile = bg_session_get_active_profile(session);
@@ -121,7 +121,7 @@ void bg_option_connect(BgSession *session, GtkBuilder *builder, const char *id, 
 	g_signal_connect(check, "toggled", G_CALLBACK(bg_option_switch_check_button_toggled), bg_control_payload_new(session, builder, id, G_OBJECT(widget_option)));
 }
 
-void bg_options_before_start(BgSession *session, GtkBuilder *builder) {
+void bg_control_before_start(BgSession *session, GtkBuilder *builder) {
 	BgProfile *profile = bg_session_get_active_profile(session);
 	bg_set_options_label(profile, builder);
 }
