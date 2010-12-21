@@ -1,7 +1,6 @@
 #ifndef L_OPTION_H_
 #define L_OPTION_H_
 
-#include "bg_config.h"
 #include "glib.h"
 
 #define L_INT_UNDEFINED G_MAXINT
