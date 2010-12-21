@@ -8,12 +8,12 @@ int main(int argc, char **argv) {
 	l_option_list_put_option(profile, l_option_new_int("midichannel", "channel"));
 	l_option_list_put_option(profile, l_option_new_string("synth", NULL));
 
-	l_option_list_set_value_string(profile, "engine", "jack");
-	l_option_list_set_value_int(profile, "midichannel", 12);
-	l_option_list_set_value_string(profile, "synth", "mini");
-
+	LValue *test = l_value_new_string("Test");
+	l_option_list_set_value(profile, "synth", test);
+	l_option_list_set_value(profile, "engine", test);
 	g_debug("startBristol %s", l_option_list_render_cli(profile));
-	g_debug("%s, %d", l_option_list_get_value_string(profile, "engine"), l_option_list_get_value_int(profile, "midichannel"));
+	test->value_string = "Hugo";
+	g_debug("startBristol %s", l_option_list_render_cli(profile));
 
 	return 0;
 }
