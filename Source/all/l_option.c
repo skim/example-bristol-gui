@@ -68,7 +68,7 @@ LType l_value_get_type(LValue *value) {
 
 void l_value_set_string(LValue *value, const char *string) {
 	g_assert(value != NULL);
-	g_assert(id != NULL && strlen(id) > 0);
+	g_assert(string != NULL && strlen(string) > 0);
 	if (value->type != L_TYPE_STRING) {
 		g_warning("value is not of type L_TYPE_STRING");
 	} else {
