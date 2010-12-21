@@ -1,5 +1,5 @@
-#ifndef L_OPTION_H_
-#define L_OPTION_H_
+#ifndef LLIB_OPTION_H_
+#define LLIB_OPTION_H_
 
 #include "glib.h"
 
@@ -36,4 +36,4 @@ int				l_option_list_length_options	(LOptionList *list);
 int 			l_option_list_length_values		(LOptionList *list);
 const char*		l_option_list_render_cli		(LOptionList *list);
 
-#endif /* L_OPTION_H_ */
+#endif /* LLIB_OPTION_H_ */

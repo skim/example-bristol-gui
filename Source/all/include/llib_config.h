@@ -1,6 +1,6 @@
-#ifndef L_CONFIG_H_
-#define L_CONFIG_H_
+#ifndef LLIB_CONFIG_H_
+#define LLIB_CONFIG_H_
 
 #define L_DATA_PATH		"./Data"
 
-#endif /* L_CONFIG_H_ */
+#endif /* LLIB_CONFIG_H_ */
