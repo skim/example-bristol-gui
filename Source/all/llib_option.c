@@ -8,12 +8,6 @@ struct _LOption {
 	char *flag;
 };
 
-struct _LValue {
-	LType type;
-	char *value_string;
-	int value_int;
-};
-
 struct _LOptionList {
 	GList *options;
 	GHashTable *map_options;
@@ -41,70 +35,6 @@ LOption* l_option_new_int(const char *id, const char *flag) {
 
 LType l_option_get_type(LOption *option) {
 	return option->type;
-}
-
-static LValue* l_option_value_new(LType type) {
-	LValue *value = g_new(LValue, 1);
-	value->type = type;
-	return value;
-}
-
-LValue* l_value_new_string(const char *value) {
-	g_assert(value != NULL && strlen(value) > 0);
-	LValue *option_value = l_option_value_new(L_TYPE_STRING);
-	option_value->value_string = g_strdup(value);
-	return option_value;
-}
-
-LValue* l_value_new_int(int value) {
-	LValue *option_value = l_option_value_new(L_TYPE_INT);
-	option_value->value_int = value;
-	return option_value;
-}
-
-LType l_value_get_type(LValue *value) {
-	return value->type;
-}
-
-void l_value_set_string(LValue *value, const char *string) {
-	g_assert(value != NULL);
-	g_assert(string != NULL && strlen(string) > 0);
-	if (value->type != L_TYPE_STRING) {
-		g_warning("value is not of type L_TYPE_STRING");
-	} else {
-		value->value_string = g_strdup(string);
-	}
-}
-
-const char* l_value_get_string(LValue *value) {
-	g_assert(value != NULL);
-	if (value->type != L_TYPE_STRING) {
-		g_warning("value is not of type L_TYPE_STRING");
-	} else {
-		return g_strdup(value->value_string);
-	}
-	return NULL;
-}
-
-void l_value_set_int(LValue *value, int int_) {
-	g_assert(value != NULL);
-	if (value->type != L_TYPE_INT) {
-		g_warning("value is not of type L_TYPE_INT");
-	} else {
-		value->value_int = int_;
-	}
-
-}
-
-int l_value_get_int(LValue *value) {
-	g_assert(value != NULL);
-	if (value->type != L_TYPE_INT) {
-		g_warning("value is not of type L_TYPE_INT");
-	} else {
-		return value->value_int;
-	}
-	return L_INT_UNDEFINED;
-
 }
 
 LOptionList* l_option_list_new() {
@@ -158,7 +88,7 @@ void l_option_list_set_value(LOptionList *list, const char *id, LValue *value) {
 	g_assert(value != NULL);
 	LOption *option = l_option_list_get_option(list, id);
 	if (option == NULL) {
-	} else if (option->type != value->type) {
+	} else if (option->type != l_value_get_type(value)) {
 		g_warning("option type does not match value type");
 	} else {
 		g_hash_table_insert(list->map_values, g_strdup(id), value);
@@ -183,12 +113,12 @@ const char* l_option_list_render_cli(LOptionList *list) {
 			if (option->flag != NULL) {
 				cli = g_strconcat(cli, option->flag, " ", NULL);
 			}
-			switch (value->type) {
+			switch (l_value_get_type(value)) {
 			case L_TYPE_STRING:
-				cli = g_strconcat(cli, value->value_string, NULL);
+				cli = g_strconcat(cli, l_value_get_string(value), NULL);
 				break;
 			case L_TYPE_INT:
-				cli = g_strdup_printf("%s%d", cli, value->value_int);
+				cli = g_strdup_printf("%s%d", cli, l_value_get_int(value));
 				break;
 			default:
 				break;

@@ -2,29 +2,15 @@
 #define LLIB_OPTION_H_
 
 #include "glib.h"
-
-#define L_INT_UNDEFINED G_MAXINT
-
-typedef enum {
-	L_TYPE_STRING,
-	L_TYPE_INT
-} LType;
+#include "llib_common.h"
+#include "llib_value.h"
 
 typedef struct _LOption 	LOption;
-typedef struct _LValue 		LValue;
 typedef struct _LOptionList LOptionList;
 
 LOption*		l_option_new_string				(const char *id, const char *flag);
 LOption*		l_option_new_int				(const char *id, const char *flag);
 LType			l_option_get_type				(LOption *option);
-
-LValue* 		l_value_new_string				(const char *value);
-LValue* 		l_value_new_int					(int value);
-LType			l_value_get_type				(LValue *value);
-void			l_value_set_string				(LValue *value, const char *string);
-const char*		l_value_get_string				(LValue *value);
-void			l_value_set_int					(LValue *value, int int_);
-int				l_value_get_int					(LValue *value);
 
 LOptionList*	l_option_list_new				();
 void			l_option_list_put_option		(LOptionList *list, LOption *option);

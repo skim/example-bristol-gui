@@ -26,3 +26,10 @@ GtkButton* ltk_builder_get_button(GtkBuilder *builder, const char *name) {
 	return GTK_BUTTON(ltk_builder_get_widget(builder, name));
 }
 
+GtkComboBox* ltk_builder_get_combo_box(GtkBuilder *builder, const char *name) {
+	g_assert(builder != NULL);
+	g_assert(name != NULL && strlen(name) > 0);
+	return GTK_COMBO_BOX(ltk_builder_get_widget(builder, name));
+
+}
+
