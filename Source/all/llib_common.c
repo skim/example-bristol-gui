@@ -1,5 +1,5 @@
-#include "l_common.h"
-#include "l_config.h"
+#include "llib_common.h"
+#include "llib_config.h"
 #include "glib.h"
 
 char* l_data_path_new(const char *filename) {

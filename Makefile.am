@@ -4,8 +4,8 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 bin_PROGRAMS = bristolgui
 
 bristolgui_SOURCES = \
-Source/all/l_common.c \
-Source/all/l_option.c \
+Source/all/llib_common.c \
+Source/all/llib_option.c \
 Source/all/ltk_builder.c \
 Source/all/ltk_common.c \
 Source/all/ltk_switch.c \
