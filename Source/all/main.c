@@ -12,7 +12,6 @@ int main(int argc, char **argv) {
 	l_option_list_set_value(profile, "synth", test);
 	l_option_list_set_value(profile, "engine", test);
 	g_debug("startBristol %s", l_option_list_render_cli(profile));
-	test->value_string = "Hugo";
 	g_debug("startBristol %s", l_option_list_render_cli(profile));
 
 	return 0;

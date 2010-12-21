@@ -1,6 +1,25 @@
 #include "l_option.h"
 #include <string.h>
 
+struct _LOption {
+	LType type;
+	int index;
+	char *id;
+	char *flag;
+};
+
+struct _LValue {
+	LType type;
+	char *value_string;
+	int value_int;
+};
+
+struct _LOptionList {
+	GList *options;
+	GHashTable *map_options;
+	GHashTable *map_values;
+};
+
 static LOption* l_option_new(LType type, const char *id, const char *flag) {
 	LOption *option = g_new(LOption, 1);
 	option->type = type;
@@ -16,6 +35,10 @@ LOption* l_option_new_string(const char *id, const char *flag) {
 }
 LOption* l_option_new_int(const char *id, const char *flag) {
 	return l_option_new(L_TYPE_INT, id, flag);
+}
+
+LType l_option_get_type(LOption *option) {
+	return option->type;
 }
 
 static LValue* l_option_value_new(LType type) {
@@ -34,6 +57,10 @@ LValue* l_value_new_int(int value) {
 	LValue *option_value = l_option_value_new(L_TYPE_INT);
 	option_value->value_int = value;
 	return option_value;
+}
+
+LType l_value_get_type(LValue *value) {
+	return value->type;
 }
 
 void l_value_set_string(LValue *value, const char *string) {
