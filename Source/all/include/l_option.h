@@ -4,6 +4,8 @@
 #include "bg_config.h"
 #include "glib.h"
 
+#define L_INT_UNDEFINED G_MAXINT
+
 typedef enum {
 	L_OPTION_TYPE_STRING,
 	L_OPTION_TYPE_INT
@@ -35,8 +37,9 @@ void			l_option_list_put_option		(LOptionList *list, LOption *option);
 LOption*		l_option_list_get_option		(LOptionList *list, const char *id);
 LOption* 		l_option_list_nth_option		(LOptionList *list, int index);
 void			l_option_list_set_value_string	(LOptionList *list, const char *id, const char *value);
+char* 			l_option_list_get_value_string	(LOptionList *list, const char *id);
 void			l_option_list_set_value_int		(LOptionList *list, const char *id, int value);
-LOptionValue*	l_option_list_get_value			(LOptionList *list, const char *id);
+int 			l_option_list_get_value_int		(LOptionList *list, const char *id);
 int				l_option_list_length_options	(LOptionList *list);
 int 			l_option_list_length_values		(LOptionList *list);
 char*			l_option_list_render_cli		(LOptionList *list);

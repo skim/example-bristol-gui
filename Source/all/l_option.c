@@ -61,6 +61,10 @@ int l_option_list_length_values(LOptionList *list) {
 	return g_hash_table_size(list->map_options);
 }
 
+static LOptionValue* l_option_list_get_value(LOptionList *list, const char *id) {
+	return (LOptionValue*) g_hash_table_lookup(list->map_values, id);
+}
+
 void l_option_list_set_value_string(LOptionList *list, const char *id, const char *value) {
 	LOption *option = l_option_list_get_option(list, id);
 	if (option == NULL) {
@@ -74,6 +78,29 @@ void l_option_list_set_value_string(LOptionList *list, const char *id, const cha
 	}
 }
 
+char* l_option_list_get_value_string(LOptionList *list, const char *id) {
+	LOptionValue *value = l_option_list_get_value(list, id);
+	if (value == NULL) {
+	} else if (value->type != L_OPTION_TYPE_STRING) {
+		g_warning("option: %s is not of type L_OPTION_TYPE_STRING", id);
+	} else {
+		return g_strdup(value->value_string);
+	}
+	return NULL;
+}
+
+int l_option_list_get_value_int(LOptionList *list, const char *id) {
+	LOptionValue *value = l_option_list_get_value(list, id);
+	if (value == NULL) {
+	} else if (value->type != L_OPTION_TYPE_INT) {
+		g_warning("option: %s is not of type L_OPTION_TYPE_INT", id);
+	} else {
+		return value->value_int;
+	}
+	return L_INT_UNDEFINED;
+}
+
+
 void l_option_list_set_value_int(LOptionList *list, const char *id, int value) {
 	LOption *option = l_option_list_get_option(list, id);
 	if (option == NULL) {
@@ -85,10 +112,6 @@ void l_option_list_set_value_int(LOptionList *list, const char *id, int value) {
 		option_value->value_int = value;
 		g_hash_table_insert(list->map_values, option->id, option_value);
 	}
-}
-
-LOptionValue* l_option_list_get_value(LOptionList *list, const char *id) {
-	return (LOptionValue*) g_hash_table_lookup(list->map_values, id);
 }
 
 char* l_option_list_render_cli(LOptionList *list) {
