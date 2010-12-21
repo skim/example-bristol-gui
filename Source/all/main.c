@@ -11,11 +11,11 @@ int main(int argc, char **argv) {
 	}
 	GtkButton *switch_profile = ltk_builder_get_button(builder, "switch_profile");
 	GtkWidget *box_profile = ltk_builder_get_widget(builder, "box_profile");
-	ltk_switch_hide_connect(switch_profile, box_profile);
+	ltk_switch_visible_connect(switch_profile, box_profile);
 
 	GtkButton *check_engine = ltk_builder_get_button(builder, "check_midichannel");
 	GtkWidget *box_engine = ltk_builder_get_widget(builder, "box_midichannel");
-	ltk_switch_deactivate_connect(check_engine, box_engine);
+	ltk_switch_sensitive_connect(check_engine, box_engine);
 
 	GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 	gtk_widget_show_all(window_root);

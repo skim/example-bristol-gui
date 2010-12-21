@@ -21,6 +21,8 @@ struct _LOptionList {
 };
 
 static LOption* l_option_new(LType type, const char *id, const char *flag) {
+	g_assert(id != NULL && strlen(id) > 0);
+	g_assert(flag != NULL && strlen(flag) > 0);
 	LOption *option = g_new(LOption, 1);
 	option->type = type;
 	option->id = g_strdup(id);
@@ -48,6 +50,7 @@ static LValue* l_option_value_new(LType type) {
 }
 
 LValue* l_value_new_string(const char *value) {
+	g_assert(value != NULL && strlen(value) > 0);
 	LValue *option_value = l_option_value_new(L_TYPE_STRING);
 	option_value->value_string = g_strdup(value);
 	return option_value;
@@ -64,6 +67,8 @@ LType l_value_get_type(LValue *value) {
 }
 
 void l_value_set_string(LValue *value, const char *string) {
+	g_assert(value != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
 	if (value->type != L_TYPE_STRING) {
 		g_warning("value is not of type L_TYPE_STRING");
 	} else {
@@ -72,6 +77,7 @@ void l_value_set_string(LValue *value, const char *string) {
 }
 
 const char* l_value_get_string(LValue *value) {
+	g_assert(value != NULL);
 	if (value->type != L_TYPE_STRING) {
 		g_warning("value is not of type L_TYPE_STRING");
 	} else {
@@ -81,6 +87,7 @@ const char* l_value_get_string(LValue *value) {
 }
 
 void l_value_set_int(LValue *value, int int_) {
+	g_assert(value != NULL);
 	if (value->type != L_TYPE_INT) {
 		g_warning("value is not of type L_TYPE_INT");
 	} else {
@@ -90,6 +97,7 @@ void l_value_set_int(LValue *value, int int_) {
 }
 
 int l_value_get_int(LValue *value) {
+	g_assert(value != NULL);
 	if (value->type != L_TYPE_INT) {
 		g_warning("value is not of type L_TYPE_INT");
 	} else {
@@ -108,6 +116,8 @@ LOptionList* l_option_list_new() {
 }
 
 void l_option_list_put_option(LOptionList *list, LOption *option) {
+	g_assert(list != NULL);
+	g_assert(option != NULL);
 	LOption *old_option = l_option_list_get_option(list, option->id);
 	if (old_option != NULL) {
 		g_hash_table_remove(list->map_options, option->id);
@@ -122,22 +132,30 @@ void l_option_list_put_option(LOptionList *list, LOption *option) {
 }
 
 LOption* l_option_list_get_option(LOptionList *list, const char *id) {
+	g_assert(list != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
 	return (LOption*) g_hash_table_lookup(list->map_options, id);
 }
 
 LOption* l_option_list_nth_option(LOptionList *list, int index) {
+	g_assert(list != NULL);
 	return (LOption*) g_list_nth_data(list->options, index);
 }
 
 int l_option_list_length_options(LOptionList *list) {
+	g_assert(list != NULL);
 	return g_list_length(list->options);
 }
 
 int l_option_list_length_values(LOptionList *list) {
+	g_assert(list != NULL);
 	return g_hash_table_size(list->map_options);
 }
 
 void l_option_list_set_value(LOptionList *list, const char *id, LValue *value) {
+	g_assert(list != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	g_assert(value != NULL);
 	LOption *option = l_option_list_get_option(list, id);
 	if (option == NULL) {
 	} else if (option->type != value->type) {
@@ -148,10 +166,13 @@ void l_option_list_set_value(LOptionList *list, const char *id, LValue *value) {
 }
 
 LValue* l_option_list_get_value(LOptionList *list, const char *id) {
+	g_assert(list != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
 	return (LValue*) g_hash_table_lookup(list->map_values, id);
 }
 
 const char* l_option_list_render_cli(LOptionList *list) {
+	g_assert(list != NULL);
 	char *cli = "";
 	int i;
 	for (i = 0; i < l_option_list_length_options(list); i++) {

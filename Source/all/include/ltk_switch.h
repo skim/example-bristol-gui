@@ -4,7 +4,7 @@
 #include "ltk_config.h"
 #include <gtk/gtk.h>
 
-void ltk_switch_hide_connect		(GtkButton *button, GtkWidget *widget_to_hide);
-void ltk_switch_deactivate_connect	(GtkButton *button, GtkWidget *widget_to_deactivate);
+void ltk_switch_visible_connect		(GtkButton *button, GtkWidget *widget);
+void ltk_switch_sensitive_connect	(GtkButton *button, GtkWidget *widget);
 
 #endif /* LTK_SWITCH_H_ */
