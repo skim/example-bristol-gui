@@ -8,5 +8,6 @@ GtkWidget* 			ltk_builder_get_widget			(GtkBuilder *builder, const char *name);
 GtkButton*			ltk_builder_get_button			(GtkBuilder *builder, const char *name);
 GtkToggleButton* 	ltk_builder_get_toggle_button	(GtkBuilder *builder, const char *name) ;
 GtkComboBox*		ltk_builder_get_combo_box		(GtkBuilder *builder, const char *name);
+GtkAdjustment* 		ltk_builder_get_adjustment		(GtkBuilder *builder, const char *name);
 
 #endif /* LTK_BUILDER_H_ */

@@ -77,7 +77,7 @@ static void ltk_combo_box_changed(GtkComboBox *combo_box, gpointer data) {
 	l_option_list_set_value(payload->options, payload->id, ltk_combo_box_get_active_value(combo_box));
 }
 
-void ltk_combo_box_connect_option(GtkComboBox *combo_box, LOptionList *options, const char *id) {
+void ltk_combo_box_connect_to_option(GtkComboBox *combo_box, LOptionList *options, const char *id) {
 	g_assert(combo_box != NULL);
 	g_assert(ltk_object_is_marked(GTK_OBJECT(combo_box)));
 	g_assert(options != NULL);
@@ -86,3 +86,21 @@ void ltk_combo_box_connect_option(GtkComboBox *combo_box, LOptionList *options, 
 	g_signal_connect(combo_box, "changed", G_CALLBACK(ltk_combo_box_changed), ltk_payload_new(options, id));
 }
 
+static void ltk_combo_box_changed_with_adjustment(GtkComboBox *combo_box, gpointer data) {
+	GtkAdjustment *adjustment = GTK_ADJUSTMENT(data);
+	LValue *value = ltk_combo_box_get_active_value(combo_box);
+	if (value != NULL) {
+		if (l_value_get_type(value) != L_TYPE_INT) {
+			g_warning("combo box value type is not L_TYPE_INT");
+		} else {
+			gtk_adjustment_set_value(adjustment, l_value_get_int(value));
+		}
+	}
+}
+
+void ltk_combo_box_connect_to_adjustment(GtkComboBox *combo_box, GtkAdjustment *adjustment) {
+	g_assert(combo_box != NULL);
+	g_assert(ltk_object_is_marked(GTK_OBJECT(combo_box)));
+	g_assert(adjustment != NULL);
+	g_signal_connect(combo_box, "changed", G_CALLBACK(ltk_combo_box_changed_with_adjustment), adjustment);
+}

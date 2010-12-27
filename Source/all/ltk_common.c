@@ -45,10 +45,39 @@ static void ltk_toggle_button_clicked(GtkToggleButton *toggle, gpointer data) {
 	g_debug("%s", l_option_list_render_cli(payload->options));
 }
 
-void ltk_toggle_button_connect_option(GtkToggleButton *toggle, LOptionList *options, const char *id) {
+void ltk_toggle_button_connect_to_option(GtkToggleButton *toggle, LOptionList *options, const char *id) {
 	g_assert(toggle != NULL);
 	g_assert(options != NULL);
 	g_assert(id != NULL && strlen(id) > 0);
 	ltk_toggle_button_set_active_from_option(toggle, options, id);
 	g_signal_connect(toggle, "clicked", G_CALLBACK(ltk_toggle_button_clicked), ltk_payload_new(options, id));
+}
+
+void ltk_adjustment_set_from_option(GtkAdjustment *adjustment, LOptionList *options, const char *id) {
+	g_assert(adjustment != NULL);
+	g_assert(options != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	if (l_option_list_get_value(options, id) != NULL) {
+		gtk_adjustment_set_value(adjustment, l_value_get_int(l_option_list_get_value(options, id)));
+	}
+
+}
+
+static void ltk_adjustment_changed(GtkAdjustment *adjustment, gpointer data) {
+	LtkPayload *payload = (LtkPayload*) data;
+	LValue *value = l_option_list_get_value(payload->options, payload->id);
+	if (value == NULL) {
+		g_warning("no value for %s", payload->id);
+		value = l_value_new_int(0);
+		l_option_list_set_value(payload->options, payload->id, value);
+	}
+	l_value_set_int(value, gtk_adjustment_get_value(adjustment));
+}
+
+void ltk_adjustment_connect_to_option(GtkAdjustment *adjustment, LOptionList *options, const char *id) {
+	g_assert(adjustment != NULL);
+	g_assert(options != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	ltk_adjustment_set_from_option(adjustment, options, id);
+	g_signal_connect(adjustment, "value-changed", G_CALLBACK(ltk_adjustment_changed), ltk_payload_new(options, id));
 }

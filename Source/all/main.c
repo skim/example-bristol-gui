@@ -11,6 +11,7 @@ int main(int argc, char **argv) {
 	l_option_list_put_option(profile, l_option_new_int("samplerate", "rate"));
 
 	l_option_list_set_value(profile, "engine", l_value_new_string("alsa"));
+	l_option_list_set_value(profile, "samplerate", l_value_new_int(44100));
 
 	gtk_init(&argc, &argv);
 
@@ -36,9 +37,9 @@ int main(int argc, char **argv) {
 
 	GtkComboBox *combo_box = ltk_builder_get_combo_box(builder, "combo_engine");
 	ltk_combo_box_fill(combo_box, engines);
-	ltk_combo_box_connect_option(combo_box, profile, "engine");
+	ltk_combo_box_connect_to_option(combo_box, profile, "engine");
 	GtkToggleButton *check_engine = ltk_builder_get_toggle_button(builder, "check_engine");
-	ltk_toggle_button_connect_option(check_engine, profile, "engine");
+	ltk_toggle_button_connect_to_option(check_engine, profile, "engine");
 
 	LValueList *samplerates = l_value_list_new_int();
 	l_value_list_put_value(samplerates, "11,025", l_value_new_int(11025));
@@ -48,7 +49,12 @@ int main(int argc, char **argv) {
 
 	GtkComboBox *combo_samplerate = ltk_builder_get_combo_box(builder, "combo_samplerate");
 	ltk_combo_box_fill(combo_samplerate, samplerates);
-	ltk_combo_box_set_active_value(combo_samplerate, l_value_new_int(44100));
+	GtkToggleButton *check_samplerate = ltk_builder_get_toggle_button(builder, "check_samplerate");
+	ltk_toggle_button_connect_to_option(check_samplerate, profile, "samplerate");
+	GtkAdjustment *adjust_samplerate = ltk_builder_get_adjustment(builder, "adjust_samplerate");
+	ltk_combo_box_connect_to_adjustment(combo_samplerate, adjust_samplerate);
+	ltk_adjustment_connect_to_option(adjust_samplerate, profile, "samplerate");
+	ltk_combo_box_set_active_value_from_option(combo_samplerate, profile, "samplerate");
 
 	GtkWidget *window_root = lgui_builder_get_window(builder, "root");
 	g_signal_connect(window_root, "delete_event", G_CALLBACK(gtk_main_quit), NULL);
