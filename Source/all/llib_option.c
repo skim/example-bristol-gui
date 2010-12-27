@@ -21,6 +21,8 @@ static LOption* l_option_new(LType type, const char *id, const char *flag) {
 	option->id = g_strdup(id);
 	if (flag != NULL) {
 		option->flag = g_strdup(flag);
+	} else {
+		option->flag = NULL;
 	}
 	return option;
 }

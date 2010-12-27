@@ -20,6 +20,20 @@ gboolean ltk_object_is_marked(GtkObject *object) {
 	return g_object_get_data(G_OBJECT(object), LTK_OBJECT_MARK_KEY) != NULL;
 }
 
+void ltk_object_mark_onetime(GtkObject *object) {
+	g_assert(object != NULL);
+	g_object_set_data(G_OBJECT(object), LTK_OBJECT_MARK_ONETIME_KEY, GINT_TO_POINTER(1));
+}
+
+gboolean ltk_object_check_marked_onetime(GtkObject *object) {
+	g_assert(object != NULL);
+	gboolean result = g_object_get_data(G_OBJECT(object), LTK_OBJECT_MARK_ONETIME_KEY) != NULL;
+	if (result) {
+		g_object_set_data(G_OBJECT(object), LTK_OBJECT_MARK_ONETIME_KEY, NULL);
+	}
+	return result;
+}
+
 void ltk_button_set_stock_image(GtkButton *button, const char *stock_name, GtkIconSize size) {
 	g_assert(button != NULL);
 	g_assert(stock_name != NULL && strlen(stock_name) > 0);
@@ -60,7 +74,6 @@ void ltk_adjustment_set_from_option(GtkAdjustment *adjustment, LOptionList *opti
 	if (l_option_list_get_value(options, id) != NULL) {
 		gtk_adjustment_set_value(adjustment, l_value_get_int(l_option_list_get_value(options, id)));
 	}
-
 }
 
 static void ltk_adjustment_changed(GtkAdjustment *adjustment, gpointer data) {
