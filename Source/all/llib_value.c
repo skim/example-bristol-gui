@@ -11,6 +11,7 @@ struct _LValue {
 	LType type;
 	char *value_string;
 	int value_int;
+	gboolean enabled;
 };
 
 struct _LValueList {
@@ -31,6 +32,7 @@ static LValueWrapper* l_value_wrapper_new(LValue *value, const char *display_nam
 static LValue* l_value_new(LType type) {
 	LValue *value = g_new(LValue, 1);
 	value->type = type;
+	value->enabled = FALSE;
 	return value;
 }
 
@@ -47,8 +49,34 @@ LValue* l_value_new_int(int value) {
 	return option_value;
 }
 
+gboolean l_value_is_enabled(LValue *value) {
+	g_assert(value != NULL);
+	return value->enabled;
+}
+
+void l_value_set_enabled(LValue *value, gboolean enabled) {
+	g_assert(value != NULL);
+	value->enabled = enabled;
+}
+
 LType l_value_get_type(LValue *value) {
 	return value->type;
+}
+
+gboolean l_value_equals(LValue *value1, LValue *value2) {
+	if (value1 != NULL && value2 != NULL && value1->type == value2->type) {
+		switch (value1->type) {
+		case L_TYPE_INT:
+			return value1->value_int == value2->value_int;
+			break;
+		case L_TYPE_STRING:
+			return g_str_equal(value1->value_string, value2->value_string);
+			break;
+		default:
+			break;
+		}
+	}
+	return FALSE;
 }
 
 void l_value_set_string(LValue *value, const char *string) {
@@ -112,6 +140,10 @@ int l_value_list_length(LValueList *list) {
 
 LValueList* l_value_list_new_string() {
 	return l_value_list_new(L_TYPE_STRING);
+}
+
+LValueList* l_value_list_new_int() {
+	return l_value_list_new(L_TYPE_INT);
 }
 
 static LValueWrapper* l_value_list_get_wrapper(LValueList *list, const char *display_name) {

@@ -500,12 +500,8 @@
                           <object class="GtkHBox" id="box_samplerate">
                             <property name="visible">True</property>
                             <child>
-                              <object class="GtkHScale" id="hscale2">
+                              <object class="GtkComboBox" id="combo_samplerate">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">adjust_samplerate</property>
-                                <property name="digits">0</property>
-                                <property name="draw_value">False</property>
                               </object>
                               <packing>
                                 <property name="position">0</property>

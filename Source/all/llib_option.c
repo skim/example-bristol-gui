@@ -16,7 +16,6 @@ struct _LOptionList {
 
 static LOption* l_option_new(LType type, const char *id, const char *flag) {
 	g_assert(id != NULL && strlen(id) > 0);
-	g_assert(flag != NULL && strlen(flag) > 0);
 	LOption *option = g_new(LOption, 1);
 	option->type = type;
 	option->id = g_strdup(id);
@@ -108,7 +107,7 @@ const char* l_option_list_render_cli(LOptionList *list) {
 	for (i = 0; i < l_option_list_length_options(list); i++) {
 		LOption *option = l_option_list_nth_option(list, i);
 		LValue *value = l_option_list_get_value(list, option->id);
-		if (value != NULL) {
+		if (value != NULL && l_value_is_enabled(value)) {
 			cli = g_strconcat(cli, " -", NULL);
 			if (option->flag != NULL) {
 				cli = g_strconcat(cli, option->flag, " ", NULL);
