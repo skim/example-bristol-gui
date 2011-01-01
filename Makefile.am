@@ -3,18 +3,12 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 bin_PROGRAMS = bristolgui
 
-bristolgui_SOURCES = \
-Source/all/llib_common.c \
-Source/all/llib_option.c \
-Source/all/ltk_builder.c \
-Source/all/ltk_common.c \
-Source/all/ltk_switch.c \
-Source/all/main.c
+bristolgui_SOURCES = Source/all/main.c
 
 bristolgui_CFLAGS = -ISource/all/include -DL_PATH_DATA=\"$(datadir)/@PACKAGE@\"
 bristolguiextradir = $(datadir)/@PACKAGE@
 bristolguiextra_DATA = Data/*
 
-AM_CPPFLAGS=@GTK_CFLAGS@
+AM_CPPFLAGS=@GTK_CFLAGS@ @lgui_CFLAGS@
 
-bristolgui_LDADD=@GTK_LIBS@
+bristolgui_LDADD=@GTK_LIBS@ @lgui_LIBS@

@@ -33,7 +33,7 @@
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.850930303" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1547814614" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Source/all/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libraries/linux32/include/lcs-c}&quot;"/>
+									<listOptionValue builtIn="false" value="/usr/include/lgui-0.1"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gio-unix-2.0"/>
@@ -50,6 +50,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.773118017" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
 								<option id="gnu.c.link.option.libs.1812431081" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="lgui-0.1"/>
 									<listOptionValue builtIn="false" value="gtk-x11-2.0"/>
 									<listOptionValue builtIn="false" value="gdk-x11-2.0"/>
 									<listOptionValue builtIn="false" value="atk-1.0"/>

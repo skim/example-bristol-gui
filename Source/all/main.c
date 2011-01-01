@@ -1,5 +1,4 @@
-#include "llib.h"
-#include "ltk.h"
+#include <lgui.h>
 #include <gtk/gtk.h>
 
 static void bg_prepare_engine(GtkBuilder *builder, LOptionList *profile) {
@@ -55,8 +54,6 @@ static void bg_prepare_samplerate(GtkBuilder *builder, LOptionList *profile) {
 }
 
 int main(int argc, char **argv) {
-
-
 
 	gtk_init(&argc, &argv);
 
