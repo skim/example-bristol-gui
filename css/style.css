@@ -1,16 +1,66 @@
+html {
+	overflow-y: scroll;
+}
+
 body {
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-	max-width: 756px;
-	border: 1px solid #bfbfbf;
 	font-family: sans-serif;
 	font-size: small;
+	width: 512px;
+	margin: auto;
+	color: #323232;
+}
+
+a {	
+	color: #32327d;
+	text-decoration: underline;
+	font-weight: bold;
+	background: transparent url(../png/link.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
+}
+
+.link-list {
+	color: #323232;	
+}
+
+.icon-link-mail {
+	background: transparent url(../png/mail.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
+}
+
+.icon-link-deb {
+	background: transparent url(../png/deb.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
+}
+
+.icon-link-zip {
+	background: transparent url(../png/zip.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
+}
+
+.headline {
+	padding: 4px 4px 16px 4px;
+}
+
+.content {
+	margin: auto;
+	border: 1px solid #bfbfbf;
 }
 
 p {
-	padding: 4px;
+	padding: 16px 4px 16px 4px;
 	margin: 0px;
+}
+
+.after {
+	padding: 0px 4px 16px 4px;	
 }
 
 h2 {
@@ -18,4 +68,60 @@ h2 {
 	padding: 4px;
 	font-size: 1.25em;
 	background-color: #dddddd;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
 }
+
+.top {
+	border-top: none;
+}
+
+h3 {
+	margin: 0px;
+	padding: 4px;
+	font-size: 1.05em;
+	background-color: none;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+ul, li {
+	list-style: none;
+	padding: 2px 4px 2px 24px;
+}
+
+.icon-ubuntu {
+	background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
+}
+
+.icon-debian {
+	background: transparent url(../png/debian.png) no-repeat 0 50%;
+}
+
+.icon-fedora {
+	background: transparent url(../png/fedora.png) no-repeat 0 50%;
+}
+
+.icon-suse {
+	background: transparent url(../png/suse.png) no-repeat 0 50%;
+}
+
+.icon-source {
+	background: transparent url(../png/source.png) no-repeat 0 50%;
+}
+
+.icon-unstable {
+	background: transparent url(../png/unstable.png) no-repeat 0 50%;
+}
+
+.icon-git {
+	background: transparent url(../png/git.png) no-repeat 0 50%;
+}
+
+.icon-github {
+	background: transparent url(../png/github.png) no-repeat 0 50%;
+}
+
+
+
+
