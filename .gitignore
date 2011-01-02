@@ -11,6 +11,13 @@ Makefile.in
 aclocal.m4
 bristolgui
 compile
-config.log
-config.status
+libtool
+*.pc
+*.sh
+ltmain.sh
+*.la
+.libs
+config.*
+*.lo
 *.o
+m4
