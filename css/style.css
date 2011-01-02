@@ -10,6 +10,16 @@ body {
 	color: #323232;
 }
 
+.headline {
+	padding: 4px 4px 16px 4px;
+	color: #b0b0b0;
+}
+
+.content {
+	margin: auto;
+	border: 1px solid #bbccff;
+}
+
 a {	
 	color: #32327d;
 	text-decoration: underline;
@@ -18,6 +28,10 @@ a {
 	background-position: right 1px;
 	padding-right: 19px;
 	margin-right: 2px;
+}
+
+.light {
+	color: #828282;	
 }
 
 .link-list {
@@ -45,15 +59,6 @@ a {
 	margin-right: 2px;
 }
 
-.headline {
-	padding: 4px 4px 16px 4px;
-}
-
-.content {
-	margin: auto;
-	border: 1px solid #bfbfbf;
-}
-
 p {
 	padding: 16px 4px 16px 4px;
 	margin: 0px;
@@ -66,10 +71,10 @@ p {
 h2 {
 	margin: 0px;
 	padding: 4px;
-	font-size: 1.25em;
-	background-color: #dddddd;
-	border-top: 1px solid #bfbfbf;
-	border-bottom: 1px solid #bfbfbf;
+	font-size: 1.4em;
+	background-color: #bbccff;
+	border-top: 1px solid #bbccff;
+	border-bottom: 1px solid #bbccff;
 }
 
 .top {
@@ -78,11 +83,11 @@ h2 {
 
 h3 {
 	margin: 0px;
-	padding: 4px;
-	font-size: 1.05em;
-	background-color: none;
-	border-top: 1px solid #bfbfbf;
-	border-bottom: 1px solid #bfbfbf;
+	padding: 0px 4px 0px 4px;
+	font-size: 1.15em;
+	background-color: #bbccff;
+	border-top: 1px solid #bbccff;
+	border-bottom: 1px solid #bbccff;	
 }
 
 ul, li {
