@@ -54,7 +54,6 @@ static void bg_prepare_samplerate(GtkBuilder *builder, LOptionList *profile) {
 }
 
 int main(int argc, char **argv) {
-
 	gtk_init(&argc, &argv);
 
 	GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
