@@ -12,7 +12,7 @@ body {
 }
 
 code {
-    background-color: #c0c0c0;
+    background-color: #d0d0d0;
     color: black;
     display: block;
     margin-left: 24px;
@@ -38,7 +38,7 @@ code {
 }
 
 a {
-    color: #354c2a;
+    color: #4b5166;
     text-decoration: underline;
     font-weight: normal;
     background: transparent url(../png/link.png) no-repeat;
@@ -52,8 +52,7 @@ a {
 }
 
 .link-list {
-    color: #323232;
-}
+ }
 
 .link-local {
     color: #646464;
