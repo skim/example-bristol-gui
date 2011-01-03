@@ -1,23 +1,30 @@
+@font-face {
+	font-family: Ubuntu;
+    src: url(../ttf/Ubuntu-R.ttf);
+}
+
+@font-face {
+	font-family: Ubuntu;
+	font-weight: bold;
+    src: url(../ttf/Ubuntu-B.ttf);
+}
+
+@font-face {
+	font-family: LiberationMono;
+    src: url(../ttf/LiberationMono-Regular.ttf);
+}
+
 html {
     overflow-y: scroll;
     background-color: white;
 }
 
 body {
-    font-family: sans-serif;
-	font-size: small;
+    font-family: Ubuntu, sans-serif;
+    font-size: small;
     width: 640px;
     margin: auto;
     color: #323232;
-}
-
-code {
-    background-color: #d0d0d0;
-    display: block;
-    margin-left: 24px;
-    margin-right: 24px;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 
 .headline {
@@ -27,13 +34,23 @@ code {
 
 .content {
     margin: auto;
-    border: 1px solid #bbccff;
+    border: 1px solid #CCDE48;
 }
 
 .navigation {
-	padding: 16px 0px;
-	margin: 0px;
-	text-align: right;
+    padding: 16px 0px;
+    margin: 0px;
+    text-align: right;
+}
+
+code {
+	font-family: LiberationMono, monospace;
+    background-color: #d0d0d0;
+    display: block;
+    margin-left: 24px;
+    margin-right: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 a {
@@ -51,7 +68,7 @@ a {
 }
 
 .link-list {
- }
+}
 
 .link-local {
     color: #646464;
@@ -125,9 +142,11 @@ h2 {
     margin: 0px;
     padding: 4px;
     font-size: 1.2em;
-    border-top: 1px solid #bbccff;
-    background-color: #bbccff;
     border-bottom: 1px solid white;
+    background: #d0f082; /* old browsers */
+    background: -moz-linear-gradient(top, #d0f082 52%, #c3d825 90%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(52%,#d0f082), color-stop(90%,#c3d825)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0f082', endColorstr='#c3d825',GradientType=0 ); /* ie */
 }
 
 .top {
@@ -138,7 +157,7 @@ h3 {
     margin: 0px;
     padding: 0px 4px 0px 4px;
     font-size: 1.1em;
-    background-color: #d7e1ff;
+    background-color: #CCDE48;
 }
 
 ul, li {
