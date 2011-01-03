@@ -3,16 +3,30 @@
     <head>
         <meta name="generator" content="HTML Tidy, see www.w3.org">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/lumen.css" />
 		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/lumen.js"></script>
+		<script type="text/javascript">
+    		$(function() {
+      			var lumen_options = {
+        			width:321,
+        			height:436
+      			};
+      			$('.lumen').lumen(lumen_options);
+    		});
+		  </script>
         <title>bristolgui - A Graphical User Interface for the Bristol Synthensizer Emulation</title>
     </head>
     <body>
-        <div class="headline">
-        	This web page is not functional yet. It functions as a dummy until the first
-			version of bristolgui is released. If you are interested in the current
-			state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
-        </div>
+    	<a class="anchor-local" name="top"></a>
+		<div class="navigation">
+			<a class="link-local icon-link-right" href="#about">About</a>
+			<a class="link-local icon-link-right" href="#screenshots">Screenshots</a>
+			<a class="link-local icon-link-right" href="#download">Download</a>
+			<a class="link-local icon-link-right" href="#manual">Manual</a>			
+		</div>
         <div class="content">
+			<a class="anchor-local" name="about"></a>
             <h2 class="top">About</h2>
 			<div id="about">
             <p>
@@ -22,10 +36,15 @@
                 <br/>
                 Bristol is a synthesizer emulation package for Linux and BSD, emulating classic synthesizers.
             </p>
+			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
 			</div>
-            <h2>Screenshots</h2>
-            <p>              
+    		<a class="anchor-local" name="screenshots"></a>
+	        <h2>Screenshots</h2>
+            <p> 
+				<a class="lumen" title="Main Window" href="png/screen1.png">Main Window</a>             
             </p>
+			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
+			<a class="anchor-local" name="download"></a>			
             <h2>Download</h2>
 			<div id="download">
             <p>
@@ -79,11 +98,20 @@
 			<p>
 				For more information please refer to the included README file.
 			</p>
+			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
 			</div>
-            <h2>User Manual</h2>
+			<a class="anchor-local" name="manual"></a>		
+            <h2>Manual</h2>
             <p>
                 To be done. For more details, refer to the <a href=".">Complete Manual</a>
             </p>
+			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
         </div>
+	    <div class="headline">
+	      	This web page is not functional yet. It functions as a dummy until the first
+			version of bristolgui is released. If you are interested in the current
+			state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
+        </div>
+
     </body>
 </html>

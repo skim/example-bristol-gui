@@ -1,155 +1,185 @@
 html {
-	overflow-y: scroll;
-	background-color: white;
+    overflow-y: scroll;
+    background-color: white;
 }
 
 body {
-	font-family: sans-serif;
+    font-family: sans-serif;
 	font-size: small;
-	width: 640px;
-	margin: auto;
-	color: #323232;
+    width: 640px;
+    margin: auto;
+    color: #323232;
 }
 
 code {
-	background-color: #c0c0c0;
-	color: black;
-	display: block;
-	margin-left: 24px;
-	margin-right: 24px;
-	padding-top: 4px;
-	padding-bottom: 4px;
+    background-color: #c0c0c0;
+    color: black;
+    display: block;
+    margin-left: 24px;
+    margin-right: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .headline {
-	padding: 4px 4px 16px 4px;
-	color: #b0b0b0;
+    padding: 4px 4px 16px 4px;
+    color: #b0b0b0;
 }
 
 .content {
-	margin: auto;
-	border: 1px solid #bbccff;
+    margin: auto;
+    border: 1px solid #bbccff;
 }
 
-a {	
-	color: #32327d;
-	text-decoration: underline;
-	font-weight: bold;
-	background: transparent url(../png/link.png) no-repeat;
-	background-position: right 1px;
-	padding-right: 19px;
-	margin-right: 2px;
+.navigation {
+	padding: 16px 0px;
+	margin: 0px;
+	text-align: right;
+}
+
+a {
+    color: #354c2a;
+    text-decoration: underline;
+    font-weight: normal;
+    background: transparent url(../png/link.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 19px;
+    margin-right: 2px;
 }
 
 .light {
-	color: #828282;	
+    color: #828282;
 }
 
 .link-list {
-	color: #323232;	
+    color: #323232;
+}
+
+.link-local {
+    color: #646464;
+}
+
+.anchor-local {
+    background: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.icon-link-top {
+    background: transparent url(../png/top.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 19px;
+    margin-right: 2px;
+}
+
+.icon-link-right {
+    background: transparent url(../png/right.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 16px;
+    margin-right: 0px;
 }
 
 .icon-link-mail {
-	background: transparent url(../png/mail.png) no-repeat;
-	background-position: right 1px;
-	padding-right: 19px;
-	margin-right: 2px;
+    background: transparent url(../png/mail.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 19px;
+    margin-right: 2px;
 }
 
 .icon-link-deb {
-	background: transparent url(../png/deb.png) no-repeat;
-	background-position: right 1px;
-	padding-right: 19px;
-	margin-right: 2px;
+    background: transparent url(../png/deb.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 19px;
+    margin-right: 2px;
 }
 
 .icon-link-zip {
-	background: transparent url(../png/zip.png) no-repeat;
-	background-position: right 1px;
-	padding-right: 19px;
-	margin-right: 2px;
+    background: transparent url(../png/zip.png) no-repeat;
+    background-position: right 1px;
+    padding-right: 19px;
+    margin-right: 2px;
 }
 
 p {
-	padding: 16px 4px 16px 4px;
-	margin: 0px;
+    padding: 16px 4px 16px 4px;
+    margin: 0px;
+}
+
+.right {
+    text-align: right;
+    padding: 0px 4px 4px 4px;
+    margin: 0px;
 }
 
 .before {
-	padding: 16px 4px 0px 4px;	
+    padding: 16px 4px 0px 4px;
 }
 
 .after {
-	padding: 0px 4px 16px 4px;	
+    padding: 0px 4px 16px 4px;
 }
 
 .between {
-	padding: 0px 4px 0px 4px;	
+    padding: 0px 4px 0px 4px;
 }
 
-
 h2 {
-	margin: 0px;
-	padding: 4px;
-	font-size: 1.4em;
-	background-color: #bbccff;
-	border-top: 1px solid #bbccff;
-	border-bottom: 1px solid white;
+    margin: 0px;
+    padding: 4px;
+    font-size: 1.2em;
+    border-top: 1px solid #bbccff;
+    background-color: #bbccff;
+    border-bottom: 1px solid white;
 }
 
 .top {
-	border-top: none;
+    border-top: none;
 }
 
 h3 {
-	margin: 0px;
-	padding: 0px 4px 0px 4px;
-	font-size: 1.15em;
-	background-color: #d7e1ff;
+    margin: 0px;
+    padding: 0px 4px 0px 4px;
+    font-size: 1.1em;
+    background-color: #d7e1ff;
 }
 
 ul, li {
-	list-style: none;
-	padding: 2px 4px 2px 24px;
+    list-style: none;
+    padding: 2px 4px 2px 24px;
 }
 
 .icon-ubuntu {
-	background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
+    background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
 }
 
 .icon-debian {
-	background: transparent url(../png/debian.png) no-repeat 0 50%;
+    background: transparent url(../png/debian.png) no-repeat 0 50%;
 }
 
 .icon-fedora {
-	background: transparent url(../png/fedora.png) no-repeat 0 50%;
+    background: transparent url(../png/fedora.png) no-repeat 0 50%;
 }
 
 .icon-suse {
-	background: transparent url(../png/suse.png) no-repeat 0 50%;
+    background: transparent url(../png/suse.png) no-repeat 0 50%;
 }
 
 .icon-source {
-	background: transparent url(../png/source.png) no-repeat 0 50%;
+    background: transparent url(../png/source.png) no-repeat 0 50%;
 }
 
 .icon-unstable {
-	background: transparent url(../png/unstable.png) no-repeat 0 50%;
+    background: transparent url(../png/unstable.png) no-repeat 0 50%;
 }
 
 .icon-git {
-	background: transparent url(../png/git.png) no-repeat 0 50%;
+    background: transparent url(../png/git.png) no-repeat 0 50%;
 }
 
 .icon-github {
-	background: transparent url(../png/github.png) no-repeat 0 50%;
+    background: transparent url(../png/github.png) no-repeat 0 50%;
 }
 
 .icon-gnome {
-	background: transparent url(../png/gnome.png) no-repeat 0 50%;
+    background: transparent url(../png/gnome.png) no-repeat 0 50%;
 }
-
-
-
-
-
