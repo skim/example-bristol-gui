@@ -1,5 +1,6 @@
 html {
 	overflow-y: scroll;
+	background-color: white;
 }
 
 body {
@@ -8,6 +9,16 @@ body {
 	width: 640px;
 	margin: auto;
 	color: #323232;
+}
+
+code {
+	background-color: #c0c0c0;
+	color: black;
+	display: block;
+	margin-left: 24px;
+	margin-right: 24px;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 .headline {
@@ -64,9 +75,18 @@ p {
 	margin: 0px;
 }
 
+.before {
+	padding: 16px 4px 0px 4px;	
+}
+
 .after {
 	padding: 0px 4px 16px 4px;	
 }
+
+.between {
+	padding: 0px 4px 0px 4px;	
+}
+
 
 h2 {
 	margin: 0px;
@@ -74,7 +94,7 @@ h2 {
 	font-size: 1.4em;
 	background-color: #bbccff;
 	border-top: 1px solid #bbccff;
-	border-bottom: 1px solid #bbccff;
+	border-bottom: 1px solid white;
 }
 
 .top {
@@ -85,9 +105,7 @@ h3 {
 	margin: 0px;
 	padding: 0px 4px 0px 4px;
 	font-size: 1.15em;
-	background-color: #bbccff;
-	border-top: 1px solid #bbccff;
-	border-bottom: 1px solid #bbccff;	
+	background-color: #d7e1ff;
 }
 
 ul, li {
@@ -126,6 +144,11 @@ ul, li {
 .icon-github {
 	background: transparent url(../png/github.png) no-repeat 0 50%;
 }
+
+.icon-gnome {
+	background: transparent url(../png/gnome.png) no-repeat 0 50%;
+}
+
 
 
 

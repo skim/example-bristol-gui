@@ -3,6 +3,7 @@
     <head>
         <meta name="generator" content="HTML Tidy, see www.w3.org">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery.js"></script>
         <title>bristolgui - A Graphical User Interface for the Bristol Synthensizer Emulation</title>
     </head>
     <body>
@@ -13,19 +14,22 @@
         </div>
         <div class="content">
             <h2 class="top">About</h2>
+			<div id="about">
             <p>
-                A graphical user interface (GUI) for <a href="http://bristol.sf.net">Bristol</a>
+                A graphical user interface (GUI) for <a href="http://bristol.sf.net">Bristol</a> It is written
+				in ANSI C, using GTK+. bristolgui is free software, licensed under the GPL v2.
                 <br>
                 <br/>
-                Bristol is a synthesizer emulation package for Linux and BSD, emulating lots of classic synthesizers.
+                Bristol is a synthesizer emulation package for Linux and BSD, emulating classic synthesizers.
             </p>
+			</div>
             <h2>Screenshots</h2>
-            <p>
-                <a href="png/screen1.png"><img border=0 src="png/screen1-thumbnail.png" /></a>
+            <p>              
             </p>
             <h2>Download</h2>
+			<div id="download">
             <p>
-                Here you can download bristolgui-0.2, released 15.01.2011.
+                The current stable version is bristolgui-0.2, released on 15.01.2011.
             </p>
             <h3>Binaries</h3>
             <ul>
@@ -36,6 +40,10 @@
                     <a class="link-list icon-link-deb" href=".">Debian (5.0, Lenny)</a>
                 </li>
             </ul>
+            <p class="after">
+                If you'd like to contribute a build for your platform that is not available 
+                here, we're more than happy to include it. You can <a class="icon-link-mail" href="mailto:voigt.m@gmail.com">contact us here</a>
+            </p>
             <h3>Source Code</h3>
             <ul>
                 <li class="icon-source">
@@ -51,10 +59,27 @@
                     <a class="link-list" href=".">Project Page at Github</a>
                 </li>
             </ul>
-            <p class="after">
-                If you'd like to contribute a build for your platform that is not available 
-                here, we're more than happy to include it. You can <a class="icon-link-mail" href="mailto:voigt.m@gmail.com">contact us here</a>
-            </p>
+			<p class="between">
+				In order to build bristolgui from source, you need to install it's dependencies.
+			</p>
+			<ul>
+				<li class="icon-gnome"><a class="link-list" href="http://http://www.gtk.org/">GTK+2</a></li>
+				<li class="icon-source"><a class="link-list" href="https://github.com/skim/lgui">lgui</a></li>				
+			</ul>
+			<p class="after">
+				Unpack the source code archive, open a terminal,
+				change into the bristolgui source directory and run the following commands.
+			</p>
+			<code>
+				./autogen.sh<br />
+				./configure<br />
+				./make<br />
+				sudo ./make install
+			</code>				
+			<p>
+				For more information please refer to the included README file.
+			</p>
+			</div>
             <h2>User Manual</h2>
             <p>
                 To be done. For more details, refer to the <a href=".">Complete Manual</a>
