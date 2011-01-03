@@ -34,7 +34,7 @@ body {
 
 .content {
     margin: auto;
-    border: 1px solid #CCDE48;
+    border: 1px solid #e3ffa3;
 }
 
 .navigation {
@@ -45,12 +45,11 @@ body {
 
 code {
 	font-family: LiberationMono, monospace;
-    background-color: #d0d0d0;
+    background-color: #e0e0e0;
     display: block;
     margin-left: 24px;
     margin-right: 24px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+   	padding: 4px;
 }
 
 a {
@@ -143,10 +142,10 @@ h2 {
     padding: 4px;
     font-size: 1.2em;
     border-bottom: 1px solid white;
-    background: #d0f082; /* old browsers */
-    background: -moz-linear-gradient(top, #d0f082 52%, #c3d825 90%); /* firefox */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(52%,#d0f082), color-stop(90%,#c3d825)); /* webkit */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0f082', endColorstr='#c3d825',GradientType=0 ); /* ie */
+    background: #e3ffa3; /* old browsers */
+    background: -moz-linear-gradient(top, #e3ffa3 52%, #c3d825 90%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(52%,#e3ffa3), color-stop(90%,#c3d825)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3ffa3', endColorstr='#c3d825',GradientType=0 ); /* ie */
 }
 
 .top {
@@ -157,7 +156,7 @@ h3 {
     margin: 0px;
     padding: 0px 4px 0px 4px;
     font-size: 1.1em;
-    background-color: #CCDE48;
+    background-color: #e3ffa3;
 }
 
 ul, li {
