@@ -1,6 +1,10 @@
 #include <lgui.h>
 #include <gtk/gtk.h>
 
+#ifndef BG_DATA_PATH
+#define BG_DATA_PATH "./Data"
+#endif
+
 static void bg_prepare_engine(GtkBuilder *builder, LOptionList *profile) {
 	g_assert(builder != NULL);
 	g_assert(profile != NULL);
@@ -54,6 +58,7 @@ static void bg_prepare_samplerate(GtkBuilder *builder, LOptionList *profile) {
 }
 
 int main(int argc, char **argv) {
+	l_set_data_path(BG_DATA_PATH);
 	gtk_init(&argc, &argv);
 
 	GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
