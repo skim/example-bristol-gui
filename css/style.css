@@ -17,6 +17,7 @@
 html {
     overflow-y: scroll;
     background-color: white;
+	background-color: #f0f0f0;
 }
 
 body {
@@ -34,7 +35,7 @@ body {
 
 .content {
     margin: auto;
-    border: 1px solid #e3ffa3;
+	background-color: white;
 }
 
 .navigation {
@@ -45,7 +46,7 @@ body {
 
 code {
 	font-family: LiberationMono, monospace;
-    background-color: #e0e0e0;
+    background-color: #e0f0ff;
     display: block;
     margin-left: 24px;
     margin-right: 24px;
