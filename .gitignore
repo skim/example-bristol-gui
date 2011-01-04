@@ -22,6 +22,6 @@ config.*
 *.o
 m4
 *.deb
-Packaging/deb/usr
+Packaging
 
 
