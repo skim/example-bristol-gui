@@ -21,5 +21,4 @@ config.*
 *.lo
 *.o
 m4
-Packaging/Debian/bristolgui/usr
 *.deb
