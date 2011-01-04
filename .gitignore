@@ -20,6 +20,7 @@ ltmain.sh
 config.*
 *.lo
 *.o
+*.so
 m4
 *.deb
 Packaging
