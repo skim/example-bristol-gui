@@ -24,5 +24,7 @@ config.*
 m4
 *.deb
 Packaging
+.dirstamp
+.deps
 
 
