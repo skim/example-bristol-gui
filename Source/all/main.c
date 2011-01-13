@@ -4,6 +4,10 @@
 
 #define BG_DATA_PATH "./Data"
 
+void bg_buffer_command_update(GtkObject *object, gpointer data) {
+	g_debug("changed");
+}
+
 int main(int argc, char **argv) {
 	l_set_data_path(BG_DATA_PATH);
 	gtk_init(&argc, &argv);
@@ -38,6 +42,12 @@ int main(int argc, char **argv) {
 
 	LOption *midichannel = l_option_new_int("midichannel", "channel");
 	bg_session_add_option_adjustment(session, midichannel, "adjust_midichannel", "check_midichannel", "box_midichannel");
+
+	bg_session_on_change_connect(session, G_CALLBACK(bg_buffer_command_update));
+
+	bg_session_add_profile(session, "Default");
+	bg_session_add_profile(session, "Other");
+	bg_session_set_active_profile(session, "Other");
 
 	GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 	g_signal_connect(window_root, "delete_event", G_CALLBACK(gtk_main_quit), NULL);

@@ -1,0 +1,455 @@
+commit a8d57b021afe0781cbfdf3392162080b34d4658d
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Jan 10 12:28:03 2011 +0100
+
+    created BgSession api
+
+commit 504e24a41f4b0d1dd2cad9603b6bcf603fec774f
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Jan 8 06:18:50 2011 +0100
+
+    ingore
+
+commit be74998ea96eed278d2930abc842dab1656cdf98
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 14:18:11 2011 +0100
+
+    ignore
+
+commit 4227479821b67b8a6b011918f43e72c5a18c1e19
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 14:17:03 2011 +0100
+
+    hack for using /usr/share in .deb package
+
+commit 327bc74a8a2d5c487e010ebfdbba9c65653e6e33
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 13:54:30 2011 +0100
+
+    added simple script to create .deb
+
+commit 6047bccb6fc9e0de04932575e0df9d63dc9af509
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 08:39:54 2011 +0100
+
+    added directories for debian package
+
+commit cd45def13e4c870983fba41489422746d68397d9
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 08:37:27 2011 +0100
+
+    igonore
+
+commit 6d56c40d6f0cb11c8218c35a28f8623aa686ab64
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Jan 4 08:36:49 2011 +0100
+
+    ignore
+
+commit 2ba5e7b7c3b176f039267f5ea736a4b6b1b07519
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Jan 2 13:44:23 2011 +0100
+
+    more ignores
+
+commit 414efc8463a6052c8eaaf70c2fd55e4340062a49
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Jan 2 13:40:37 2011 +0100
+
+    converted to CDT autotools project
+
+commit 14761b024ad21700901705100ae526673b038db7
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Jan 1 18:09:26 2011 +0100
+
+    eclipse project now builds against workspace rather than prefix
+
+commit 7c6c6266d86461943296b1df5a15c6d3e8329955
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Jan 1 16:06:43 2011 +0100
+
+    split lgui into own project
+
+commit 34f9e587898dae94ba0aa29a1a296d4705585cf6
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 27 08:59:01 2010 +0100
+
+    remove lgui, obsolete
+
+commit 28ce4f5b8b95af6ac451a3bab2891e842f80a3c9
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 27 07:57:02 2010 +0100
+
+    added support for adjustments
+
+commit 5dabfaa6df58edcc8cede34d22557c7ddd7d4ea1
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 27 05:27:48 2010 +0100
+
+    extracted ltk_combo_box.h from ltk_common.h
+
+commit 70c6c4012fb11825346b24eb91d0eba4a7d17377
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 27 05:20:41 2010 +0100
+
+    option connectors for combo and toggle
+
+commit c16e6f62075a2dc772d2b21041687763e367fb2e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Fri Dec 24 05:54:03 2010 +0100
+
+    combo box now backed by LValue
+
+commit 4824d131dd996b029f4b9d0a6cdd8e595dabae3f
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 21:11:48 2010 +0100
+
+    value list, filling combo boxes from value lists
+
+commit 7d4685fbb83da557dd9bd2776cde8e344718fa13
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 19:34:54 2010 +0100
+
+    added lgui, switches
+
+commit fbea7eff1faba4da9039f1c303fa52403ec44ac6
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 19:10:18 2010 +0100
+
+    l_* > llib_*
+
+commit 8f1f09cb11ac8ea96b3a05461e7f6d3149757a34
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 18:55:20 2010 +0100
+
+    autogen fixes
+
+commit 972b605627ccd023cd6087c5b1c3ad0e94a11477
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 18:51:02 2010 +0100
+
+    fixed type
+
+commit 9c5b8731c56784576f68f8178739e586e61261f9
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 18:49:30 2010 +0100
+
+    added asserts
+
+commit 09029e43e06e7632863da6696e77eb7b6e232bfa
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 18:38:45 2010 +0100
+
+    added ltk_switch and _builder
+
+commit acbe61a018f31fd5fb1b584bc3ccd52ffbc36192
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 17:39:28 2010 +0100
+
+    hid structs behind typedefs
+
+commit c1a512ceccb18c922e32a7e1966ddef095f9d49b
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 17:33:06 2010 +0100
+
+    reworked values a bit
+
+commit c59b4bfd35ee9d33b9c22217f190adf492daf878
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 15:48:19 2010 +0100
+
+    created llib.h, hid LOptionValue behind _get_value_string etc
+
+commit 3886c1f9d8737d3b09ed2085267f433b321ef1c1
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 13:16:15 2010 +0100
+
+    formatted headers
+
+commit 0b5fd40b10e1fa14d5c3d8e3b99d2e8bb2f892cd
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 21 13:14:44 2010 +0100
+
+    implementent l_option_* and l_option_list_*
+
+commit d39b8a7b76be6e8a8da71eceec2f273c1d1a81da
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 17:02:22 2010 +0100
+
+    generous deletion
+
+commit 3346481b382fc1aa7ace9814dc90a36327790a53
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 13:22:24 2010 +0100
+
+    prototyped profile handling
+
+commit 13e65f84f1ce72cf9a07e551e9c7ba12f51b0d5b
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 10:21:34 2010 +0100
+
+    typos in README
+
+commit e1590c051b89581b6976c7e6322d02610e567a76
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 10:11:27 2010 +0100
+
+    added window icon
+
+commit fc2a5d2ed0c9169496b62b87e250f9ec1a25b52e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 09:31:08 2010 +0100
+
+    changed profile gui, play and stop will be in runtimes section
+
+commit fd2ffe69380f1b83c557c0fd6194977098e36ee0
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 09:19:23 2010 +0100
+
+    added flag suppot to BgOption
+
+commit b70351bfcb2f81fe3095ae05960873b29159641e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 08:52:10 2010 +0100
+
+    cleaned up a bit, added some comments
+
+commit 4dc91fb8403168b0d7bbc440bc8298d96436ce49
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 08:42:02 2010 +0100
+
+    updated autotools
+
+commit 493e4675a431eff187c3275263ea893270a276ac
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 08:40:05 2010 +0100
+
+    cleaned up controllers
+
+commit 03d263d5f388b85b6c7a495efb5da12945554d92
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 20 08:20:49 2010 +0100
+
+    added controllers
+
+commit 172d36447d49bdbe55f6126fbb42254ba2a768bd
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Dec 19 21:47:24 2010 +0100
+
+    naming
+
+commit 5cc539c5b5cdc529ce74b3ec378756078af1770e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Dec 19 20:47:04 2010 +0100
+
+    more gui work
+
+commit 82f6a0f015939f2d1715f34c5e20746b1f27a3d9
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Dec 19 19:54:26 2010 +0100
+
+    more gui work
+
+commit c6dea0a406f71d8be6c2880e9f32510813c236fc
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sun Dec 19 12:38:46 2010 +0100
+
+    more gui work
+
+commit 3c34b67f963d030e26377326b1f8d4f108de9d09
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 18 18:23:48 2010 +0100
+
+    renames
+
+commit 5e45d7264e5e0d00fb521c7ab6daa9452fbed957
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 18 17:19:19 2010 +0100
+
+    renewed
+
+commit eaa307a8f88d067b1f072680e048f4d2366ab400
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 18 13:24:41 2010 +0100
+
+    small
+
+commit bcf3977ce0fc9483c46d6e2a5758e703efd5582e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 14 13:16:54 2010 +0100
+
+    added switch widget
+
+commit 7a06316779b74825bcaab1a0896133c82452f527
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 11 07:42:54 2010 +0100
+
+    typo
+
+commit cbb993648d13da0f48dfedf798a492dda0ff0ddb
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 11 07:42:32 2010 +0100
+
+    cleaned, fixes
+
+commit 8aefac9e889f2fb373a5a15f548d3b08868e605d
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 11 07:26:36 2010 +0100
+
+    added options framework
+
+commit f20e9156c370c57efc3d135ef65a91398d3023f6
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Sat Dec 11 04:31:39 2010 +0100
+
+    cleanroom
+
+commit eb4f7ca1613f3b513bda5f3ee64a00a84bf04c57
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Fri Dec 10 13:11:31 2010 +0100
+
+    fixes
+
+commit be60413e69116bb0f22b68e55092e1cf86e420c8
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 20:16:18 2010 +0100
+
+    shortened synth labels
+
+commit 21d541877ad86976db1b213a59a63804f9194ce2
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 20:12:36 2010 +0100
+
+    changed gui_commons function names, added switch_hbox widget
+
+commit 37ac64bd860333d9ca261fa34cb058283443565a
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 17:02:37 2010 +0100
+
+    ignore
+
+commit 60cda6970426d6faa1f044e9d7cbbbf3e35fc4ce
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 17:02:23 2010 +0100
+
+    fix
+
+commit 0ec651b615845321b7e0b1bff1eb60bd193beab9
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 16:59:56 2010 +0100
+
+    added aclocal to autogen.sh
+
+commit 6bfdb6e6db429ad9d3cc717ac79546a655cd7567
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 16:54:29 2010 +0100
+
+    autoclear added to remove the autotools mess
+
+commit b090e894c6754c07c3456d41338dee545e12aba0
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 16:46:18 2010 +0100
+
+    added autogen.sh
+
+commit e3e4abbfce67a1f449c049a14fd04a8160dde22d
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 16:43:44 2010 +0100
+
+    added minimal autotools support
+
+commit 880619892d0c66937d0c5cc92ca8e36d95adee50
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 13:09:46 2010 +0100
+
+    renames
+
+commit f7ffce3c4bd5fb5cd6b6b8973bb5681e406da710
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 12:59:22 2010 +0100
+
+    extracted some *_common util functions
+
+commit 7d483670b9c22105d04f1f2c03d4c24c83194bfa
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 12:25:58 2010 +0100
+
+    cosmetics
+
+commit 8231e0aba7a0dc777f81f1b2ddb1a67db05f8e05
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 12:15:43 2010 +0100
+
+    tab images configurable
+
+commit a561c628b0e120342c8d2874c369262f74f2a2b4
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 12:14:05 2010 +0100
+
+    added tab images
+
+commit 9ff9258c77823d3bf54c238c04940ab2bc4140c1
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 11:27:06 2010 +0100
+
+    gui factory functions
+
+commit d2e480eb66fa1a343be7b7d7d80e06e6f71186bc
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Tue Dec 7 10:38:06 2010 +0100
+
+    cleanroom prototype
+
+commit 632d3cd76c7128584b9ad5f92ad229c3f42163f2
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 6 22:24:06 2010 +0100
+
+    more on data structures
+
+commit ccc0c79b9a278b1ffcd41f22ed19e8691655d352
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 6 20:30:26 2010 +0100
+
+    refactored more
+
+commit 3ccb5d03f04e40a8f2119bcb24825315a1d6e7ca
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Mon Dec 6 11:49:46 2010 +0100
+
+    refactored, using prefixes, split files
+
+commit a6e125193ed95c675082432496d5bad2d3bc4cac
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 15:06:52 2010 +0100
+
+    refactored, edited README
+
+commit a5d9250c34e6ee384aa964b4deb3cabdf9d9672a
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 07:01:26 2010 +0100
+
+    added help window, README
+
+commit 6a9f2dd8d6c19162ab0d237ee4df48b491b966fe
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 06:28:21 2010 +0100
+
+    added license
+
+commit 8a569d53cffa6d7ab22df0dce5a263a18d6d7a2e
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 06:22:13 2010 +0100
+
+    small
+
+commit 8423f8c18f6a5b965dc811164daa4d82a11914e7
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 06:18:36 2010 +0100
+
+    added markdown
+
+commit 5b2c0cbcfd930234ac91f4463af2bd216f83615c
+Author: Martin Voigt <voigt.m@gmail.com>
+Date:   Thu Dec 2 06:12:51 2010 +0100
+
+    initial commit
