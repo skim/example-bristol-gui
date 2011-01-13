@@ -2,6 +2,8 @@
 #include <string.h>
 #include <lgui.h>
 
+#define BG_SESSION_ID_KEY "bg_option_id"
+
 typedef struct {
 	GtkObject *widget;
 	GList *on_change_funcs;
@@ -46,7 +48,12 @@ static LOptionList* bg_session_new_profile(BgSession *session) {
 	int i;
 	for (i = 0; i < l_option_list_length_options(session->base_profile); i++) {
 		LOption *source_option = l_option_list_nth_option(session->base_profile, i);
+		const char *id = l_option_get_id(source_option);
 		l_option_list_insert_option(profile, l_option_new_from_option(source_option));
+		LValue *default_value = l_option_list_get_value(session->base_profile, id);
+		if (default_value != NULL) {
+			l_option_list_set_value(profile, id, l_value_new_from_value(default_value));
+		}
 	}
 	g_debug("created new profile with %d options", i);
 	return profile;
@@ -137,37 +144,53 @@ static void bg_session_connect_toggle(BgSession *session, const char *toggle_nam
 	}
 }
 
-static void bg_session_add_option(BgSession *session, LOption *option) {
+static void bg_session_add_option(BgSession *session, LOption *option, LValue *default_value, GObject *widget) {
 	g_assert(session != NULL);
 	g_assert(option != NULL);
+	g_assert(default_value != NULL);
+	g_assert(l_option_get_type(option) == l_value_get_type(default_value));
+	const char *id = l_option_get_id(option);
 	l_option_list_insert_option(session->base_profile, option);
+	l_option_list_set_value(session->base_profile, id, default_value);
+	g_object_set_data(widget, BG_SESSION_ID_KEY, g_strdup(id));
+	g_debug("added option: %s, has default value: %d", id, l_option_list_get_value(session->base_profile, id) != NULL);
 }
 
-void bg_session_add_option_combo_box(BgSession *session, LOption *option, LValueList *choices, const char *combo_name, const char *toggle_name,
-		const char *con_name) {
+static void bg_session_on_change(GObject* object, gpointer data) {
+}
+
+static void bg_session_on_toggle(GObject *object, gpointer value) {
+	//TODO default values or real lazy init (extract new_value)
+}
+
+void bg_session_add_option_combo_box(BgSession *session, LOption *option, LValueList *choices, LValue *default_value, const char *combo_name,
+		const char *toggle_name, const char *con_name) {
 	g_assert(session != NULL);
 	g_assert(option != NULL);
 	g_assert(choices != NULL);
 	g_assert(combo_name != NULL && strlen(combo_name) > 1);
-	bg_session_add_option(session, option);
 	GtkComboBox *combo = ltk_builder_get_combo_box(session->builder, combo_name);
 	g_assert(combo != NULL);
 	ltk_combo_box_fill(combo, choices);
+	bg_session_add_option(session, option, default_value, G_OBJECT(combo));
 	bg_session_connect_toggle(session, toggle_name, con_name);
 	BgOptionData *data = bg_option_data_new(GTK_OBJECT(combo));
 	g_hash_table_insert(session->option_data, g_strdup(l_option_get_id(option)), data);
+	g_signal_connect(combo, "changed", G_CALLBACK(bg_session_on_change), session);
 }
 
-void bg_session_add_option_adjustment(BgSession *session, LOption *option, const char *adjust_name, const char *toggle_name, const char *con_name) {
+void bg_session_add_option_adjustment(BgSession *session, LOption *option, LValue *default_value, const char *adjust_name, const char *toggle_name,
+		const char *con_name) {
 	g_assert(session != NULL);
 	g_assert(option != NULL);
 	g_assert(adjust_name != NULL && strlen(adjust_name) > 1);
-	bg_session_add_option(session, option);
 	GtkAdjustment *adjust = ltk_builder_get_adjustment(session->builder, adjust_name);
 	g_assert(adjust != NULL);
+	bg_session_add_option(session, option, default_value, G_OBJECT(adjust));
 	bg_session_connect_toggle(session, toggle_name, con_name);
 	BgOptionData *data = bg_option_data_new(GTK_OBJECT(adjust));
 	g_hash_table_insert(session->option_data, g_strdup(l_option_get_id(option)), data);
+	g_signal_connect(adjust, "changed", G_CALLBACK(bg_session_on_change), session);
 }
 
 void bg_session_on_change_connect(BgSession *session, GCallback func) {

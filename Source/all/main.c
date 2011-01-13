@@ -4,8 +4,14 @@
 
 #define BG_DATA_PATH "./Data"
 
+static GtkTextBuffer *buffer_command = NULL;
+
 void bg_buffer_command_update(GtkObject *object, gpointer data) {
-	g_debug("changed");
+	LOptionList *profile = (LOptionList*) data;
+	g_assert(profile != NULL);
+	const char *cli = l_option_list_render_cli(profile);
+	g_debug("values: %d", l_option_list_length_values(profile));
+	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile), -1);
 }
 
 int main(int argc, char **argv) {
@@ -16,6 +22,9 @@ int main(int argc, char **argv) {
 	if (builder == NULL) {
 		g_error("could not load gui definition");
 	}
+
+	buffer_command = ltk_builder_get_text_buffer(builder, "buffer_command");
+	g_assert(buffer_command != NULL);
 
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_profile"), ltk_builder_get_widget(builder, "box_profile"));
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_synth"), ltk_builder_get_widget(builder, "box_synth"));
@@ -29,7 +38,7 @@ int main(int argc, char **argv) {
 	l_value_list_put_value(engines, "JACK", l_value_new_string("jack"));
 	l_value_list_put_value(engines, "ALSA", l_value_new_string("alsa"));
 	l_value_list_put_value(engines, "OSS", l_value_new_string("oss"));
-	bg_session_add_option_combo_box(session, option_engine, engines, "combo_engine", "check_engine", "box_engine");
+	bg_session_add_option_combo_box(session, option_engine, engines, l_value_new_string("alsa"), "combo_engine", "check_engine", "box_engine");
 
 	LOption *samplerate = l_option_new_int("samplerate", "rate");
 	LValueList *samplerates = l_value_list_new_int();
@@ -38,10 +47,10 @@ int main(int argc, char **argv) {
 	l_value_list_put_value(samplerates, "44,100 Hz - (Audio CD)", l_value_new_int(44100));
 	l_value_list_put_value(samplerates, "48,000 Hz - (Video Standard)", l_value_new_int(48000));
 	l_value_list_put_value(samplerates, "96,000 Hz - (DVD Audio)", l_value_new_int(96000));
-	bg_session_add_option_combo_box(session, samplerate, samplerates, "combo_samplerate", "check_samplerate", "box_samplerate");
+	bg_session_add_option_combo_box(session, samplerate, samplerates, l_value_new_int(44000), "combo_samplerate", "check_samplerate", "box_samplerate");
 
 	LOption *midichannel = l_option_new_int("midichannel", "channel");
-	bg_session_add_option_adjustment(session, midichannel, "adjust_midichannel", "check_midichannel", "box_midichannel");
+	bg_session_add_option_adjustment(session, midichannel, l_value_new_int(1), "adjust_midichannel", "check_midichannel", "box_midichannel");
 
 	bg_session_on_change_connect(session, G_CALLBACK(bg_buffer_command_update));
 

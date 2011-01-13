@@ -823,7 +823,5 @@
     <property name="stock">gtk-edit</property>
     <property name="icon-size">1</property>
   </object>
-  <object class="GtkTextBuffer" id="buffer_command">
-    <property name="text" translatable="yes">startBristol</property>
-  </object>
+  <object class="GtkTextBuffer" id="buffer_command"/>
 </interface>
