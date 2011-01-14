@@ -8,7 +8,7 @@ static GtkTextBuffer *buffer_command;
 
 void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
 	g_debug("value changed for: %s", l_option_get_id(option));
-	const char *cli = l_option_list_render_cli(profile);
+	const char *cli = l_option_list_render_cli(profile, "startBristol ");
 	gtk_text_buffer_set_text(buffer_command, cli, -1);
 }
 
@@ -24,6 +24,9 @@ int main(int argc, char **argv) {
 
 	buffer_command = ltk_builder_get_text_buffer(builder, "buffer_command");
 	g_assert(buffer_command != NULL);
+	PangoFontDescription *monospace = pango_font_description_new();
+	pango_font_description_set_family(monospace, "monospace");
+	gtk_widget_modify_font(ltk_builder_get_widget(builder, "text_command"), monospace);
 
 	GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 	g_signal_connect(window_root, "delete_event", G_CALLBACK(gtk_main_quit), NULL);
@@ -52,7 +55,7 @@ int main(int argc, char **argv) {
 	LOptionList *profile = l_option_list_new();
 	l_option_list_add_value_change_listener(profile, bg_update_profile, NULL);
 
-	LValue *value_synth = l_value_new_string("mini");
+	LValue *value_synth = l_value_new_string("minilongword");
 	l_value_set_enabled(value_synth, TRUE);
 	LValue *value_engine = l_value_list_nth_value(engines, 2);
 	LValue *value_samplerate = l_value_list_nth_value(samplerates, 3);
@@ -75,7 +78,7 @@ int main(int argc, char **argv) {
 
 	bg_session_set_active_profile(session, "Default");
 
-	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile), -1);
+	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile, "startBristol "), -1);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();
