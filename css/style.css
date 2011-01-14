@@ -16,7 +16,6 @@
 
 html {
     overflow-y: scroll;
-    background-color: white;
 	background-color: #f0f0f0;
 }
 
@@ -46,7 +45,7 @@ body {
 
 code {
 	font-family: LiberationMono, monospace;
-    background-color: #e0f0ff;
+    background-color: #f0f0f0;
     display: block;
     margin-left: 24px;
     margin-right: 24px;
