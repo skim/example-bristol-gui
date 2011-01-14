@@ -4,7 +4,16 @@
 
 #define BG_DATA_PATH "./Data"
 
+void bg_update_profile(LValue *value, gpointer data) {
+	BgSession *session = (BgSession*) data;
+	g_assert(session != NULL);
+	LOptionList *profile = bg_session_get_active_profile(session);
+	g_assert(profile != NULL);
+	g_debug("startBristol %s", l_option_list_render_cli(profile));
+}
+
 int main(int argc, char **argv) {
+
 	l_set_data_path(BG_DATA_PATH);
 	gtk_init(&argc, &argv);
 
@@ -38,9 +47,11 @@ int main(int argc, char **argv) {
 	BgSession *session = bg_session_new(builder);
 
 	LOptionList *profile = l_option_list_new();
-	l_option_list_insert_option(profile, l_option_new_string("engine", NULL));
-	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"));
-	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"));
+	LValue *alsa = l_value_new_string("alsa");
+
+	l_option_list_insert_option(profile, l_option_new_string("engine", NULL), alsa);
+	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), l_value_new_int(48000));
+	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"), l_value_new_int(1));
 	bg_session_insert_profile(session, "Default", profile);
 
 	bg_session_register_combo_box(session, "engine", "combo_engine", engines);
@@ -51,6 +62,9 @@ int main(int argc, char **argv) {
 
 	bg_session_register_combo_box(session, "samplerate", "combo_samplerate", samplerates);
 	bg_session_register_enable_button(session, "samplerate", "check_samplerate", NULL);
+
+	bg_session_set_active_profile(session, "Default");
+	l_value_add_update_listener(alsa, bg_update_profile, session);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();
