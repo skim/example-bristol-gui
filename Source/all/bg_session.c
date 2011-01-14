@@ -4,35 +4,25 @@
 
 #define BG_SESSION_ID_KEY "bg_option_id"
 
-typedef struct {
-	GtkObject *widget;
-	GList *on_change_funcs;
-} BgOptionData;
-
 struct _BgSession {
-	LOptionList *base_profile;
-	GHashTable *option_data;
-	char *active_profile;
-	GHashTable *profiles;
 	GtkBuilder *builder;
+	GHashTable *profiles;
+	LValueList *profile_names;
+	GHashTable *widgets;
+	GHashTable *enable_buttons;
+	char *active_profile;
 };
-
-BgOptionData* bg_option_data_new(GtkObject *widget) {
-	g_assert(widget != NULL);
-	BgOptionData *data = g_new(BgOptionData, 1);
-	data->widget = widget;
-	data->on_change_funcs = NULL;
-	return data;
-}
 
 BgSession* bg_session_new(GtkBuilder *builder) {
 	g_assert(builder != NULL);
 	BgSession *session = g_new(BgSession, 1);
-	session->profiles = g_hash_table_new(g_str_hash, g_str_equal);
-	session->option_data = g_hash_table_new(g_str_hash, g_str_equal);
 	session->builder = builder;
-	session->base_profile = l_option_list_new();
+	session->profiles = g_hash_table_new(g_str_hash, g_str_equal);
+	session->profile_names = l_value_list_new_string();
+	session->widgets = g_hash_table_new(g_str_hash, g_str_equal);
+	session->enable_buttons = g_hash_table_new(g_str_hash, g_str_equal);
 	session->active_profile = NULL;
+	g_debug("new session");
 	return session;
 }
 
@@ -42,165 +32,80 @@ LOptionList* bg_session_get_profile(BgSession *session, const char *name) {
 	return (LOptionList*) g_hash_table_lookup(session->profiles, name);
 }
 
-static LOptionList* bg_session_new_profile(BgSession *session) {
+LOptionList* bg_session_get_active_profile(BgSession *session) {
 	g_assert(session != NULL);
-	LOptionList *profile = l_option_list_new();
-	int i;
-	for (i = 0; i < l_option_list_length_options(session->base_profile); i++) {
-		LOption *source_option = l_option_list_nth_option(session->base_profile, i);
-		const char *id = l_option_get_id(source_option);
-		l_option_list_insert_option(profile, l_option_new_from_option(source_option));
-		LValue *default_value = l_option_list_get_value(session->base_profile, id);
-		if (default_value != NULL) {
-			l_option_list_set_value(profile, id, l_value_new_from_value(default_value));
-		}
+	if (session->active_profile == NULL) {
+		return NULL;
+	} else {
+		return (LOptionList*) g_hash_table_lookup(session->profiles, g_strdup(session->active_profile));
 	}
-	g_debug("created new profile with %d options", i);
-	return profile;
 }
 
-void bg_session_add_profile(BgSession *session, const char *name) {
+void bg_session_set_active_profile(BgSession *session, const char *name) {
 	g_assert(session != NULL);
 	g_assert(name != NULL && strlen(name) > 0);
-	if (bg_session_get_profile(session, name) != NULL) {
-		g_warning("not adding profile %s, profile exists already", name);
+	LOptionList *profile = bg_session_get_profile(session, name);
+	if (profile == NULL) {
+		g_warning("no profile for name: %s", name);
 	} else {
-		g_hash_table_insert(session->profiles, g_strdup(name), bg_session_new_profile(session));
-		g_debug("added profile %s", name);
+		session->active_profile = g_strdup(name);
+		g_debug("set active profile: %s", name);
+	}
+}
+
+void bg_session_insert_profile(BgSession *session, const char *name, LOptionList *profile) {
+	g_assert(session != NULL);
+	g_assert(name != NULL && strlen(name) > 0);
+	g_assert(profile != NULL);
+	if (bg_session_get_profile(session, name)) {
+		g_warning("a profile with the name %s already exists", name);
+	} else {
+		g_hash_table_insert(session->profiles, g_strdup(name), profile);
+		l_value_list_put_value(session->profile_names, name, l_value_new_string(name));
+		g_debug("inserted profile: %s", name);
 		if (bg_session_get_active_profile(session) == NULL) {
 			bg_session_set_active_profile(session, name);
 		}
 	}
 }
 
-static void bg_session_connect_active_profile(BgSession *session) {
+void bg_session_register_combo_box(BgSession *session, const char *option_name, const char *widget_name, LValueList *filling) {
 	g_assert(session != NULL);
-	LOptionList *profile = bg_session_get_active_profile(session);
-	g_assert(profile != NULL);
-	if (profile != NULL) {
-		GList *keys = g_hash_table_get_keys(session->option_data);
-		int i;
-		for (i = 0; i < g_list_length(keys); i++) {
-			BgOptionData *data = g_hash_table_lookup(session->option_data, g_list_nth_data(keys, i));
-			int j;
-			for (j = 0; j < g_list_length(data->on_change_funcs); j++) {
-				GCallback func = (GCallback) g_list_nth_data(data->on_change_funcs, j);
-				if (GTK_IS_ADJUSTMENT(data->widget)) {
-					g_signal_connect(data->widget, "value-changed", G_CALLBACK(func), profile);
-				} else if (GTK_IS_COMBO_BOX(data->widget)) {
-					g_signal_connect(data->widget, "changed", G_CALLBACK(func), profile);
-				}
-			}
-		}
-		g_debug("connected profile %s to %d widgets", session->active_profile, i);
-	}
-}
-
-static void bg_session_disconnect_active_profile(BgSession *session) {
-	g_assert(session != NULL);
-	LOptionList *profile = bg_session_get_active_profile(session);
-	if (profile != NULL) {
-		GList *keys = g_hash_table_get_keys(session->option_data);
-		int i;
-		for (i = 0; i < g_list_length(keys); i++) {
-			BgOptionData *data = g_hash_table_lookup(session->option_data, g_list_nth_data(keys, i));
-			if (g_list_length(data->on_change_funcs) > 0) {
-				gtk_signal_disconnect_by_data(data->widget, profile);
-			}
-		}
-		g_debug("disconnected profile %s from %d widgets", session->active_profile, i);
-	}
-}
-
-void bg_session_set_active_profile(BgSession *session, const char *name) {
-	g_assert(session != NULL);
-	g_assert(name != NULL);
-	if (g_hash_table_lookup(session->profiles, name) != NULL) {
-		bg_session_disconnect_active_profile(session);
-		session->active_profile = g_strdup(name);
-		bg_session_connect_active_profile(session);
-		g_debug("activated profile %s", name);
-	} else {
-		g_warning("could not activate profile: %s, profile not found", name);
-	}
-}
-
-LOptionList* bg_session_get_active_profile(BgSession *session) {
-	g_assert(session != NULL);
-	if (session->active_profile == NULL) {
-		return NULL;
-	} else {
-		return (LOptionList*) g_hash_table_lookup(session->profiles, session->active_profile);
-	}
-}
-
-static void bg_session_connect_toggle(BgSession *session, const char *toggle_name, const char *con_name) {
-	if (toggle_name != NULL) {
-		GtkToggleButton *toggle = ltk_builder_get_toggle_button(session->builder, toggle_name);
-		GtkWidget *widget = ltk_builder_get_widget(session->builder, con_name);
-		g_assert(toggle != NULL);
-		g_assert(widget != NULL);
-		ltk_switch_sensitive_connect(GTK_BUTTON(toggle), widget);
-	}
-}
-
-static void bg_session_add_option(BgSession *session, LOption *option, LValue *default_value, GObject *widget) {
-	g_assert(session != NULL);
-	g_assert(option != NULL);
-	g_assert(default_value != NULL);
-	g_assert(l_option_get_type(option) == l_value_get_type(default_value));
-	const char *id = l_option_get_id(option);
-	l_option_list_insert_option(session->base_profile, option);
-	l_option_list_set_value(session->base_profile, id, default_value);
-	g_object_set_data(widget, BG_SESSION_ID_KEY, g_strdup(id));
-	g_debug("added option: %s, has default value: %d", id, l_option_list_get_value(session->base_profile, id) != NULL);
-}
-
-static void bg_session_on_change(GObject* object, gpointer data) {
-}
-
-static void bg_session_on_toggle(GObject *object, gpointer value) {
-	//TODO default values or real lazy init (extract new_value)
-}
-
-void bg_session_add_option_combo_box(BgSession *session, LOption *option, LValueList *choices, LValue *default_value, const char *combo_name,
-		const char *toggle_name, const char *con_name) {
-	g_assert(session != NULL);
-	g_assert(option != NULL);
-	g_assert(choices != NULL);
-	g_assert(combo_name != NULL && strlen(combo_name) > 1);
-	GtkComboBox *combo = ltk_builder_get_combo_box(session->builder, combo_name);
+	g_assert(option_name != NULL && strlen(option_name) > 0);
+	g_assert(widget_name != NULL && strlen(widget_name) > 0);
+	g_assert(filling != NULL);
+	GtkComboBox *combo = ltk_builder_get_combo_box(session->builder, widget_name);
 	g_assert(combo != NULL);
-	ltk_combo_box_fill(combo, choices);
-	bg_session_add_option(session, option, default_value, G_OBJECT(combo));
-	bg_session_connect_toggle(session, toggle_name, con_name);
-	BgOptionData *data = bg_option_data_new(GTK_OBJECT(combo));
-	g_hash_table_insert(session->option_data, g_strdup(l_option_get_id(option)), data);
-	g_signal_connect(combo, "changed", G_CALLBACK(bg_session_on_change), session);
+	ltk_combo_box_fill(combo, filling);
+	g_hash_table_insert(session->widgets, g_strdup(option_name), combo);
+	g_debug("registered combo box: %s to option: %s", widget_name, option_name);
 }
 
-void bg_session_add_option_adjustment(BgSession *session, LOption *option, LValue *default_value, const char *adjust_name, const char *toggle_name,
-		const char *con_name) {
+void bg_session_register_adjustment(BgSession *session, const char *option_name, const char *widget_name) {
 	g_assert(session != NULL);
-	g_assert(option != NULL);
-	g_assert(adjust_name != NULL && strlen(adjust_name) > 1);
-	GtkAdjustment *adjust = ltk_builder_get_adjustment(session->builder, adjust_name);
+	g_assert(option_name != NULL && strlen(option_name) > 0);
+	g_assert(widget_name != NULL && strlen(widget_name) > 0);
+	GtkAdjustment *adjust = ltk_builder_get_adjustment(session->builder, widget_name);
 	g_assert(adjust != NULL);
-	bg_session_add_option(session, option, default_value, G_OBJECT(adjust));
-	bg_session_connect_toggle(session, toggle_name, con_name);
-	BgOptionData *data = bg_option_data_new(GTK_OBJECT(adjust));
-	g_hash_table_insert(session->option_data, g_strdup(l_option_get_id(option)), data);
-	g_signal_connect(adjust, "changed", G_CALLBACK(bg_session_on_change), session);
+	g_hash_table_insert(session->widgets, g_strdup(option_name), adjust);
+	g_debug("registered adjustment: %s for option: %s", widget_name, option_name);
 }
 
-void bg_session_on_change_connect(BgSession *session, GCallback func) {
+void bg_session_register_enable_button(BgSession *session, const char *option_name, const char *button_name, const char *widget_to_toggle) {
 	g_assert(session != NULL);
-	g_assert(func != NULL);
-	GList *keys = g_hash_table_get_keys(session->option_data);
-	int i;
-	for (i = 0; i < g_list_length(keys); i++) {
-		BgOptionData *data = g_hash_table_lookup(session->option_data, g_list_nth_data(keys, i));
-		data->on_change_funcs = g_list_append(data->on_change_funcs, func);
+	g_assert(option_name != NULL && strlen(option_name) > 0);
+	g_assert(button_name != NULL && strlen(button_name) > 0);
+	g_assert(widget_to_toggle == NULL || strlen(widget_to_toggle) > 0);
+	GtkButton *toggle = ltk_builder_get_button(session->builder, button_name);
+	g_assert(toggle != NULL);
+	GtkWidget *widget = NULL;
+	if (widget_to_toggle != NULL) {
+		widget = ltk_builder_get_widget(session->builder, widget_to_toggle);
+	} else {
+		widget = GTK_WIDGET(g_hash_table_lookup(session->widgets, option_name));
 	}
-	g_debug("added on_change func to %d options", i);
+	g_assert(widget != NULL);
+	ltk_switch_sensitive_connect(toggle, widget);
+	g_hash_table_insert(session->enable_buttons, g_strdup(option_name), toggle);
+	g_debug("registered toggle: %s for option: %s", button_name, option_name);
 }
