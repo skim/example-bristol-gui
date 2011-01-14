@@ -6,13 +6,10 @@
 
 static GtkTextBuffer *buffer_command;
 
-void bg_update_profile(LValue *value, gpointer data) {
-	BgSession *session = (BgSession*) data;
-	g_assert(session != NULL);
-	g_assert(buffer_command != NULL);
-	LOptionList *profile = bg_session_get_active_profile(session);
-	g_assert(profile != NULL);
-	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile), -1);
+void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
+	g_debug("value changed for: %s", l_option_get_id(option));
+	const char *cli = l_option_list_render_cli(profile);
+	gtk_text_buffer_set_text(buffer_command, cli, -1);
 }
 
 int main(int argc, char **argv) {
@@ -53,11 +50,15 @@ int main(int argc, char **argv) {
 	BgSession *session = bg_session_new(builder);
 
 	LOptionList *profile = l_option_list_new();
+	l_option_list_add_value_change_listener(profile, bg_update_profile, NULL);
 
+	LValue *value_synth = l_value_new_string("mini");
+	l_value_set_enabled(value_synth, TRUE);
 	LValue *value_engine = l_value_list_nth_value(engines, 2);
 	LValue *value_samplerate = l_value_list_nth_value(samplerates, 3);
 	LValue *value_midichannel = l_value_new_int(1);
 
+	l_option_list_insert_option(profile, l_option_new_string("synth", FALSE), value_synth);
 	l_option_list_insert_option(profile, l_option_new_string("engine", NULL), value_engine);
 	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), value_samplerate);
 	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"), value_midichannel);
@@ -73,9 +74,8 @@ int main(int argc, char **argv) {
 	bg_session_register_enable_button(session, "samplerate", "check_samplerate", NULL);
 
 	bg_session_set_active_profile(session, "Default");
-	l_value_add_update_listener(value_engine, bg_update_profile, session);
-	l_value_add_update_listener(value_samplerate, bg_update_profile, session);
-	l_value_add_update_listener(value_midichannel, bg_update_profile, session);
+
+	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile), -1);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();
