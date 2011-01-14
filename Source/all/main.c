@@ -4,12 +4,15 @@
 
 #define BG_DATA_PATH "./Data"
 
+static GtkTextBuffer *buffer_command;
+
 void bg_update_profile(LValue *value, gpointer data) {
 	BgSession *session = (BgSession*) data;
 	g_assert(session != NULL);
+	g_assert(buffer_command != NULL);
 	LOptionList *profile = bg_session_get_active_profile(session);
 	g_assert(profile != NULL);
-	g_debug("startBristol %s", l_option_list_render_cli(profile));
+	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile), -1);
 }
 
 int main(int argc, char **argv) {
@@ -21,6 +24,9 @@ int main(int argc, char **argv) {
 	if (builder == NULL) {
 		g_error("could not load gui definition");
 	}
+
+	buffer_command = ltk_builder_get_text_buffer(builder, "buffer_command");
+	g_assert(buffer_command != NULL);
 
 	GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 	g_signal_connect(window_root, "delete_event", G_CALLBACK(gtk_main_quit), NULL);
@@ -47,11 +53,14 @@ int main(int argc, char **argv) {
 	BgSession *session = bg_session_new(builder);
 
 	LOptionList *profile = l_option_list_new();
-	LValue *alsa = l_value_new_string("alsa");
 
-	l_option_list_insert_option(profile, l_option_new_string("engine", NULL), alsa);
-	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), l_value_new_int(48000));
-	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"), l_value_new_int(1));
+	LValue *value_engine = l_value_list_nth_value(engines, 2);
+	LValue *value_samplerate = l_value_list_nth_value(samplerates, 3);
+	LValue *value_midichannel = l_value_new_int(1);
+
+	l_option_list_insert_option(profile, l_option_new_string("engine", NULL), value_engine);
+	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), value_samplerate);
+	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"), value_midichannel);
 	bg_session_insert_profile(session, "Default", profile);
 
 	bg_session_register_combo_box(session, "engine", "combo_engine", engines);
@@ -64,7 +73,9 @@ int main(int argc, char **argv) {
 	bg_session_register_enable_button(session, "samplerate", "check_samplerate", NULL);
 
 	bg_session_set_active_profile(session, "Default");
-	l_value_add_update_listener(alsa, bg_update_profile, session);
+	l_value_add_update_listener(value_engine, bg_update_profile, session);
+	l_value_add_update_listener(value_samplerate, bg_update_profile, session);
+	l_value_add_update_listener(value_midichannel, bg_update_profile, session);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();
