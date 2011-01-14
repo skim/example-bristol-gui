@@ -2,18 +2,33 @@
 #include "bg_session.h"
 #include <gtk/gtk.h>
 
-#ifndef BG_DATA_PATH
+#define QUOTE_(x) #x
+#define QUOTE(x) QUOTE_(x)
+
 #define BG_DATA_PATH "./Data"
-#endif
 
 static GtkTextBuffer *buffer_command;
 
 void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
+	LValue *value = l_option_list_get_value(profile, l_option_get_id(option));
 	const char *cli = l_option_list_render_cli(profile, "startBristol");
 	gtk_text_buffer_set_text(buffer_command, cli, -1);
 }
 
+void bg_start_profile(GtkButton *button, gpointer data) {
+	BgSession *session = (BgSession*) data;
+	g_assert(data != NULL);
+	LOptionList *profile = bg_session_get_active_profile(session);
+	g_assert(profile != NULL);
+	const char *cli = l_option_list_render_cli(profile, "startBristol");
+	GError *error;
+	if (!g_spawn_command_line_async(cli, &error)) {
+		g_warning("Could not start profile, reason: %s", error->message);
+	}
+}
+
 int main(int argc, char **argv) {
+	g_debug("data path: %s", BG_DATA_PATH);
 
 	l_set_data_path(BG_DATA_PATH);
 	gtk_init(&argc, &argv);
@@ -59,8 +74,8 @@ int main(int argc, char **argv) {
 
 	LValue *value_synth = l_value_new_string("mini");
 	l_value_set_enabled(value_synth, TRUE);
-	LValue *value_engine = l_value_list_nth_value(engines, 0);
-	LValue *value_samplerate = l_value_list_nth_value(samplerates, 3);
+	LValue *value_engine = l_value_new_string("jack");
+	LValue *value_samplerate = l_value_new_int(48000);
 	LValue *value_midichannel = l_value_new_int(1);
 
 	l_option_list_insert_option(profile, l_option_new_string("synth", FALSE), value_synth);
@@ -83,6 +98,7 @@ int main(int argc, char **argv) {
 	bg_session_set_active_profile(session, "Default");
 
 	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile, "startBristol"), -1);
+	g_signal_connect(ltk_builder_get_button(builder, "button_start"), "clicked", G_CALLBACK(bg_start_profile), session);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();

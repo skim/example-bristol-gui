@@ -200,6 +200,8 @@
             </child>
           </object>
           <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="padding">4</property>
             <property name="position">3</property>
           </packing>
@@ -271,7 +273,7 @@
                 <property name="visible">True</property>
                 <child>
                   <object class="GtkButton" id="button_synth_edit">
-                    <property name="label" translatable="yes">Change</property>
+                    <property name="label" translatable="yes">Change...</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -561,7 +563,7 @@
                             <property name="visible">True</property>
                             <child>
                               <object class="GtkButton" id="button1">
-                                <property name="label" translatable="yes">Reorder</property>
+                                <property name="label" translatable="yes">Reorder...</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
@@ -818,7 +820,7 @@
   </object>
   <object class="GtkImage" id="image12">
     <property name="visible">True</property>
-    <property name="stock">gtk-edit</property>
+    <property name="stock">gtk-properties</property>
     <property name="icon-size">1</property>
   </object>
   <object class="GtkAdjustment" id="adjust_midichannel">
@@ -842,7 +844,7 @@
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
-    <property name="stock">gtk-properties</property>
+    <property name="stock">gtk-edit</property>
     <property name="icon-size">1</property>
   </object>
   <object class="GtkTextBuffer" id="buffer_command"/>
