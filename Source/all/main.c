@@ -2,13 +2,14 @@
 #include "bg_session.h"
 #include <gtk/gtk.h>
 
+#ifndef BG_DATA_PATH
 #define BG_DATA_PATH "./Data"
+#endif
 
 static GtkTextBuffer *buffer_command;
 
 void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
-	g_debug("value changed for: %s", l_option_get_id(option));
-	const char *cli = l_option_list_render_cli(profile, "startBristol ");
+	const char *cli = l_option_list_render_cli(profile, "startBristol");
 	gtk_text_buffer_set_text(buffer_command, cli, -1);
 }
 
@@ -33,6 +34,7 @@ int main(int argc, char **argv) {
 
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_profile"), ltk_builder_get_widget(builder, "box_profile"));
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_synth"), ltk_builder_get_widget(builder, "box_synth"));
+	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_synth"), ltk_builder_get_widget(builder, "box_check_synth"));
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_options"), ltk_builder_get_widget(builder, "box_options"));
 	ltk_switch_visible_connect(ltk_builder_get_button(builder, "switch_runtimes"), ltk_builder_get_widget(builder, "box_runtimes"));
 
@@ -55,17 +57,19 @@ int main(int argc, char **argv) {
 	LOptionList *profile = l_option_list_new();
 	l_option_list_add_value_change_listener(profile, bg_update_profile, NULL);
 
-	LValue *value_synth = l_value_new_string("minilongword");
+	LValue *value_synth = l_value_new_string("mini");
 	l_value_set_enabled(value_synth, TRUE);
-	LValue *value_engine = l_value_list_nth_value(engines, 2);
+	LValue *value_engine = l_value_list_nth_value(engines, 0);
 	LValue *value_samplerate = l_value_list_nth_value(samplerates, 3);
 	LValue *value_midichannel = l_value_new_int(1);
 
 	l_option_list_insert_option(profile, l_option_new_string("synth", FALSE), value_synth);
 	l_option_list_insert_option(profile, l_option_new_string("engine", NULL), value_engine);
-	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), value_samplerate);
 	l_option_list_insert_option(profile, l_option_new_int("midichannel", "channel"), value_midichannel);
+	l_option_list_insert_option(profile, l_option_new_int("samplerate", "rate"), value_samplerate);
 	bg_session_insert_profile(session, "Default", profile);
+
+	bg_session_register_enable_button(session, "synth", "check_synth", "box_synth");
 
 	bg_session_register_combo_box(session, "engine", "combo_engine", engines);
 	bg_session_register_enable_button(session, "engine", "check_engine", NULL);
@@ -78,7 +82,7 @@ int main(int argc, char **argv) {
 
 	bg_session_set_active_profile(session, "Default");
 
-	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile, "startBristol "), -1);
+	gtk_text_buffer_set_text(buffer_command, l_option_list_render_cli(profile, "startBristol"), -1);
 
 	gtk_widget_show_all(window_root);
 	gtk_main();
