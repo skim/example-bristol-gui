@@ -14,5 +14,6 @@ void 			bg_session_register_combo_box(BgSession *session, const char *option_nam
 void 			bg_session_register_adjustment(BgSession *session, const char *option_name, const char *widget_name);
 void 			bg_session_register_enable_button(BgSession *session, const char *option_name, const char *button_name, const char *widget_to_toggle);
 void 			bg_session_connect_profile(BgSession *session, const char *name);
+LValueList* 	bg_session_get_profile_names(BgSession *session);
 
 #endif /* BG_SESSION_H_ */

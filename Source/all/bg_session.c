@@ -43,6 +43,11 @@ void bg_session_insert_profile(BgSession *session, const char *name, LOptionList
 	}
 }
 
+LValueList* bg_session_get_profile_names(BgSession *session) {
+	g_assert(session != NULL);
+	return session->profile_names;
+}
+
 void bg_session_register_combo_box(BgSession *session, const char *option_name, const char *widget_name, LValueList *filling) {
 	g_assert(session != NULL);
 	g_assert(option_name != NULL && strlen(option_name) > 0);
