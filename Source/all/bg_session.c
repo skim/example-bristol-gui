@@ -24,6 +24,11 @@ BgSession* bg_session_new(GtkBuilder *builder) {
 	return session;
 }
 
+GtkBuilder* bg_session_get_builder(BgSession *session) {
+	g_assert(session != NULL);
+	return session->builder;
+}
+
 LOptionList* bg_session_get_profile(BgSession *session, const char *name) {
 	g_assert(session != NULL);
 	g_assert(name != NULL && strlen(name) > 0);

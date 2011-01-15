@@ -8,12 +8,12 @@
 
 static GtkTextBuffer *buffer_command;
 
-void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
+static void bg_update_profile(LOptionList *profile, LOption *option, gpointer data) {
 	const char *cli = l_option_list_render_cli(profile, "startBristol");
 	gtk_text_buffer_set_text(buffer_command, cli, -1);
 }
 
-void bg_start_profile(GtkButton *button, gpointer data) {
+static void bg_start_profile(GtkButton *button, gpointer data) {
 	BgSession *session = (BgSession*) data;
 	g_assert(data != NULL);
 	LOptionList *profile = bg_session_get_active_profile(session);
@@ -25,13 +25,23 @@ void bg_start_profile(GtkButton *button, gpointer data) {
 	}
 }
 
-void bg_change_profile(LValue *value, gpointer data) {
+static void bg_change_profile(LValue *value, gpointer data) {
 	g_assert(value != NULL);
 	BgSession *session = (BgSession*) data;
 	g_assert(session != NULL);
 	bg_session_set_active_profile(session, l_value_get_string(value));
 	bg_update_profile(bg_session_get_active_profile(session), NULL, NULL);
 	g_debug("changed profile: %s", l_value_get_string(value));
+}
+
+static void bg_new_profile(GtkButton *button, gpointer data) {
+	BgSession *session = (BgSession*) data;
+	g_assert(session != NULL);
+	GtkDialog *dialog = ltk_builder_get_dialog(bg_session_get_builder(session), "dialog_profile_new");
+	g_assert(dialog != NULL);
+	int result = gtk_dialog_run(dialog);
+	g_debug("result: %d", result);
+	gtk_widget_hide(GTK_WIDGET(dialog));
 }
 
 int main(int argc, char **argv) {
@@ -45,6 +55,10 @@ int main(int argc, char **argv) {
 
 	buffer_command = ltk_builder_get_text_buffer(builder, "buffer_command");
 	g_signal_connect(ltk_builder_get_button(builder, "button_start"), "clicked", G_CALLBACK(bg_start_profile), session);
+
+	GtkButton *button_profile_new = ltk_builder_get_button(builder, "button_profile_new");
+	g_assert(button_profile_new != NULL);
+	g_signal_connect(button_profile_new, "clicked", G_CALLBACK(bg_new_profile), session);
 
 	LOptionList *profile = bg_create_default_profile();
 	l_option_list_add_value_change_listener(profile, bg_update_profile, NULL);

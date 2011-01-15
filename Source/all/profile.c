@@ -6,12 +6,14 @@ BgSession* bg_create_session(GtkBuilder *builder) {
 	l_value_list_put_value(engines, "JACK", l_value_new_string("jack"));
 	l_value_list_put_value(engines, "ALSA", l_value_new_string("alsa"));
 	l_value_list_put_value(engines, "OSS", l_value_new_string("oss"));
+	l_value_list_put_value(engines, "DebugLongString", l_value_new_string("averylongstringtochecklinewrapping"));
+
 
 	LValueList *samplerates = l_value_list_new_int();
 	l_value_list_put_value(samplerates, "11,025 Hz - (1/4 Audio CD)", l_value_new_int(11025));
 	l_value_list_put_value(samplerates, "22,050 Hz - (1/2 Audio CD)", l_value_new_int(22050));
 	l_value_list_put_value(samplerates, "44,100 Hz - (Audio CD)", l_value_new_int(44100));
-	l_value_list_put_value(samplerates, "48,000 Hz - (Video Standard)", l_value_new_int(48000));
+	l_value_list_put_value(samplerates, "48,000 Hz - (HiFi/ Video Standard)", l_value_new_int(48000));
 	l_value_list_put_value(samplerates, "96,000 Hz - (DVD Audio)", l_value_new_int(96000));
 
 	BgSession *session = bg_session_new(builder);

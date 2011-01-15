@@ -7,6 +7,7 @@
 typedef struct _BgSession BgSession;
 
 BgSession* 		bg_session_new(GtkBuilder *builder);
+GtkBuilder*		bg_session_get_builder(BgSession *session);
 void			bg_session_insert_profile(BgSession *session, const char *name, LOptionList *profile);
 void 			bg_session_set_active_profile(BgSession *session, const char *name);
 LOptionList*	bg_session_get_active_profile(BgSession *session);
