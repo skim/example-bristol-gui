@@ -6,10 +6,6 @@ synthesizer emulation (http://bristol.sourceforge.net,
 author: Nick Copeland). Written in ANSI-C, using the GTK. 
 bristolgui is Free Software, see the "License" section.
 
-bristolgui runs only on Linux and BSD systems.
-Since there is no equivalent to JACK or ALSA on MS Windows based 
-operating systems, porting it would make no sense at all.
-
 License
 -------
 
@@ -40,6 +36,7 @@ automake
 autoconf
 m4
 gtk+-dev 
+lgui-0.1
 
 To compile and install, run:
 

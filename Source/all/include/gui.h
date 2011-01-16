@@ -2,7 +2,8 @@
 #define GUI_H_
 
 #include <gtk/gtk.h>
+#include "bg_session.h"
 
-GtkBuilder* bg_prepare_gui(const char *filename);
+void bg_prepare_gui(BgSession *session);
 
 #endif /* GUI_H_ */

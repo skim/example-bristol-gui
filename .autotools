@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurations>
-<configuration id="org.eclipse.linuxtools.cdt.autotools.core.configuration.build.903144744">
+<configuration id="org.eclipse.linuxtools.cdt.autotools.core.configuration.build.1620625062">
 <option id="configure" value="configure"/>
 <option id="configdir" value=""/>
 <option id="cache-file" value=""/>
@@ -10,7 +10,7 @@
 <option id="version" value="false"/>
 <option id="host" value=""/>
 <option id="build" value=""/>
-<option id="target" value="DEVELOPMENT"/>
+<option id="target" value=""/>
 <option id="prefix" value=""/>
 <option id="exec-prefix" value=""/>
 <option id="libdir" value=""/>

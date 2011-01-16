@@ -53,14 +53,12 @@ LValueList* bg_session_get_profile_names(BgSession *session) {
 	return session->profile_names;
 }
 
-void bg_session_register_combo_box(BgSession *session, const char *option_name, const char *widget_name, LValueList *filling) {
+void bg_session_register_combo_box(BgSession *session, const char *option_name, const char *widget_name) {
 	g_assert(session != NULL);
 	g_assert(option_name != NULL && strlen(option_name) > 0);
 	g_assert(widget_name != NULL && strlen(widget_name) > 0);
-	g_assert(filling != NULL);
 	GtkComboBox *combo = ltk_builder_get_combo_box(session->builder, widget_name);
 	g_assert(combo != NULL);
-	ltk_combo_box_fill(combo, filling);
 	g_hash_table_insert(session->widgets, g_strdup(option_name), combo);
 	g_debug("registered combo box: %s to option: %s", widget_name, option_name);
 }
@@ -148,10 +146,18 @@ static void bg_session_connect_option(BgSession *session, const char *option_nam
 			g_debug("connected enable toggle for option: %s", option_name);
 		}
 		GtkObject *widget = g_hash_table_lookup(session->widgets, option_name);
+		LOption *option = l_option_list_get_option(profile, option_name);
+		g_assert(option != NULL);
+		LValueList *choices = l_option_get_choices(option);
 		if (widget == NULL) {
 			g_warning("no widget registered for option: %s", option_name);
 		} else {
 			if (GTK_IS_COMBO_BOX(widget)) {
+				if (choices != NULL) {
+					ltk_combo_box_fill(GTK_COMBO_BOX(widget), choices);
+				} else {
+					g_warning("empty combo box: %s", option_name);
+				}
 				ltk_combo_box_connect_value(GTK_COMBO_BOX(widget), value);
 				g_debug("connected combo box to option: %s", option_name);
 			} else if (GTK_IS_ADJUSTMENT(widget)) {

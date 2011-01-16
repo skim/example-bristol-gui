@@ -17,4 +17,4 @@ bristolguiextra_DATA = Data/*
 
 AM_CPPFLAGS=@GTK_CFLAGS@ @lgui_CFLAGS@
 
-bristolgui_LDADD=@GTK_LIBS@ @lgui_LIBS@
+bristolgui_LDADD=@GTK_LIBS@ @lgui_LIBS@ -lgc
