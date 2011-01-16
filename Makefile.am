@@ -5,9 +5,9 @@ bin_PROGRAMS = bristolgui
 
 bristolgui_SOURCES = \
 Source/all/main.c \
-Source/all/profile.c \
-Source/all/gui.c \
-Source/all/bg_session.c
+Source/all/bg_session.c \
+Source/all/app_profile.c \
+Source/all/app_session.c 
 
 #FIXME: data dir (usr/share) is hardcoded, './configure --prefix=[]' won't work
 bristolgui_CFLAGS = -ISource/all/include -DBG_DATA_PATH=\"/usr/share/@PACKAGE@\"

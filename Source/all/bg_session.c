@@ -35,6 +35,12 @@ LOptionList* bg_session_get_profile(BgSession *session, const char *name) {
 	return (LOptionList*) g_hash_table_lookup(session->profiles, name);
 }
 
+gboolean bg_session_has_profile(BgSession *session, const char *name) {
+	g_assert(session != NULL);
+	g_assert(name != NULL && strlen(name) > 0);
+	return bg_session_get_profile(session, name) != NULL;
+}
+
 void bg_session_insert_profile(BgSession *session, const char *name, LOptionList *profile) {
 	g_assert(session != NULL);
 	g_assert(name != NULL && strlen(name) > 0);
@@ -153,11 +159,9 @@ static void bg_session_connect_option(BgSession *session, const char *option_nam
 			g_warning("no widget registered for option: %s", option_name);
 		} else {
 			if (GTK_IS_COMBO_BOX(widget)) {
-				if (choices != NULL) {
-					ltk_combo_box_fill(GTK_COMBO_BOX(widget), choices);
-				} else {
-					g_warning("empty combo box: %s", option_name);
-				}
+				g_debug("LAST: %s", option_name);
+				g_assert(choices != NULL);
+				ltk_combo_box_fill(GTK_COMBO_BOX(widget), choices);
 				ltk_combo_box_connect_value(GTK_COMBO_BOX(widget), value);
 				g_debug("connected combo box to option: %s", option_name);
 			} else if (GTK_IS_ADJUSTMENT(widget)) {

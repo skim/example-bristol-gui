@@ -1,44 +1,37 @@
 #include <lgui.h>
-#include "bg_session.h"
-#include "profile.h"
-#include "gui.h"
 #include <gtk/gtk.h>
-#include <stdlib.h>
-#include <gc.h>
+#include <string.h>
+#include "bg_session.h"
+#include "app_profile.h"
+#include "app_session.h"
+
 
 #define BG_DATA_PATH "./Data"
 
-static void bg_start_profile(GtkButton *button, gpointer data) {
-	BgSession *session = (BgSession*) data;
-	g_assert(data != NULL);
-	LOptionList *profile = bg_session_get_active_profile(session);
-	g_assert(profile != NULL);
-	const char *cli = l_option_list_render_cli(profile, "startBristol");
-	GError *error = NULL;
-	if (!g_spawn_command_line_async(cli, &error)) {
-		g_warning("Could not start profile, reason: %s", error->message);
-	}
-}
-
 int main(int argc, char **argv) {
 	gtk_init(&argc, &argv);
-
 	l_set_data_path(BG_DATA_PATH);
 	g_debug("data path: %s", BG_DATA_PATH);
-
 
 	GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
 	if (builder == NULL) {
 		g_error("could not load gui definition");
 	}
 
-	BgSession *session = bg_create_session(builder);
-	bg_session_insert_profile(session, "Default", bg_create_default_profile(session));
-	bg_session_insert_profile(session, "Polyphonic", bg_create_default_profile(session));
-	bg_prepare_gui(session);
-	bg_session_set_active_profile(session, "Default");
+	BgSession *session = bg_session_new(builder);
+	app_session_prepare(session);
+	app_profile_prepare_session(session);
 
-	gtk_widget_show_all(ltk_builder_get_widget(builder, "window_root"));
+	LOptionList *profile_default = app_profile_new();
+	LOptionList *profile_other = l_option_list_new_from_option_list(profile_default);
+	LOption *o = l_option_list_get_option(profile_other, "engine");
+	g_assert(l_option_get_choices(o) != NULL);
+	app_session_add_profile(session, "Default", profile_default);
+	app_session_add_profile(session, "Other", profile_other);
+
+	GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
+	g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
+	gtk_widget_show_all(window_root);
 	gtk_main();
 
 	return 0;

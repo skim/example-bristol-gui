@@ -9,6 +9,7 @@ typedef struct _BgSession BgSession;
 BgSession* 		bg_session_new(GtkBuilder *builder);
 GtkBuilder*		bg_session_get_builder(BgSession *session);
 void			bg_session_insert_profile(BgSession *session, const char *name, LOptionList *profile);
+gboolean		bg_session_has_profile(BgSession *session, const char *name);
 void 			bg_session_set_active_profile(BgSession *session, const char *name);
 LOptionList*	bg_session_get_active_profile(BgSession *session);
 void 			bg_session_register_combo_box(BgSession *session, const char *option_name, const char *widget_name);
