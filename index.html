@@ -18,7 +18,7 @@
         <title>bristolgui - A Graphical User Interface for the Bristol Synthensizer Emulation</title>
     </head>
     <body>
-    	<a class="anchor-local" name="top"></a>
+    	<a class="anchor-local" id="top"></a>
 		<div class="navigation">
 			<a class="link-local icon-link-right" href="#about">About</a>
 			<a class="link-local icon-link-right" href="#screenshots">Screenshots</a>
@@ -26,7 +26,7 @@
 			<a class="link-local icon-link-right" href="#manual">Manual</a>			
 		</div>
         <div class="content">
-			<a class="anchor-local" name="about"></a>
+			<a class="anchor-local" id="about"></a>
             <h2 class="top">About</h2>
 			<div id="about">
             <p>
@@ -40,29 +40,28 @@
             </p>
 			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
 			</div>
-    		<a class="anchor-local" name="screenshots"></a>
+    		<a class="anchor-local" id="screenshots"></a>
 	        <h2>Screenshots</h2>
             <p> 
 				<a class="lumen" href="png/screen1.png">Main Window</a>
             </p>
 			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
-			<a class="anchor-local" name="download"></a>			
+			<a class="anchor-local" id="download"></a>			
             <h2>Download</h2>
 			<div id="download">
             <p>
-                The current stable version is bristolgui-0.2, released on 15.01.2011.
+               The latest version is <b>bristolgui-0.2.1</b>, released on 19.01.2011.
             </p>
             <h3>Binaries</h3>
-			<p class="before">You need to install these prerequisites:</p>
+            <p>
+               Bristolgui is split into two packages: the GUI library and the bristolgui application.
+            </p>
             <ul>
                 <li class="icon-ubuntu">
-                    <a class="link-list icon-link-deb" href="deb/lgui-0.1.deb">lgui-0.1 Debian, Ubuntu</a>
+                    <a class="link-list icon-link-deb" href="deb/lgui-0.1.deb">Ubuntu 10.10 - lgui-0.1</a>
                 </li>
-            </ul>
-			<p class="between">Install bristolgui:</p>
-            <ul>
                 <li class="icon-ubuntu">
-                    <a class="link-list icon-link-deb" href="deb/bristolgui.deb">bristolgui, Debian, Ubuntu</a>
+                    <a class="link-list icon-link-deb" href="deb/bristolgui.deb">Ubuntu 10.10 - bristolgui</a>
                 </li>
             </ul>
             <p class="after">
@@ -70,43 +69,30 @@
                 here, we're more than happy to include it. You can <a class="icon-link-mail" href="mailto:voigt.m@gmail.com">contact us here</a>
             </p>
             <h3>Source Code</h3>
+            <p>The downloadable packages include both the source code for lgui and bristolgui.</p>
             <ul>
                 <li class="icon-source">
                     <a class="link-list icon-link-zip" href=".">Last stable version</a>
                 </li>
-                <li class="icon-unstable">
+                <li class="icon-source">
                     <a class="link-list icon-link-zip" href=".">Current development snapshot</a>
                 </li>
-                <li class="icon-git">
-                    <a class="link-list" href="git://github.com/skim/bristolgui.git">Git clone URL</a>
-                </li>
+            </ul>
+            <p>Both projects are also available on Github.</p>
+            <ul>
                 <li class="icon-github">
-                    <a class="link-list" href="https://github.com/skim/bristolgui">Project Page at Github</a>
+                	<a class="link-list" href="https://github.com/skim/lgui">lgui library at Github</a>
+                </li>				
+                <li class="icon-github">
+                    <a class="link-list" href="https://github.com/skim/bristolgui">bristolgui at Github</a>
                 </li>
             </ul>
-			<p class="between">
-				In order to build bristolgui from source, you need to install it's dependencies.
-			</p>
-			<ul>
-				<li class="icon-gnome"><a class="link-list" href="http://www.gtk.org/">GTK+2</a></li>
-				<li class="icon-source"><a class="link-list" href="https://github.com/skim/lgui">lgui</a></li>				
-			</ul>
-			<p class="after">
-				Unpack the source code archive, open a terminal,
-				change into the bristolgui source directory and run the following commands.
-			</p>
-			<code>
-				./autogen.sh<br />
-				./configure<br />
-				./make<br />
-				sudo ./make install
-			</code>				
 			<p>
 				For more information please refer to the included README file.
 			</p>
 			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
 			</div>
-			<a class="anchor-local" name="manual"></a>		
+			<a class="anchor-local" id="manual"></a>		
             <h2>Manual</h2>
             <p>
                 To be done. For more details, refer to the <a href=".">Complete Manual</a>

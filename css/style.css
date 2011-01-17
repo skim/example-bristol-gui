@@ -1,201 +1,215 @@
 @font-face {
-	font-family: Ubuntu;
-    src: url(../ttf/Ubuntu-R.ttf);
+	font-family: 'Ubuntu';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Ubuntu'), local('Ubuntu-Regular'),
+		url('http://themes.googleusercontent.com/font?kit=2Q-AW1e_taO6pHwMXcXW5w')
+		format('truetype');
 }
 
-@font-face {
-	font-family: Ubuntu;
-	font-weight: bold;
-    src: url(../ttf/Ubuntu-B.ttf);
 }
-
 @font-face {
 	font-family: LiberationMono;
-    src: url(../ttf/LiberationMono-Regular.ttf);
+	src: url(../ttf/LiberationMono-Regular.ttf);
 }
 
 html {
-    overflow-y: scroll;
+	font-family: Ubuntu, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	overflow-y: scroll;
 	background-color: #f0f0f0;
 }
 
 body {
-    font-family: Ubuntu, sans-serif;
-    font-size: small;
-    width: 640px;
-    margin: auto;
-    color: #323232;
+	width: 640px;
+	margin: auto;
+	color: #323232;
 }
 
 .headline {
-    padding: 4px 4px 16px 4px;
-    color: #b0b0b0;
+	padding: 4px 4px 16px 4px;
+	color: #b0b0b0;
 }
 
 .content {
-    margin: auto;
+	margin: auto;
 	background-color: white;
 }
 
 .navigation {
-    padding: 16px 0px;
-    margin: 0px;
-    text-align: right;
+	padding: 16px 0px 8px 0px;
+	margin: 0px;
+	text-align: right;
+}
+
+em {
+	color: #0000a0;
+	font-style: normal;
 }
 
 code {
 	font-family: LiberationMono, monospace;
-    background-color: #f0f0f0;
-    display: block;
-    margin-left: 24px;
-    margin-right: 24px;
-   	padding: 4px;
+	background-color: #f0f0f0;
+	display: block;
+	margin-left: 24px;
+	margin-right: 24px;
+	padding: 4px;
 }
 
 a {
-    color: #4b5166;
-    text-decoration: underline;
-    font-weight: normal;
-    background: transparent url(../png/link.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 19px;
-    margin-right: 2px;
+	color: #3b5166;
+	text-decoration: none;
+	font-weight: normal;
+	background: transparent url(../png/link.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
 }
 
 .light {
-    color: #828282;
+	color: #828282;
 }
 
 .link-list {
+	
 }
 
 .link-local {
-    color: #646464;
+	color: #646464;
 }
 
 .anchor-local {
-    background: none;
-    padding: 0px;
-    margin: 0px;
+	background: none;
+	padding: 0px;
+	margin: 0px;
 }
 
 .icon-link-top {
-    background: transparent url(../png/top.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 19px;
-    margin-right: 2px;
+	background: transparent url(../png/top.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
 }
 
 .icon-link-right {
-    background: transparent url(../png/right.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 16px;
-    margin-right: 0px;
+	background: none;
+	padding: 4px 0px 4px 16px;
+	
 }
 
 .icon-link-mail {
-    background: transparent url(../png/link.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 19px;
-    margin-right: 2px;
+	background: transparent url(../png/link.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
 }
 
 .icon-link-deb {
-    background: transparent url(../png/deb.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 19px;
-    margin-right: 2px;
+	background: transparent url(../png/deb.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
 }
 
 .icon-link-zip {
-    background: transparent url(../png/zip.png) no-repeat;
-    background-position: right 1px;
-    padding-right: 19px;
-    margin-right: 2px;
+	background: transparent url(../png/zip.png) no-repeat;
+	background-position: right 1px;
+	padding-right: 19px;
+	margin-right: 2px;
 }
 
 p {
-    padding: 16px 4px 16px 4px;
-    margin: 0px;
+	padding: 16px 4px 16px 4px;
+	margin: 0px;
 }
 
 .right {
-    text-align: right;
-    padding: 0px 4px 4px 4px;
-    margin: 0px;
+	text-align: right;
+	padding: 0px 4px 4px 4px;
+	margin: 0px;
 }
 
 .before {
-    padding: 16px 4px 0px 4px;
+	padding: 16px 4px 16px 4px;
+	margin: 0px;
 }
 
 .after {
-    padding: 0px 4px 16px 4px;
+	padding: 16px 4px 16px 4px;
+	margin: 0px;
 }
 
 .between {
-    padding: 0px 4px 0px 4px;
+	padding: 16px 4px 16px 4px;
+	margin: 0px;
 }
 
 h2 {
-    margin: 0px;
-    padding: 4px;
-    font-size: 1.2em;
-    border-bottom: 1px solid white;
-    background: #e3ffa3; /* old browsers */
-    background: -moz-linear-gradient(top, #e3ffa3 52%, #c3d825 90%); /* firefox */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(52%,#e3ffa3), color-stop(90%,#c3d825)); /* webkit */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3ffa3', endColorstr='#c3d825',GradientType=0 ); /* ie */
+	margin: 8px 0px 16px 0px;
+	padding: 6px 4px 6px 4px;
+	font-size: 1.5em;
+	font-weight: normal; border-bottom : 1px solid white;
+	background: #e3ffa3; /* old browsers */
+	background: -moz-linear-gradient(top, #e3ffa3 52%, #c3d825 90%);
+	/* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(52%, #e3ffa3),
+		color-stop(90%, #c3d825) ); /* webkit */
+	filter: progid : DXImageTransform.Microsoft.gradient (   startColorstr =
+		'#e3ffa3', endColorstr = '#c3d825', GradientType = 0 );
+	border-bottom: 1px solid white; /* ie */
 }
 
 .top {
-    border-top: none;
+	border-top: none;
 }
 
 h3 {
-    margin: 0px;
-    padding: 0px 4px 0px 4px;
-    font-size: 1.1em;
-    background-color: #e3ffa3;
+	margin: 8px 0px 8px 0px;
+	padding: 8px 4px 8px 4px;
+	font-size: 1.5em;
+	font-weight: normal;
+	/*background-color: #e3ffa3;*/
 }
 
-ul, li {
-    list-style: none;
-    padding: 2px 4px 2px 24px;
+ul,li {
+	list-style: none;
+	padding: 2px 4px 2px 24px;
+	line-height: 16px;
 }
 
 .icon-ubuntu {
-    background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
+	background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
 }
 
 .icon-debian {
-    background: transparent url(../png/debian.png) no-repeat 0 50%;
+	background: transparent url(../png/debian.png) no-repeat 0 50%;
 }
 
 .icon-fedora {
-    background: transparent url(../png/fedora.png) no-repeat 0 50%;
+	background: transparent url(../png/fedora.png) no-repeat 0 50%;
 }
 
 .icon-suse {
-    background: transparent url(../png/suse.png) no-repeat 0 50%;
+	background: transparent url(../png/suse.png) no-repeat 0 50%;
 }
 
 .icon-source {
-    background: transparent url(../png/source.png) no-repeat 0 50%;
+	background: transparent url(../png/source.png) no-repeat 0 50%;
 }
 
 .icon-unstable {
-    background: transparent url(../png/unstable.png) no-repeat 0 50%;
+	background: transparent url(../png/unstable.png) no-repeat 0 50%;
 }
 
 .icon-git {
-    background: transparent url(../png/git.png) no-repeat 0 50%;
+	background: transparent url(../png/git.png) no-repeat 0 50%;
 }
 
 .icon-github {
-    background: transparent url(../png/github.png) no-repeat 0 50%;
+	background: transparent url(../png/github.png) no-repeat 0 50%;
 }
 
 .icon-gnome {
-    background: transparent url(../png/gnome.png) no-repeat 0 50%;
+	background: transparent url(../png/gnome.png) no-repeat 0 50%;
 }
