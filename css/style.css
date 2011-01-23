@@ -53,8 +53,8 @@ a {
     text-decoration: none;
     font-weight: normal;
     background: transparent url(../png/link.png) no-repeat;
-    background-position: right -1px;
-    padding-right: 18px;
+    background-position: right 2px;
+    padding-right: 19px;
     margin-right: 2px;
 }
 .light {
@@ -84,8 +84,8 @@ a {
 }
 .icon-link-mail {
     background: transparent url(../png/link.png) no-repeat;
-    background-position: right -1px;
-    padding-right: 18px;
+    background-position: right 2px;
+    padding-right: 19px;
     margin-right: 2px;
 }
 .icon-link-deb {
