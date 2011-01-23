@@ -3,107 +3,151 @@
     <head>
         <meta name="generator" content="HTML Tidy, see www.w3.org">
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/lumen.css" />
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/lumen.js"></script>
-		<script type="text/javascript">
-    		$(function() {
-      			var lumen_options = {
-        			width:321,
-        			height:436
-      			};
-      			$('.lumen').lumen(lumen_options);
-    		});
-		  </script>
+        <link rel="stylesheet" type="text/css" href="css/colorbox.css" />
+        <script type="text/javascript" src="js/jquery.js">
+        </script>
+        <script type="text/javascript" src="js/jquery.colorbox.js">
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("a[rel='screenshot']").colorbox({
+                    transition: "none",
+                    opacity: "0.75"
+                });
+            });
+        </script>
         <title>bristolgui - A Graphical User Interface for the Bristol Synthensizer Emulation</title>
     </head>
     <body>
-    	<a class="anchor-local" id="top"></a>
-		<div class="navigation">
-			<a class="link-local icon-link-right" href="#about">About</a>
-			<a class="link-local icon-link-right" href="#screenshots">Screenshots</a>
-			<a class="link-local icon-link-right" href="#download">Download</a>
-			<a class="link-local icon-link-right" href="#manual">Manual</a>			
-		</div>
+        <div class="headline">
+            This web page is not functional yet. It functions as a dummy until the first 
+            version of bristolgui is released. If you are interested in the current  
+            state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
+        </div>    	
+        <a class="anchor-local" id="top"></a>
+        <div class="navigation">
+            <a class="link-local icon-link-right" href="#about">About</a>
+            <a class="link-local icon-link-right" href="#screenshots">Screenshots</a>
+            <a class="link-local icon-link-right" href="#download">Download</a>
+            <a class="link-local icon-link-right" href="#manual">Manual</a>
+        </div>
         <div class="content">
-			<a class="anchor-local" id="about"></a>
+            <a class="anchor-local" id="about"></a>
             <h2 class="top">About</h2>
-			<div id="about">
+            <div id="about">
+                <p>
+                    Bristolgui is a graphical user interface (GUI) for Bristol, written in ANSI C using the GTK+ library.
+                    <br/>
+                    <br/>
+                    Bristolgui is free software, licensed under the GPL v2. It is developed
+                    and maintained by Martin Voigt, synthesizer images and descriptions are provided by Nick Copeland.
+                    <br>
+                    <br/>
+                    <a href="http://bristol.sf.net">Bristol</a>
+                    is a synthesizer emulation package for Linux,
+                    written and maintained by Nick Copeland.
+                </p>
+                <div class="right">
+                    <a class="link-local icon-link-top" href="#top"></a>
+                </div>
+            </div>
+            <a class="anchor-local" id="screenshots"></a>
+            <h2>Screenshots</h2>
             <p>
-                Bristolgui is a graphical user interface (GUI) for Bristol, written in ANSI C using the GTK+ library.
-				<br /><br /> 
-				Bristolgui is free software, licensed under the GPL v2. It is developed
-				and maintained by Martin Voigt, synthesizer images and descriptions are provided by Nick Copeland.
-                <br> <br/>
-                 <a href="http://bristol.sf.net">Bristol</a> is a synthesizer emulation package for Linux, 
-				 written and maintained by Nick Copeland.
+                These were taken from <b>bristolgui-0.2.1</b>.
             </p>
-			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
-			</div>
-    		<a class="anchor-local" id="screenshots"></a>
-	        <h2>Screenshots</h2>
-            <p> 
-				<a class="lumen" href="png/screen1.png">Main Window</a>
-            </p>
-			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
-			<a class="anchor-local" id="download"></a>			
+            <table>
+                <tr>
+                    <td>
+                        <a href="png/screen1.png" rel="screenshot" title="The Main Window" class="link-simple"><img src="png/screen1-thumbnail.png" /></a>
+                    </td>
+                    <td>
+                        <a href="png/screen2.png" rel="screenshot" title="The Synthesizer Chooser" class="link-simple"><img src="png/screen2-thumbnail.png" /></a>
+                    </td>
+                    <td>
+                        <a href="png/screen3.png" rel="screenshot" title="A Typical Session" class="link-simple"><img src="png/screen3-thumbnail.png" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <a href="png/screen1.png" rel="screenshot" title="The Main Window">Main Window</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <a href="png/screen2.png" rel="screenshot" title="The Synthesizer Chooser">Synthesizer Chooser</a>
+                    </td>
+                    <td style="text-align: left;">
+                        <a href="png/screen3.png" rel="screenshot" title="The Synthesizer Chooser">A Typical Session</a>
+                    </td>
+                </tr>				
+            </table>
+            <div class="right">
+                <a class="link-local icon-link-top" href="#top"></a>
+            </div>
+            <a class="anchor-local" id="download"></a>
             <h2>Download</h2>
-			<div id="download">
-            <p>
-               The latest version is <b>bristolgui-0.2.1</b>, released on 19.01.2011.
-            </p>
-            <h3>Binaries</h3>
-            <p>
-               Bristolgui is split into two packages: the GUI library and the bristolgui application.
-            </p>
-            <ul>
-                <li class="icon-ubuntu">
-                    <a class="link-list icon-link-deb" href="deb/lgui-0.1.deb">Ubuntu 10.10 - lgui-0.1</a>
-                </li>
-                <li class="icon-ubuntu">
-                    <a class="link-list icon-link-deb" href="deb/bristolgui.deb">Ubuntu 10.10 - bristolgui</a>
-                </li>
-            </ul>
-            <p class="after">
-                If you'd like to contribute a build for your platform that is not available 
-                here, we're more than happy to include it. You can <a class="icon-link-mail" href="mailto:voigt.m@gmail.com">contact us here</a>
-            </p>
-            <h3>Source Code</h3>
-            <p>The downloadable packages include both the source code for lgui and bristolgui.</p>
-            <ul>
-                <li class="icon-source">
-                    <a class="link-list icon-link-zip" href=".">Last stable version</a>
-                </li>
-                <li class="icon-source">
-                    <a class="link-list icon-link-zip" href=".">Current development snapshot</a>
-                </li>
-            </ul>
-            <p>Both projects are also available on Github.</p>
-            <ul>
-                <li class="icon-github">
-                	<a class="link-list" href="https://github.com/skim/lgui">lgui library at Github</a>
-                </li>				
-                <li class="icon-github">
-                    <a class="link-list" href="https://github.com/skim/bristolgui">bristolgui at Github</a>
-                </li>
-            </ul>
-			<p>
-				For more information please refer to the included README file.
-			</p>
-			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
-			</div>
-			<a class="anchor-local" id="manual"></a>		
+            <div id="download">
+                <p>
+                    The latest version is <b>bristolgui-0.2.1</b>, released on 19.01.2011.
+                </p>
+                <h3>Binaries</h3>
+                <p>
+                    Bristolgui is split into two packages: the GUI library and the bristolgui application.
+                </p>
+                <ul>
+                    <li class="icon-ubuntu">
+                        <a class="link-list icon-link-deb" href="deb/lgui-0.1.deb">Ubuntu 10.10 - lgui-0.1</a>
+                    </li>
+                    <li class="icon-ubuntu">
+                        <a class="link-list icon-link-deb" href="deb/bristolgui.deb">Ubuntu 10.10 - bristolgui</a>
+                    </li>
+                </ul>
+                <p class="after">
+                    If you'd like to contribute a build for your platform that is not available 
+                    here, we're more than happy to include it. You can <a class="icon-link-mail" href="mailto:voigt.m@gmail.com">contact us here</a>
+                </p>
+                <h3>Source Code</h3>
+                <p>
+                    The downloadable packages include both the source code for lgui and bristolgui.
+                </p>
+                <ul>
+                    <li class="icon-source">
+                        <a class="link-list icon-link-zip" href=".">Last stable version</a>
+                    </li>
+                    <li class="icon-source">
+                        <a class="link-list icon-link-zip" href=".">Current development snapshot</a>
+                    </li>
+                </ul>
+                <p>
+                    Both projects are also available on Github.
+                </p>
+                <ul>
+                    <li class="icon-github">
+                        <a class="link-list" href="https://github.com/skim/lgui">lgui library at Github</a>
+                    </li>
+                    <li class="icon-github">
+                        <a class="link-list" href="https://github.com/skim/bristolgui">bristolgui at Github</a>
+                    </li>
+                </ul>
+                <p>
+                    For more information please refer to the included README file.
+                </p>
+                <div class="right">
+                    <a class="link-local icon-link-top" href="#top"></a>
+                </div>
+            </div>
+            <a class="anchor-local" id="manual"></a>
             <h2>Manual</h2>
             <p>
                 To be done. For more details, refer to the <a href=".">Complete Manual</a>
             </p>
-			<div class="right"><a class="link-local icon-link-top" href="#top"></a></div>
+            <div class="right">
+                <a class="link-local icon-link-top" href="#top"></a>
+            </div>
         </div>
-	    <div class="headline">
-	      	This web page is not functional yet. It functions as a dummy until the first
-			version of bristolgui is released. If you are interested in the current
-			state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
+        <div class="headline">
+            This web page is not functional yet. It functions as a dummy until the first 
+            version of bristolgui is released. If you are interested in the current  
+            state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
         </div>
-
     </body>
 </html>

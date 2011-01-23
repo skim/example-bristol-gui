@@ -1,0 +1,106 @@
+/*
+ColorBox Core Style
+The following rules are the styles that are consistant between themes.
+Avoid changing this area to maintain compatability with future versions of ColorBox.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:9999;
+    overflow:hidden;
+}
+
+#colorbox {
+    border: 8px solid #f0f0f0; 
+}
+
+#cboxOverlay {
+    position:fixed;
+    width:100%;
+    height:100%;
+}
+#cboxMiddleLeft, #cboxBottomLeft {
+    clear:left;
+}
+#cboxContent {
+    position:relative;
+    overflow:hidden;
+}
+#cboxLoadedContent {
+    overflow:auto;
+}
+#cboxLoadedContent iframe {
+    display:block;
+    width:100%;
+    height:100%;
+    border:0;
+}
+#cboxLoadingOverlay, #cboxLoadingGraphic {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow {
+    cursor:pointer;
+}
+/*
+Example user style
+The following rules are ordered and tabbed in a way that represents the
+order/nesting of the generated HTML, so that the structure easier to understand.
+*/
+#cboxOverlay {
+    background:url(images/overlay.png) repeat 0 0;
+}
+#colorbox {
+}
+#cboxContent {
+    background:#fff;
+}
+#cboxLoadedContent {
+    margin-bottom:28px;
+}
+#cboxTitle {
+    position:absolute;
+    bottom:7px;
+    left:0;
+    text-align:left;
+    width:100%;
+    color: #323232;
+    font-size: 1.5em;
+    font-style: normal;
+}
+#cboxCurrent {
+	display:none;
+}
+#cboxSlideshow {
+    position:absolute;
+    bottom:4px;
+    right:30px;
+    color:#0092ef;
+}
+#cboxPrevious {
+	display: none;
+}
+#cboxNext {
+	display: none;
+}
+#cboxLoadingOverlay {
+    background:url(images/loading_background.png) no-repeat center center;
+}
+#cboxLoadingGraphic {
+    background:url(images/loading.gif) no-repeat center center;
+}
+#cboxClose {
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:url(images/controls.png) no-repeat -25px 0px;
+    width:25px;
+    height:25px;
+    text-indent:-9999px;
+}
+#cboxClose.hover {
+    background-position:-25px -25px;
+}

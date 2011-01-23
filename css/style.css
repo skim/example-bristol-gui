@@ -1,16 +1,16 @@
-@font-face {
-    font-family: 'Ubuntu';
+@font-face {font-family:
+    'Ubuntu';
     font-style: normal;
     font-weight: normal;
-    src: local('Ubuntu'), local('Ubuntu-Regular'),
-    url('http://themes.googleusercontent.com/font?kit=2Q-AW1e_taO6pHwMXcXW5w')
-    format('truetype');
+    src:
+    local('Ubuntu'), local('Ubuntu-Regular'), url('http://themes.googleusercontent.com/font?kit=2Q-AW1e_taO6pHwMXcXW5w') format('truetype');
 }
 }
-@font-face {
-    font-family: LiberationMono;
-    src: url(../ttf/LiberationMono-Regular.ttf);
+@font-face {font-family:LiberationMono;
+    src:
+    url(../ttf/LiberationMono-Regular.ttf);
 }
+
 html {
     font-family: Ubuntu, sans-serif;
     font-size: 12px;
@@ -18,28 +18,50 @@ html {
     overflow-y: scroll;
     background-color: #f0f0f0;
 }
+
 body {
     width: 640px;
     margin: auto;
     color: #323232;
 }
+
 .headline {
     padding: 4px 4px 16px 4px;
     color: #b0b0b0;
 }
+
 .content {
     margin: auto;
     background-color: white;
 }
+
 .navigation {
     padding: 16px 0px 8px 0px;
     margin: 0px;
     text-align: right;
 }
+
+table, tr, img {
+	padding: 0px;
+	margin: 0px;
+	border-spacing: 0px;
+	border: none;
+	
+}
+
+table {
+	margin-top: 16px;
+}
+
+td {
+	padding: 0px 32px 0px 4px;
+}
+
 em {
     color: #0000a0;
     font-style: normal;
 }
+
 code {
     font-family: LiberationMono, monospace;
     background-color: #f0f0f0;
@@ -48,85 +70,112 @@ code {
     margin-right: 24px;
     padding: 4px;
 }
-a {
+
+a, .link {
     color: #3b5166;
     text-decoration: none;
     font-weight: normal;
     background: transparent url(../png/link.png) no-repeat;
-    background-position: right 2px;
+    background-position: right -1px;
     padding-right: 19px;
     margin-right: 2px;
 }
+
+.link-simple {
+    background: none;
+    padding: 0px;
+    margine: 0px;
+}
+
 .light {
     color: #828282;
 }
-.link-list {
 
+.link-list {
 }
+
 .link-local {
     color: #646464;
 }
+
 .anchor-local {
     background: none;
     padding: 0px;
     margin: 0px;
 }
+
 .icon-link-top {
     background: transparent url(../png/top.png) no-repeat;
     background-position: right 1px;
     padding-right: 19px;
     margin-right: 2px;
 }
+
 .icon-link-right {
     background: none;
     padding: 4px 0px 4px 16px;
-
 }
+
 .icon-link-mail {
     background: transparent url(../png/link.png) no-repeat;
     background-position: right 2px;
     padding-right: 19px;
     margin-right: 2px;
 }
+
 .icon-link-deb {
     background: transparent url(../png/deb.png) no-repeat;
     background-position: right 1px;
     padding-right: 19px;
     margin-right: 2px;
 }
+
 .icon-link-zip {
     background: transparent url(../png/zip.png) no-repeat;
     background-position: right 1px;
     padding-right: 19px;
     margin-right: 2px;
 }
+
+.box {
+    display: inline;
+    text-align: left;
+	margin-top: 22px;
+	padding: 4px;
+}
+
 p {
     padding: 16px 4px 16px 4px;
     margin: 0px;
 }
+
 .right {
     text-align: right;
     padding: 0px 4px 4px 4px;
     margin: 0px;
 }
+
 .before {
     padding: 16px 4px 16px 4px;
     margin: 0px;
 }
+
 .after {
     padding: 16px 4px 16px 4px;
     margin: 0px;
 }
+
 .between {
     padding: 16px 4px 16px 4px;
     margin: 0px;
 }
+
 h2 {
     margin: 8px 0px 16px 0px;
     padding: 6px 4px 6px 4px;
     font-size: 1.5em;
     font-weight: normal;
-    border-bottom : 1px solid white;
+    border-bottom: 1px solid white;
     background: #e3ffa3; /* old browsers */
     background: -moz-linear-gradient(top, #e3ffa3 52%, #c3d825 90%);
     /* firefox */
@@ -139,6 +188,7 @@ h2 {
 .top {
     border-top: none;
 }
+
 h3 {
     margin: 8px 0px 8px 0px;
     padding: 8px 4px 8px 4px;
@@ -146,6 +196,7 @@ h3 {
     font-weight: normal;
     /*background-color: #e3ffa3;*/
 }
+
 ul, li {
     list-style: none;
     padding: 2px 4px 2px 24px;
