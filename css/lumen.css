@@ -15,8 +15,13 @@
   font-weight:bold;
   text-decoration:none;
   color:#323232;
+  background: none;
+  padding: 2px 2px 0px 2px;
+  margin: 0px;
 }
+
 #lumen_window .close a:hover {
+  background: none;
 }
 
 #lumen_window .contents {

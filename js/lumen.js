@@ -8,7 +8,7 @@ jQuery.fn.lumen = function(options) {
     var lumen_contents = '<div id="lumen_wrapper"></div>';
     lumen_contents +=    '<div id="lumen_window">';
     lumen_contents +=    '<div class="title">'+jQuery(this).attr('title')+'</div>';
-    lumen_contents +=    '<div class="close"><a href="#">close</a></div>';
+    lumen_contents +=    '<div class="close"><a href="#">Close Window</a></div>';
     lumen_contents +=    '<div class="contents"><img src="'+jQuery(this).attr('href')+'" width="'+settings.width+'" height="'+settings.height+'" /></div>';
     lumen_contents +=    '</div>';
     
