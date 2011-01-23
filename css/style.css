@@ -16,7 +16,7 @@ html {
     font-size: 12px;
     line-height: 14px;
     overflow-y: scroll;
-    background-color: #f0f0f0;
+    background-color: #fafafa;
 }
 
 body {
@@ -41,8 +41,8 @@ body {
     text-align: right;
 }
 
-table, tr, img {
-	padding: 0px;
+table {
+	padding: 2px 4px 2px 24px;
 	margin: 0px;
 	border-spacing: 0px;
 	border: none;
@@ -54,7 +54,7 @@ table {
 }
 
 td {
-	padding: 0px 32px 0px 4px;
+	padding: 0px 32px 0px 0px;
 }
 
 em {
