@@ -26,5 +26,6 @@ m4
 Packaging
 .dirstamp
 .deps
-
-
+callgrind.out.*
+gmon.out
+*.dot
