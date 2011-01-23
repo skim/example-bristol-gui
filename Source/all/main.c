@@ -11,6 +11,7 @@ static gboolean run_tests = FALSE;
 static GOptionEntry entries[] = { { "tests", 't', 0, G_OPTION_ARG_NONE, &run_tests, "Run unit tests", NULL }, { NULL } };
 
 int main(int argc, char **argv) {
+	//command line arguments
 	GError *error = NULL;
 	GOptionContext *context;
 	context = g_option_context_new("- a GUI for the bristol synthesizer emulation");
@@ -22,13 +23,20 @@ int main(int argc, char **argv) {
 	}
 	gtk_init(&argc, &argv);
 	if (run_tests) {
+		//run tests if arg is present
 		g_debug("running lgui tests...");
 		int ex = llib_test(&argc, &argv);
 		g_debug("done");
 		return ex;
 	} else {
+		//run bristolgui
 		l_set_data_path(BG_DATA_PATH);
 		g_debug("BG_DATA_PATH %s", BG_DATA_PATH);
+		GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
+		GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
+		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
+		gtk_widget_show_all(window_root);
+		gtk_main();
 		return 0;
 	}
 	return 1;
