@@ -7,7 +7,6 @@
 #define BG_DATA_PATH "./Data"
 
 static gboolean run_tests = FALSE;
-
 static GOptionEntry entries[] = { { "tests", 't', 0, G_OPTION_ARG_NONE, &run_tests, "Run unit tests", NULL }, { NULL } };
 
 int main(int argc, char **argv) {
@@ -32,6 +31,10 @@ int main(int argc, char **argv) {
 		//run bristolgui
 		l_set_data_path(BG_DATA_PATH);
 		g_debug("BG_DATA_PATH %s", BG_DATA_PATH);
+
+		LSession *session = l_session_new();
+		LProfile *profile = l_profile_new();
+
 		GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
 		GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
