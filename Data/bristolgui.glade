@@ -583,7 +583,7 @@
                                                     </child>
                                                     <child>
                                                       <object class="GtkCheckButton" id="check_samplerate">
-                                                        <property name="label" translatable="yes">Sample Rate</property>
+                                                        <property name="label" translatable="yes">Sample Rate (Hz)</property>
                                                         <property name="width_request">128</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
