@@ -22,15 +22,16 @@ int main(int argc, char **argv) {
 		g_print("option parsing failed: %s\n", error->message);
 		exit(1);
 	}
-	gtk_init(&argc, &argv);
 	if (run_tests) {
 		//run tests if arg is present
-		g_debug("running lgui tests...");
-		int ex = llib_test(&argc, &argv);
+		lgui_test_init(&argc, &argv);
+		g_debug("running tests...");
+		int ex = lgui_test();
 		g_debug("done");
 		return ex;
 	} else {
 		//run bristolgui
+		gtk_init(&argc, &argv);
 		l_set_data_path(BG_DATA_PATH);
 		g_debug("BG_DATA_PATH %s", BG_DATA_PATH);
 
