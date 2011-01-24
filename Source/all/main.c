@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 #define BG_DATA_PATH "./Data"
 
 static gboolean run_tests = FALSE;

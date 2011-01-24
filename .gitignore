@@ -30,3 +30,4 @@ callgrind.out.*
 gmon.out
 *.dot
 memcheck.xml
+*.log
