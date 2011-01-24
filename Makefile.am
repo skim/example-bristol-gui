@@ -5,6 +5,8 @@ bin_PROGRAMS = bristolgui
 
 bristolgui_SOURCES = \
 Source/all/main.c \
+Source/all/profile.c \
+Source/all/session.c \
 Source/all/gui.c 
 
 #FIXME: data dir (usr/share) is hardcoded, './configure --prefix=[]' won't work
