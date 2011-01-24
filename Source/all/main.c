@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdlib.h>
+#include "gui.h"
 
 
 #define BG_DATA_PATH "./Data"
@@ -37,6 +38,9 @@ int main(int argc, char **argv) {
 		LProfile *profile = l_profile_new();
 
 		GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
+
+		bg_gui_connect(builder);
+
 		GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 		gtk_widget_show_all(window_root);
