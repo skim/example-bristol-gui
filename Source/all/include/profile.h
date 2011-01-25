@@ -3,7 +3,8 @@
 
 #include <lgui.h>
 
-LProfile* 	bg_profile_new();
-void		bg_profile_connect(LProfile *profile, GtkBuilder *builder);
+LProfile* 	bg_profile_new			();
+void 		bg_profile_connect		(LProfile *profile, GtkBuilder *builder);
+void 		bg_profile_disconnect	(LProfile *profile, GtkBuilder *builder);
 
 #endif /* PROFILE_H_ */

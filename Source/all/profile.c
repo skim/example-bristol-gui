@@ -1,5 +1,6 @@
 #include "profile.h"
 #include "ltk_test.h"
+#include <string.h>
 
 LProfile* bg_profile_new() {
 	LProfile* profile = l_profile_new();
@@ -21,26 +22,62 @@ LProfile* bg_profile_new() {
 	return profile;
 }
 
+static void bg_profile_connect_toggle_enable(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkToggleButton *toggle = ltk_builder_get_toggle_button(builder, l_strdup_printf("check_%s", id));
+	g_assert(toggle != NULL);
+	ltk_toggle_button_connect_option_enabled(toggle, profile, id);
+}
+
+static void bg_profile_connect_combo_box(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
+	GList *names = l_profile_get_option_choices_names(profile, id);
+	g_assert(combo != NULL);
+	g_assert(names != NULL);
+	ltk_combo_box_set_cell_renderer_text(combo);
+	ltk_combo_box_set_choices_string(combo, names);
+}
+
+static void bg_profile_combo_box_set_value_string(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
+	char *value = l_profile_get_option_value_string(profile, id);
+	GList *choices = l_profile_get_option_choices(profile, id);
+	g_assert(choices != NULL);
+	gtk_combo_box_set_active(combo, l_list_index(choices, value, l_string_compare));
+}
+
+static void bg_profile_combo_box_set_value_int(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
+	LWrapInt *value = l_wrap_int(l_profile_get_option_value_int(profile, id));
+	GList *choices = l_profile_get_option_choices(profile, id);
+	g_assert(choices != NULL);
+	gtk_combo_box_set_active(combo, l_list_index(choices, value, l_wrap_int_compare));
+	g_free(value);
+}
+
+
 void bg_profile_connect(LProfile *profile, GtkBuilder *builder) {
 	g_assert(profile != NULL);
 	g_assert(builder != NULL);
 
-	GtkComboBox *combo_engine = ltk_builder_get_combo_box(builder, "combo_engine");
-	GList *choices_engine = l_profile_get_option_choices(profile, "engine");
-	GList *names_engine = l_profile_get_option_choices_names(profile, "engine");
-	char *value_engine = l_profile_get_option_value_string(profile, "engine");
-	ltk_combo_box_set_cell_renderer_text(combo_engine);
-	ltk_combo_box_set_choices_string(combo_engine, names_engine);
-	gtk_combo_box_set_active(combo_engine, l_list_index(choices_engine, value_engine, l_string_compare));
+	bg_profile_connect_combo_box(profile, builder, "engine");
+	bg_profile_connect_toggle_enable(profile, builder, "engine");
+	bg_profile_combo_box_set_value_string(profile, builder, "engine");
 
-	GtkComboBox *combo_samplerate = ltk_builder_get_combo_box(builder, "combo_samplerate");
-	GList *choices_samplerate = l_profile_get_option_choices(profile, "samplerate");
-	GList *names_samplerate = l_profile_get_option_choices_names(profile, "samplerate");
-	LWrapInt *value_samplerate = l_wrap_int(l_profile_get_option_value_int(profile, "samplerate"));
-	g_debug("%d", value_samplerate->value);
-	ltk_combo_box_set_cell_renderer_text(combo_samplerate);
-	ltk_combo_box_set_choices_string(combo_samplerate, names_samplerate);
-	gtk_combo_box_set_active(combo_samplerate, l_list_index(choices_samplerate, value_samplerate, l_wrap_int_compare));
+	bg_profile_connect_combo_box(profile, builder, "samplerate");
+	bg_profile_combo_box_set_value_int(profile, builder, "samplerate");
+}
 
-
+void bg_profile_disconnect(LProfile *profile, GtkBuilder *builder) {
 }
