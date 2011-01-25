@@ -219,11 +219,16 @@ h3 {
 
 ul, li {
     list-style: none;
-    padding: 2px 4px 2px 24px;
-    line-height: 16px;
+    padding: 2px 24px 2px 24px;
 }
+
+.list-text {
+    padding-bottom: 12px;
+	
+}
+
 .icon-bullet {
-    background: transparent url(../png/bullet.png) no-repeat 0 50%;
+    background: transparent url(../png/bullet.png) no-repeat 0 1px;
 }
 
 .icon-ubuntu {
