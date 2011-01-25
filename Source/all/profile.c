@@ -50,7 +50,6 @@ static void bg_profile_connect_combo_box(LProfile *profile, GtkBuilder *builder,
 	GList *names = l_profile_get_option_choices_names(profile, id);
 	g_assert(combo != NULL);
 	g_assert(names != NULL);
-	ltk_combo_box_set_cell_renderer_text(combo);
 	ltk_combo_box_set_choices_string(combo, names);
 }
 
@@ -77,19 +76,23 @@ static void bg_profile_combo_box_set_value_int(LProfile *profile, GtkBuilder *bu
 	g_free(value);
 }
 
-
 void bg_profile_connect(LProfile *profile, GtkBuilder *builder) {
 	g_assert(profile != NULL);
 	g_assert(builder != NULL);
+
+	bg_profile_connect_toggle_enable(profile, builder, "synth");
 
 	bg_profile_connect_combo_box(profile, builder, "engine");
 	bg_profile_connect_toggle_enable(profile, builder, "engine");
 	bg_profile_combo_box_set_value_string(profile, builder, "engine");
 
 	bg_profile_connect_combo_box(profile, builder, "samplerate");
+	bg_profile_connect_toggle_enable(profile, builder, "samplerate");
 	bg_profile_combo_box_set_value_int(profile, builder, "samplerate");
 }
 
 void bg_profile_disconnect(LProfile *profile, GtkBuilder *builder) {
+	bg_profile_disconnect_toggle_enable(profile, builder, "synth");
 	bg_profile_disconnect_toggle_enable(profile, builder, "engine");
+	bg_profile_disconnect_toggle_enable(profile, builder, "samplerate");
 }

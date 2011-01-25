@@ -40,7 +40,18 @@ int main(int argc, char **argv) {
 		GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
 		bg_gui_connect(builder);
 		LSession *session = bg_session_new();
+		LProfile *profile = bg_profile_new();
+		l_session_add_profile(session, "Default", profile);
+		LProfile *poly = l_profile_copy(profile);
+		l_profile_set_option_value_int(poly, "samplerate", 11025);
+		l_profile_set_option_enabled(poly, "samplerate", TRUE);
+		l_profile_set_option_enabled(poly, "engine", FALSE);
+		l_profile_set_option_enabled(poly, "synth", TRUE);
+		l_session_add_profile(session, "Polyphonic", poly);
+
 		bg_session_connect(session, builder);
+
+		bg_session_activate_profile(session, "Polyphonic", builder);
 
 		GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
