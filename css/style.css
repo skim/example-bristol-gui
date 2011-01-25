@@ -25,6 +25,10 @@ body {
     color: #323232;
 }
 
+b {
+    color: #424242;	
+}
+
 .headline {
     padding: 4px 4px 16px 4px;
     color: #b0b0b0;
@@ -42,19 +46,18 @@ body {
 }
 
 table {
-	padding: 2px 4px 2px 24px;
-	margin: 0px;
-	border-spacing: 0px;
-	border: none;
-	
+    padding: 2px 4px 2px 24px;
+    margin: 0px;
+    border-spacing: 0px;
+    border: none;
 }
 
 table {
-	margin-top: 16px;
+    margin-top: 16px;
 }
 
 td {
-	padding: 0px 32px 0px 0px;
+    padding: 0px 32px 0px 0px;
 }
 
 em {
@@ -71,6 +74,10 @@ code {
     padding: 4px;
 }
 
+img {
+    border: none;
+}
+
 a, .link {
     color: #3b5166;
     text-decoration: none;
@@ -79,12 +86,25 @@ a, .link {
     background-position: right -1px;
     padding-right: 19px;
     margin-right: 2px;
+    border: none;
 }
 
 .link-simple {
     background: none;
     padding: 0px;
     margine: 0px;
+}
+
+.link-caption {
+    text-align: center;
+    padding-left: 8px;
+}
+
+.link-box {
+    border: 1px dotted #d0d0d0;
+    display: block;
+    margin-bottom: 4px;
+    padding: 2px;
 }
 
 .light {
@@ -140,8 +160,8 @@ a, .link {
 .box {
     display: inline;
     text-align: left;
-	margin-top: 22px;
-	padding: 4px;
+    margin-top: 22px;
+    padding: 4px;
 }
 
 p {
@@ -202,6 +222,10 @@ ul, li {
     padding: 2px 4px 2px 24px;
     line-height: 16px;
 }
+.icon-bullet {
+    background: transparent url(../png/bullet.png) no-repeat 0 50%;
+}
+
 .icon-ubuntu {
     background: transparent url(../png/ubuntu.png) no-repeat 0 50%;
 }

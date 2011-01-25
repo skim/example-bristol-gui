@@ -23,7 +23,7 @@
             This web page is not functional yet. It functions as a dummy until the first 
             version of bristolgui is released. If you are interested in the current  
             state of bristolgui, you may visit it's <a class="light" href="https://github.com/skim/bristolgui">Github page</a>
-        </div>    	
+        </div>
         <a class="anchor-local" id="top"></a>
         <div class="navigation">
             <a class="link-local icon-link-right" href="#about">About</a>
@@ -37,16 +37,35 @@
             <div id="about">
                 <p>
                     Bristolgui is a graphical user interface (GUI) for Bristol, written in ANSI C using the GTK+ library.
-                    <br/>
-                    <br/>
-                    Bristolgui is free software, licensed under the GPL v2. It is developed
-                    and maintained by Martin Voigt, synthesizer images and descriptions are provided by Nick Copeland.
                     <br>
                     <br/>
                     <a href="http://bristol.sf.net">Bristol</a>
                     is a synthesizer emulation package for Linux,
                     written and maintained by Nick Copeland.
+                    <br/>
+                    <br/>
+                    Bristolgui is free software, licensed under the GPL v2. It is developed
+                    and maintained by Martin Voigt, synthesizer images and descriptions are provided by Nick Copeland.
                 </p>
+                <h3>Features</h3>
+                <ul>
+                    <li class="icon-bullet">
+                        Clean interface, preserving screen real estate
+                    </li>
+                    <li class="icon-bullet">
+                        Written in C with very few dependencies, thus suitable for older PCs
+						and mobile linux devices
+                    </li>
+                    <li class="icon-bullet">
+						Lets you create, copy and store multiple synthesizer configurations
+					</li>
+                    <li class="icon-bullet">
+						No command line fiddling (CLI fiddling is fine, but not for most musicians)
+					</li>
+                    <li class="icon-bullet">
+						And, of course, the real feature is the power of <a href="http://bristol.sf.net">Bristol</a>
+					</li>
+                </ul>
                 <div class="right">
                     <a class="link-local icon-link-top" href="#top"></a>
                 </div>
@@ -59,26 +78,26 @@
             <table>
                 <tr>
                     <td>
-                        <a href="png/screen1.png" rel="screenshot" title="The Main Window" class="link-simple"><img src="png/screen1-thumbnail.png" /></a>
+                        <a href="png/screen1.png" rel="screenshot" title="The Main Window" class="link-simple link-box"><img src="png/screen1-thumbnail.png" /></a>
                     </td>
                     <td>
-                        <a href="png/screen2.png" rel="screenshot" title="The Synthesizer Chooser" class="link-simple"><img src="png/screen2-thumbnail.png" /></a>
+                        <a href="png/screen2.png" rel="screenshot" title="The Synthesizer Chooser" class="link-simple link-box"><img src="png/screen2-thumbnail.png" /></a>
                     </td>
                     <td>
-                        <a href="png/screen3.png" rel="screenshot" title="A Typical Session" class="link-simple"><img src="png/screen3-thumbnail.png" /></a>
+                        <a href="png/screen3.png" rel="screenshot" title="A Typical Session" class="link-simple link-box"><img src="png/screen3-thumbnail.png" /></a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">
+                    <td class="link-caption">
                         <a href="png/screen1.png" rel="screenshot" title="The Main Window">Main Window</a>
                     </td>
-                    <td style="text-align: left;">
+                    <td class="link-caption">
                         <a href="png/screen2.png" rel="screenshot" title="The Synthesizer Chooser">Synthesizer Chooser</a>
                     </td>
-                    <td style="text-align: left;">
+                    <td class="link-caption">
                         <a href="png/screen3.png" rel="screenshot" title="The Synthesizer Chooser">A Typical Session</a>
                     </td>
-                </tr>				
+                </tr>
             </table>
             <div class="right">
                 <a class="link-local icon-link-top" href="#top"></a>
@@ -87,7 +106,7 @@
             <h2>Download</h2>
             <div id="download">
                 <p>
-                    The latest version is <b>bristolgui-0.2.1</b>, released on 19.01.2011.
+                    The current version is <b>bristolgui-0.2.1</b>, released on 31.01.2011.
                 </p>
                 <h3>Binaries</h3>
                 <p>
@@ -111,14 +130,28 @@
                 </p>
                 <ul>
                     <li class="icon-source">
-                        <a class="link-list icon-link-zip" href=".">Last stable version</a>
+                        <a class="link-list icon-link-zip" href=".">Current release version (0.2.1)</a>
                     </li>
                     <li class="icon-source">
-                        <a class="link-list icon-link-zip" href=".">Current development snapshot</a>
+                        <a class="link-list icon-link-zip" href=".">Upcoming release version (master)</a>
+                    </li>
+                    <li class="icon-source">
+                        <a class="link-list icon-link-zip" href=".">Development snapshot (unstable)</a>
                     </li>
                 </ul>
                 <p>
-                    Both projects are also available on Github.
+                    Both projects are also available on Github. The important branches are <b>master</b>
+                    and <b>unstable</b>.
+                    <br/>
+                    <br/>
+                    <b>Master</b>
+                    always points to the ref we consider stable for the upcoming 
+                    release (this may be a beta, RC or a Release), while <b>unstable</b>
+                    points to the current state of development and should at least compile and run.
+                    <br/>
+                    <br/>
+                    All other branches are used internally, use 
+                    them at your own risk. 
                 </p>
                 <ul>
                     <li class="icon-github">
