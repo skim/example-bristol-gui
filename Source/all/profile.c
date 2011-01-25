@@ -8,6 +8,7 @@ LProfile* bg_profile_new() {
 	l_profile_set_option_value_string(profile, "synth", "mini");
 
 	l_profile_set_option_value_string(profile, "engine", "alsa");
+	l_profile_set_option_enabled(profile, "engine", TRUE);
 	l_profile_add_named_option_choice_string(profile, "engine", "alsa", "ALSA");
 	l_profile_add_named_option_choice_string(profile, "engine", "jack", "JACK");
 	l_profile_add_named_option_choice_string(profile, "engine", "oss", "OSS");
@@ -30,6 +31,16 @@ static void bg_profile_connect_toggle_enable(LProfile *profile, GtkBuilder *buil
 	g_assert(toggle != NULL);
 	ltk_toggle_button_connect_option_enabled(toggle, profile, id);
 }
+
+static void bg_profile_disconnect_toggle_enable(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkToggleButton *toggle = ltk_builder_get_toggle_button(builder, l_strdup_printf("check_%s", id));
+	g_assert(toggle != NULL);
+	ltk_toggle_button_disconnect_option_enabled(toggle, profile, id);
+}
+
 
 static void bg_profile_connect_combo_box(LProfile *profile, GtkBuilder *builder, const char *id) {
 	g_assert(profile != NULL);
@@ -80,4 +91,5 @@ void bg_profile_connect(LProfile *profile, GtkBuilder *builder) {
 }
 
 void bg_profile_disconnect(LProfile *profile, GtkBuilder *builder) {
+	bg_profile_disconnect_toggle_enable(profile, builder, "engine");
 }
