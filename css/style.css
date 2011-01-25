@@ -136,22 +136,15 @@ a, .link {
     padding: 4px 0px 4px 16px;
 }
 
-.icon-link-mail {
-    background: transparent url(../png/link.png) no-repeat;
-    background-position: right 2px;
-    padding-right: 19px;
-    margin-right: 2px;
-}
-
 .icon-link-deb {
-    background: transparent url(../png/deb.png) no-repeat;
+    background: transparent url(../png/download.png) no-repeat;
     background-position: right 1px;
     padding-right: 19px;
     margin-right: 2px;
 }
 
 .icon-link-zip {
-    background: transparent url(../png/zip.png) no-repeat;
+    background: transparent url(../png/download.png) no-repeat;
     background-position: right 1px;
     padding-right: 19px;
     margin-right: 2px;
