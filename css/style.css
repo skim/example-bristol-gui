@@ -93,8 +93,8 @@ a, .link {
 }
 
 .link-caption {
-    text-align: center;
-    padding-left: 8px;
+    text-align: left;
+	padding: 16px 4px 4px 1px;
 }
 
 .link-box {

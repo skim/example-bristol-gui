@@ -12,7 +12,7 @@ Avoid changing this area to maintain compatability with future versions of Color
 }
 
 #colorbox {
-    border: 8px solid #f0f0f0; 
+    border: 8px solid #ffffff; 
 }
 
 #cboxOverlay {
