@@ -2,6 +2,28 @@
 #include "ltk_test.h"
 #include <string.h>
 
+typedef struct {
+	LtkOptionData *option;
+	GtkTextBuffer *buffer_command;
+} BgProfileData;
+
+static BgProfileData* bg_profile_data_new(LProfile *profile, const char *id, GtkTextBuffer *buffer_command) {
+	g_assert(profile != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	g_assert(buffer_command != NULL);
+	BgProfileData *data = g_new(BgProfileData, 1);
+	data->option = ltk_option_data_new(profile, id);
+	data->buffer_command = buffer_command;
+	return data;
+}
+
+static bg_profile_data_free(BgProfileData *data) {
+	g_assert(data != NULL);
+	g_assert(data->option != NULL);
+	ltk_option_data_free(data->option);
+	g_free(data);
+}
+
 LProfile* bg_profile_new() {
 	LProfile* profile = l_profile_new();
 
@@ -21,6 +43,13 @@ LProfile* bg_profile_new() {
 	l_profile_add_named_option_choice_int(profile, "samplerate", 96000, "96,000 - DVD-Audio");
 
 	return profile;
+}
+
+static void bg_profile_update_buffer_command(gpointer widget, gpointer data) {
+	BgProfileData *pdata = (BgProfileData*) data;
+	g_assert(pdata != NULL);
+	char *text = l_profile_render_debug(pdata->option->profile);
+	gtk_text_buffer_set_text(pdata->buffer_command, text, -1);
 }
 
 static void bg_profile_connect_toggle_enable(LProfile *profile, GtkBuilder *builder, const char *id) {
@@ -53,7 +82,28 @@ static void bg_profile_connect_combo_box(LProfile *profile, GtkBuilder *builder,
 	g_assert(names != NULL);
 	g_assert(choices != NULL);
 	ltk_combo_box_set_choices(combo, choices, names);
+	ltk_combo_box_connect_option(combo, profile, id);
+	BgProfileData *data = bg_profile_data_new(profile, id, ltk_builder_get_text_buffer(builder, "buffer_command"));
+	char *key = l_key_new(BG_SIGNAL_PROFILE_UPDATE_BUFFER_COMMAND, profile, NULL);
+	LSid sid = g_signal_connect(combo, "changed", G_CALLBACK(bg_profile_update_buffer_command), data);
+	ltk_register_signal(combo, key, sid, data);
+	g_free(key);
 }
+
+static void bg_profile_disconnect_combo_box(LProfile *profile, GtkBuilder *builder, const char *id) {
+	g_assert(profile != NULL);
+	g_assert(builder != NULL);
+	g_assert(id != NULL && strlen(id) > 0);
+	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
+	g_assert(combo != NULL);
+	ltk_combo_box_disconnect_option(combo, profile, id);
+	char *key = l_key_new(BG_SIGNAL_PROFILE_UPDATE_BUFFER_COMMAND, profile, NULL);
+	BgProfileData *data = (BgProfileData*) ltk_disconnect_signal(combo, key);
+	g_assert(data != NULL);
+	bg_profile_data_free(data);
+	g_free(key);
+}
+
 
 static void bg_profile_combo_box_set_value_string(LProfile *profile, GtkBuilder *builder, const char *id) {
 	g_assert(profile != NULL);
@@ -91,6 +141,10 @@ void bg_profile_connect(LProfile *profile, GtkBuilder *builder) {
 
 void bg_profile_disconnect(LProfile *profile, GtkBuilder *builder) {
 	bg_profile_disconnect_toggle_enable(profile, builder, "synth");
+
+	bg_profile_disconnect_combo_box(profile, builder, "engine");
 	bg_profile_disconnect_toggle_enable(profile, builder, "engine");
+
 	bg_profile_disconnect_toggle_enable(profile, builder, "samplerate");
+	bg_profile_disconnect_combo_box(profile, builder, "samplerate");
 }
