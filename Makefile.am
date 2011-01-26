@@ -4,10 +4,7 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 bin_PROGRAMS = bristolgui
 
 bristolgui_SOURCES = \
-Source/all/main.c \
-Source/all/profile.c \
-Source/all/session.c \
-Source/all/gui.c 
+Source/all/main.c 
 
 #FIXME: data dir (usr/share) is hardcoded, './configure --prefix=[]' won't work
 bristolgui_CFLAGS = -ISource/all/include -DBG_DATA_PATH=\"/usr/share/@PACKAGE@\" -g -O
