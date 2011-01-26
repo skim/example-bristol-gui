@@ -30,9 +30,11 @@ int main(int argc, char **argv) {
 		g_debug("running tests...");
 		int ex = lgui_test();
 		g_debug("done");
+		g_debug("strdups: %d", l_get_n_strdups());
 		return ex;
 	} else {
 		//run bristolgui
+
 		gtk_init(&argc, &argv);
 		l_set_data_path(BG_DATA_PATH);
 		g_debug("BG_DATA_PATH %s", BG_DATA_PATH);
@@ -57,6 +59,7 @@ int main(int argc, char **argv) {
 		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 		gtk_widget_show_all(window_root);
 		gtk_main();
+		g_debug("strdups: %d", l_get_n_strdups());
 		return 0;
 	}
 	return 1;

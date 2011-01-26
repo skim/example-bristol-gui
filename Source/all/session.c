@@ -29,32 +29,49 @@ LSession* bg_session_connect(LSession *session, GtkBuilder *builder) {
 	ltk_combo_box_set_cell_renderer_text(combo);
 	GList *names = l_session_get_profile_names(session);
 	g_assert(g_list_length(names) > 0);
-	ltk_combo_box_set_choices_string(combo, names);
+	ltk_combo_box_set_choices(combo, names, NULL);
 }
 
 
-void bg_session_activate_profile(LSession *session, const char *name, GtkBuilder *builder) {
+static void bg_session_connect_profile_combo_box(LSession *session, GtkComboBox *combo, GtkBuilder *builder) {
 	g_assert(session != NULL);
-	g_assert(name != NULL && strlen(name) > 0);
-	g_assert(l_session_has_profile(session, name));
-	if (l_session_get_selected_profile(session) != NULL) {
-		bg_profile_disconnect(l_session_get_selected_profile(session), builder);
-	}
-	l_session_select_profile(session, name);
-	bg_profile_connect(l_session_get_selected_profile(session), builder);
-	GtkComboBox *combo = ltk_builder_get_combo_box(builder, "combo_profile");
+	g_assert(combo != NULL);
+	BgProfileSelectData *data = g_new(BgProfileSelectData, 1);
+	data->session = session;
+	data->builder = builder;
+	LSid sid = g_signal_connect(combo, "changed", G_CALLBACK(bg_session_combo_activate_profile), data);
+	ltk_register_signal(combo, BG_SIGNAL_SESSION_ACTIVATE_PROFILE, sid, data);
+}
+
+static void bg_session_disconnect_profile_combo_box(LSession *session, GtkComboBox *combo) {
+	g_assert(session != NULL);
 	g_assert(combo != NULL);
 	if (ltk_is_signal_registered(combo, BG_SIGNAL_SESSION_ACTIVATE_PROFILE)) {
 		gpointer data = ltk_disconnect_signal(combo, BG_SIGNAL_SESSION_ACTIVATE_PROFILE);
 		g_free(data);
 		g_assert(!ltk_is_signal_registered(combo, BG_SIGNAL_SESSION_ACTIVATE_PROFILE));
 	}
+}
+
+void bg_session_activate_profile(LSession *session, const char *name, GtkBuilder *builder) {
+	g_assert(session != NULL);
+	g_assert(name != NULL && strlen(name) > 0);
+	g_assert(builder != NULL);
+	g_assert(l_session_has_profile(session, name));
+	if (l_session_get_selected_profile(session) != NULL) {
+		bg_profile_disconnect(l_session_get_selected_profile(session), builder);
+	}
+	l_session_select_profile(session, name);
+	bg_profile_connect(l_session_get_selected_profile(session), builder);
+
+	GtkComboBox *combo = ltk_builder_get_combo_box(builder, "combo_profile");
+	g_assert(combo != NULL);
+
+	bg_session_disconnect_profile_combo_box(session, combo);
+
 	GList *names = l_session_get_profile_names(session);
 	g_assert(g_list_length(names) > 0);
 	gtk_combo_box_set_active(combo, l_list_index(names, l_session_get_selected_profile_name(session), l_string_compare));
-	BgProfileSelectData *data = g_new(BgProfileSelectData, 1);
-	data->session = session;
-	data->builder = builder;
-	LSid sid = g_signal_connect(combo, "changed", G_CALLBACK(bg_session_combo_activate_profile), data);
-	ltk_register_signal(combo, BG_SIGNAL_SESSION_ACTIVATE_PROFILE, sid, data);
+
+	bg_session_connect_profile_combo_box(session, combo, builder);
 }

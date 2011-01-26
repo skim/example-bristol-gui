@@ -48,9 +48,11 @@ static void bg_profile_connect_combo_box(LProfile *profile, GtkBuilder *builder,
 	g_assert(id != NULL && strlen(id) > 0);
 	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
 	GList *names = l_profile_get_option_choices_names(profile, id);
+	GList *choices = l_profile_get_option_choices(profile, id);
 	g_assert(combo != NULL);
 	g_assert(names != NULL);
-	ltk_combo_box_set_choices_string(combo, names);
+	g_assert(choices != NULL);
+	ltk_combo_box_set_choices(combo, choices, names);
 }
 
 static void bg_profile_combo_box_set_value_string(LProfile *profile, GtkBuilder *builder, const char *id) {
@@ -58,10 +60,9 @@ static void bg_profile_combo_box_set_value_string(LProfile *profile, GtkBuilder 
 	g_assert(builder != NULL);
 	g_assert(id != NULL && strlen(id) > 0);
 	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
+	g_assert(combo != NULL);
 	char *value = l_profile_get_option_value_string(profile, id);
-	GList *choices = l_profile_get_option_choices(profile, id);
-	g_assert(choices != NULL);
-	gtk_combo_box_set_active(combo, l_list_index(choices, value, l_string_compare));
+	ltk_combo_box_set_active_string(combo, value);
 }
 
 static void bg_profile_combo_box_set_value_int(LProfile *profile, GtkBuilder *builder, const char *id) {
@@ -69,11 +70,8 @@ static void bg_profile_combo_box_set_value_int(LProfile *profile, GtkBuilder *bu
 	g_assert(builder != NULL);
 	g_assert(id != NULL && strlen(id) > 0);
 	GtkComboBox *combo = ltk_builder_get_combo_box(builder, l_strdup_printf("combo_%s", id));
-	LWrapInt *value = l_wrap_int(l_profile_get_option_value_int(profile, id));
-	GList *choices = l_profile_get_option_choices(profile, id);
-	g_assert(choices != NULL);
-	gtk_combo_box_set_active(combo, l_list_index(choices, value, l_wrap_int_compare));
-	g_free(value);
+	int value = l_profile_get_option_value_int(profile, id);
+	ltk_combo_box_set_active_int(combo, value);
 }
 
 void bg_profile_connect(LProfile *profile, GtkBuilder *builder) {
