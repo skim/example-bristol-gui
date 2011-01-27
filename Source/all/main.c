@@ -27,22 +27,30 @@ int main(int argc, char **argv) {
 	if (run_tests) {
 		//run tests if arg is present
 		lgui_test_init(&argc, &argv);
-		g_debug("running tests...");
 		int ex = lgui_test();
-		g_debug("done");
-		g_debug("strdups: %d", l_get_n_strdups());
+		g_debug("strdup: %d, strfree: %d", l_get_n_strdup(), l_get_n_strfree());
 		return ex;
 	} else {
 		//run bristolgui
 		gtk_init(&argc, &argv);
 		l_set_data_path(BG_DATA_PATH);
-		g_debug("BG_DATA_PATH %s", BG_DATA_PATH);
+		g_debug("data path: %s", BG_DATA_PATH);
+
 		GtkBuilder *builder = ltk_builder_new_from_data_path("bristolgui.glade");
+
+		LProfile *profile = l_profile_new();
+		l_profile_set_option_enabled(profile, "engine", FALSE);
+		GtkToggleButton *toggle = ltk_builder_get_toggle_button(builder, "check_engine");
+		ltk_toggle_button_connect_option_enabled(toggle, profile, "engine");
+
 		GtkWidget *window_root = ltk_builder_get_widget(builder, "window_root");
 		g_signal_connect(window_root, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 		gtk_widget_show_all(window_root);
 		gtk_main();
-		g_debug("strdups: %d", l_get_n_strdups());
+
+		g_debug("%d", l_profile_get_option_enabled(profile, "engine"));
+
+		g_debug("strdup: %d, strfree: %d", l_get_n_strdup(), l_get_n_strfree());
 		return 0;
 	}
 	return 1;
