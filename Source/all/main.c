@@ -7,11 +7,15 @@
 #include "session.h"
 #include "profile.h"
 
-
 #define BG_DATA_PATH "./Data"
 
 static gboolean run_tests = FALSE;
 static GOptionEntry entries[] = { { "tests", 't', 0, G_OPTION_ARG_NONE, &run_tests, "Run unit tests", NULL }, { NULL } };
+
+static LProfile* create_profile() {
+	LProfile *profile = l_profile_new();
+	return profile;
+}
 
 int main(int argc, char **argv) {
 	//command line arguments
@@ -28,7 +32,7 @@ int main(int argc, char **argv) {
 		//run tests if arg is present
 		lgui_test_init(&argc, &argv);
 		int ex = lgui_test();
-		g_debug("strdup: %d, strfree: %d", l_get_n_strdup(), l_get_n_strfree());
+		g_debug("strdup: %d, strfree: %d, dangling: %d", l_get_n_strdup(), l_get_n_strfree(), l_get_n_strdup() - l_get_n_strfree());
 		return ex;
 	} else {
 		//run bristolgui
@@ -50,7 +54,7 @@ int main(int argc, char **argv) {
 
 		g_debug("%d", l_profile_get_option_enabled(profile, "engine"));
 
-		g_debug("strdup: %d, strfree: %d", l_get_n_strdup(), l_get_n_strfree());
+		g_debug("strdup: %d, strfree: %d, dangling: %d", l_get_n_strdup(), l_get_n_strfree(), l_get_n_strdup() - l_get_n_strfree());
 		return 0;
 	}
 	return 1;
